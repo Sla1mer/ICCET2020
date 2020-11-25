@@ -19,9 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.squareup.okhttp.Request;
 
 import java.io.IOException;
 
@@ -44,7 +42,7 @@ public class TestSendPushNotification extends AppCompatActivity {
         title = findViewById(R.id.title);
         message = findViewById(R.id.message);
         send = findViewById(R.id.send);
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        apiService = Client.getClient("https://fcm.googleapis.com/fcm/send/").create(APIService.class);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,11 +52,12 @@ public class TestSendPushNotification extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String usertoken = snapshot.getValue(String.class);
                         sendNotifications(usertoken, title.getText().toString().trim(), message.getText().toString().trim());
+                        Toast.makeText(getApplicationContext(), "Круто", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
