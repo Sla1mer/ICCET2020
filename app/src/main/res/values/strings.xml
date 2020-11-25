@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">ICCET2020</string>
     <string name="sign_in">Вход</string>
-    <string name="sign_in2">Войти</string>
+    <string name="registrait">Зарегистрироваться</string>
+    <string name="take_note">Запись на прием</string>
+    <string name="btnTakeNoteText">Записаться</string>
     <string name="registration">Регистрация</string>
     <string name="email">Email</string>
     <string name="password">Пароль</string>
+    <string name="surname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="name_of_father">Отчество</string>
+    <string name="data">Дата рождения</string>
+    <string name="snils">СНИЛС</string>
+    <string name="phone">Телефон</string>
+    <string name="polis">Серия полиса ОМС</string>
+    <string name="polis_number">Номер полиса ОМС</string>
+    <string name="enter_oblast">Пожалуйста выберите область</string>
+    <string name="whoWillGo">Кому необходимо записаться на прием</string>
+    <string name="me">мне</string>
+    <string name="someoneElse">Другому человеку</string>
 </resources>
