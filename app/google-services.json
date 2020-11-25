@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "956410423401",
+    "firebase_url": "https://iccet2020-fdde5.firebaseio.com",
+    "project_id": "iccet2020-fdde5",
+    "storage_bucket": "iccet2020-fdde5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956410423401:android:c9d2efcec539822a145af8",
+        "android_client_info": {
+          "package_name": "com.example.iccet2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956410423401-2q2vt2gnbe29sclquropscpqb83p27d2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL1sZ44uDeCZJE0DObHyC8rRKmSr8w69w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956410423401-2q2vt2gnbe29sclquropscpqb83p27d2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
