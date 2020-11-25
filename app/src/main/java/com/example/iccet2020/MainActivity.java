@@ -1,10 +1,10 @@
 package com.example.iccet2020;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -20,22 +20,26 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-        signinBnt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Переход на LoginActivity (окно с входом)
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        registrationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Здесь код перехода на другую активность
-            }
-        });
+        signinBnt.setOnClickListener(BTNs);
+        registrationBtn.setOnClickListener(BTNs);
     }
+
+    View.OnClickListener BTNs = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case (R.id.registration):
+                    Intent intent_For_registration = new Intent(getApplicationContext(), RegistraitActivity.class);
+                    startActivity(intent_For_registration);
+                    break;
+                case (R.id.sign_in):
+                    Intent intent_for_signIn = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent_for_signIn);
+                    break;
+
+            }
+        }
+    };
 
     // Инициализация элементов интерфейса
     private void init()
