@@ -83,6 +83,22 @@
             android:inputType="number"
             android:paddingTop="10dp" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/seriaOMS"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/seriaOMS"
+            android:inputType="number"
+            android:paddingTop="10dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nomerOMS"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/nomerOMS"
+            android:inputType="number"
+            android:paddingTop="10dp" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registration_btn"

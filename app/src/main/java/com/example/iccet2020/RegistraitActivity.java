@@ -27,7 +27,7 @@ import java.util.Calendar;
 
 public class RegistraitActivity extends AppCompatActivity {
 
-    private EditText surname, name, name_of_father, data, snils, email, password, phone;
+    private EditText surname, name, name_of_father, data, snils, email, password, phone, seriaOMS, nomerOMS;
     private Button btnRegistrit;
     private DatabaseReference mDataBase;
     private String USER_KEY = "User";
@@ -87,6 +87,8 @@ public class RegistraitActivity extends AppCompatActivity {
         btnRegistrit = findViewById(R.id.registration_btn);
         mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
         mAuth = FirebaseAuth.getInstance();
+        seriaOMS = findViewById(R.id.seriaOMS);
+        nomerOMS = findViewById(R.id.nomerOMS);
     }
 
     // Создание нового пользователя
@@ -103,8 +105,11 @@ public class RegistraitActivity extends AppCompatActivity {
                     String birhtday = data.getText().toString();
                     String SNILS = snils.getText().toString();
                     String Phone = phone.getText().toString();
+                    String seria_oms = seriaOMS.getText().toString();
+                    String nomer_oms = nomerOMS.getText().toString();
 
-                    User user = new User(lastname, Name, middleName, birhtday, SNILS, email, Phone);
+                    User user = new User(lastname, Name, middleName, birhtday, SNILS, email, Phone,
+                            seria_oms, nomer_oms);
                     mDataBase.push().setValue(user);
 
                     Intent intent = new Intent(getApplicationContext(), TakeNoteActivity.class);
