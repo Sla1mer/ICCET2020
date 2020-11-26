@@ -1,8 +1,9 @@
 package com.example.iccet2020;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -34,7 +35,18 @@ public class TakeNoteActivity extends AppCompatActivity {
         adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterForSpinner);
 
+        registration_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.registration_btn){
+                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
+
 
     //иницилизация
 

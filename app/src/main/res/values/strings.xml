@@ -19,4 +19,6 @@
     <string name="whoWillGo">Кому необходимо записаться на прием</string>
     <string name="me">мне</string>
     <string name="someoneElse">Другому человеку</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyD5a7dwCxI7AFAyGmIYBk5MrkHn6_LmF1g</string>
 </resources>
