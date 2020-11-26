@@ -19,14 +19,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.416">
 
-
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/surname"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/surname"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -34,7 +32,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/name"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -42,7 +40,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/name_of_father"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -50,7 +48,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/data"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,7 +56,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/snils"
-            android:inputType="textEmailAddress"
+            android:inputType="number"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -82,7 +80,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/phone"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:paddingTop="10dp" />
 
 
