@@ -7,16 +7,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"  >
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etOrigin"
-        android:hint="Enter origin address" />
+        android:hint="Введите начальное местоположение" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter destination address"
+        android:hint="Введите конечное местоположение"
         android:id="@+id/etDestination" />
 
     <LinearLayout
@@ -24,11 +24,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-        <Button
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginLeft="3dp"
+            android:id="@+id/btnFindPath"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Find path"
-            android:id="@+id/btnFindPath" />
+            android:text="построить маршрут" />
+
         <ImageView
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"

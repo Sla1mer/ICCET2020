@@ -74,11 +74,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String origin = etOrigin.getText().toString();
         String destination = etDestination.getText().toString();
         if (origin.isEmpty()) {
-            Toast.makeText(this, "Please enter origin address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Пожалуйста введите начальное местоположение!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (destination.isEmpty()) {
-            Toast.makeText(this, "Please enter destination address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Пожалуйста введите конечное местоположение!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -98,15 +98,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .position(hcmus)
                 .title("ГБУЗ 'Центральная городская больница'"));
 
-       /* LatLng mfc = new LatLng(54.68313480507827, 20.490985060080185);
-        mMap.addPolyline(new PolylineOptions().add(
-                //54.68313480507827, 20.490985060080185
 
-                hcmus, new LatLng(54.680850, 20.491857),new LatLng(54.68362867950602, 20.48973268879739),mfc
-
-        ).width(10).color(Color.RED)
-
-        );*/
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hcmus, 17));
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -120,8 +112,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(this, "Please wait.",
-                "Finding direction..!", true);
+        progressDialog = ProgressDialog.show(this, "Пожалуйста подождите.",
+                "Простроение маршрута..!", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -143,19 +135,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
-   /* @SuppressLint("MissingPermission")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_REQUEST:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mMap.setMyLocationEnabled(true);
-                }
-                  break;
-                }
-
-        }*/
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
