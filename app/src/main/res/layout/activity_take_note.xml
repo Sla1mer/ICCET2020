@@ -32,35 +32,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.416">
 
-            <TextView
-                android:paddingLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/enter_oblast"
-                android:textSize="19dp"
-                android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="41dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = "@string/whoWillGo"
-                android:padding="10dp"
-                android:textSize="15dp"/>
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/me"/>
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/someoneElse"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/surname"
@@ -142,13 +116,45 @@
                 android:inputType="textPassword"
                 android:paddingTop="10dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "Выберите врача "
+                android:textStyle = "bold"
+                android:textSize = "18dp"
+                />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="297dp"
+                android:layout_height="38dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "Выберите удобное время записи "
+                android:textStyle = "bold"
+                android:textSize = "18dp"
+                />
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="302dp"
+                android:selectedWeekBackgroundColor="#ff0000"
+                android:weekNumberColor="#0000ff"
+                android:weekSeparatorLineColor="#00ff00" />
+
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/registration_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:layout_gravity="center"
                 android:paddingTop="10dp"
                 android:text="@string/btnTakeNoteText" />
+
+
 
         </LinearLayout>
         </LinearLayout>

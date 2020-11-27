@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,8 +30,16 @@ public class TakeNoteActivity extends AppCompatActivity {
         init();//вызов метода
 
         countries = new ArrayList<>();
-        countries.add("Московская область");
-        countries.add("Калининградская область");
+        countries.add("Педиатр");
+        countries.add("Психолог");
+        countries.add("Лор");
+        countries.add("Акушер-гинеколог");
+        countries.add("Аллерголог-иммунолог");
+        countries.add("Аллерголог");
+        countries.add("Ангиохирург");
+
+
+
 
         adapterForSpinner = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, countries);
         adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -42,6 +52,23 @@ public class TakeNoteActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+
+        CalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year,
+                                            int month, int dayOfMonth) {
+                int mYear = year;
+                int mMonth = month;
+                int mDay = dayOfMonth;
+                String selectedDate = new StringBuilder().append(mMonth + 1)
+                        .append("-").append(mDay).append("-").append(mYear)
+                        .append(" ").toString();
+                Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -67,3 +94,154 @@ public class TakeNoteActivity extends AppCompatActivity {
         registration_btn = findViewById(R.id.registration_btn);
     }
 }
+
+
+/*
+*
+*
+
+Акушер-гинеколог
+Аллерголог-иммунолог
+Аллерголог
+Ангиохирург
+Андролог-эндокринолог
+Андролог
+Анестезиолог-реаниматолог
+Анестезиолог
+Аритмолог
+Ароматерапевт
+Артролог
+Бактериолог
+Бальнеолог
+Валеолог
+Венеролог
+Вертебролог
+Вирусолог
+Врач УЗИ
+Врач общей практики
+Врач по лечебной физкультуре и спорту
+Врач по лечению бесплодия
+Врач по спортивной медицине
+Врач скорой помощи
+Врач функциональной диагностики
+Гастроэнтеролог
+Гематолог
+Генетик
+Гепатолог
+Гериатр
+Гинеколог-перинатолог
+Гинеколог-эндокринолог
+Гинеколог
+Гирудотерапевт
+Гомеопат
+Дерматовенеролог
+Дерматолог
+Диагност
+Диетолог
+Зубной врач
+Иглорефлексотерапевт
+Иммунолог
+Имплантолог
+Инфекционист
+Кардиолог
+Кардиоревматолог
+Кардиохирург
+Кинезиолог
+Колопроктолог
+Косметолог
+Курортолог
+ЛОР
+Лаборант
+Логопед
+Маммолог
+Мануальный терапевт
+Массажист
+Миколог
+Нарколог
+Невролог
+Невропатолог
+Нейротравматолог
+Нейрохирург
+Нефролог
+Окулист
+Онкогинеколог
+Онколог-гинеколог
+Онколог-хирург
+Онколог
+Онкоуролог
+Ортодонт
+Ортопед-травматолог
+Ортопед
+Остеопат
+Отоларинголог
+Отоневролог
+Офтальмолог-хирург
+Офтальмолог
+Паразитолог
+Паркинсонолог
+Пародонтолог
+Пластический хирург
+Подолог
+Проктолог
+Профпатолог
+Психиатр-нарколог
+Психиатр
+Психолог
+Психоневролог
+Психотерапевт
+Пульмонолог
+Радиолог
+Реабилитолог
+Реаниматолог
+Ревматолог
+Рентгенолог
+Репродуктолог
+Рефлексотерапевт
+Санитарный врач по гигиене питания
+Санитарный врач по гигиене труда
+Сексолог
+Сексопатолог
+Семейный врач
+Семейный доктор
+Сомнолог
+Сосудистый хирург
+Специалист восстановительного лечения
+Стоматолог-ортодонт
+Стоматолог-ортопед
+Стоматолог-протезист
+Стоматолог-терапевт
+Стоматолог-хирург
+Стоматолог
+Суггестолог
+Судебно-медицинский эксперт
+Сурдолог
+Терапевт мануальный
+Терапевт
+Токсиколог
+Торакальный хирург
+Травматолог
+Трансфузиолог
+Трихолог
+УЗИ врач
+Урогинеколог
+Уролог
+Фармаколог клинический
+Физиотерапевт
+Флеболог
+Фониатр
+Фтизиатр
+Хирург пластический
+Хирург сосудистый
+Хирург торакальный
+Хирург челюстно-лицевой
+Хирург-флеболог
+Хирург
+Эмбриолог
+Эндодонт
+Эндокринолог
+Эндоскопист
+Эпидемиолог
+Эпилептолог
+*
+*
+* */
