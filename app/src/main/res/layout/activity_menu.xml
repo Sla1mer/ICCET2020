@@ -4,35 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="12dp"
-    android:gravity="center_horizontal"
-    tools:context=".MenuActivity">
+    tools:context=".MenuActivity"
+    android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/sourseLoc"
-        android:layout_width="349dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/editbox_background"
-        android:hint="Введите начальное местоположение"
-        android:inputType="text"
-        android:paddingTop="10dp" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/finishLocation"
-        android:layout_width="349dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/editbox_background"
-        android:hint="Введите конечное местоположение"
-        android:inputType="text"
-        android:paddingTop="10dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/text_view"
-        android:textSize="24sp"
-        android:textStyle = "bold"
-        android:gravity="center"/>
 
 </LinearLayout>
