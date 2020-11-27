@@ -62,10 +62,7 @@ public class TakeNoteActivity extends AppCompatActivity {
         registration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getId() == R.id.registration_btn) {
-                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                    startActivity(intent);
-                }
+
             }
         });
     }
