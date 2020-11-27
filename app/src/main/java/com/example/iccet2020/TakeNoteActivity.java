@@ -54,7 +54,7 @@ public class TakeNoteActivity extends AppCompatActivity {
         countries.add("Аллерголог-иммунолог");
         countries.add("Аллерголог");
         countries.add("Хирург");
-        
+
         adapterForSpinner = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, countries);
         adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterForSpinner);
@@ -62,10 +62,8 @@ public class TakeNoteActivity extends AppCompatActivity {
         registration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getId() == R.id.registration_btn) {
-                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), AddShedule.class);
+                startActivity(intent);
             }
         });
     }
@@ -119,15 +117,15 @@ public class TakeNoteActivity extends AppCompatActivity {
             uInfo.setSeriaOMS(ds.child(userID).getValue(User.class).getSeriaOMS());
             uInfo.setNomerOMS(ds.child(userID).getValue(User.class).getNomerOMS());
 
-            surname.setText(uInfo.lastname);
-            name.setText(uInfo.firstname);
-            name_of_father.setText(uInfo.middlename);
-            data.setText(uInfo.birhday);
-            snils.setText(uInfo.snils);
-            email.setText(uInfo.email);
-            phone.setText(uInfo.phone);
-            polis.setText(uInfo.seriaOMS);
-            polis_number.setText(uInfo.nomerOMS);
+            surname.setText(uInfo.getLastname());
+            name.setText(uInfo.getFirstname());
+            name_of_father.setText(uInfo.getMiddlename());
+            data.setText(uInfo.getBirhday());
+            snils.setText(uInfo.getSnils());
+            email.setText(uInfo.getEmail());
+            phone.setText(uInfo.getPhone());
+            polis.setText(uInfo.getSeriaOMS());
+            polis_number.setText(uInfo.getNomerOMS());
         }
     }
 }
@@ -136,7 +134,6 @@ public class TakeNoteActivity extends AppCompatActivity {
 /*
 *
 *
-
 Акушер-гинеколог
 Аллерголог-иммунолог
 Аллерголог
