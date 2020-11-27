@@ -12,8 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddShedule"></activity>
+
+        <activity android:name=".AddShedule" />
         <activity android:name=".RegistraitActivity" />
+
+        <activity android:name=".MenuActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -22,7 +29,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="Карта"
-            android:theme="@style/AppTheme2"></activity>
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".TakeNoteActivity"
             android:label="@string/take_note"
