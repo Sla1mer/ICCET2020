@@ -110,7 +110,7 @@ public class RegistraitActivity extends AppCompatActivity {
 
                     User user = new User(lastname, Name, middleName, birhtday, SNILS, email, Phone,
                             seria_oms, nomer_oms);
-                    mDataBase.push().setValue(user);
+                    mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
                     Intent intent = new Intent(getApplicationContext(), TakeNoteActivity.class);
                     startActivity(intent);

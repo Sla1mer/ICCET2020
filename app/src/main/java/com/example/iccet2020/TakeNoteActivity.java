@@ -1,5 +1,6 @@
 package com.example.iccet2020;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,18 +11,34 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class TakeNoteActivity extends AppCompatActivity {
 
-    private EditText surname, name, name_of_father, data, snils, email, password, phone, polis, polis_number;
+    private EditText surname, name, name_of_father, data, snils, email, phone, polis, polis_number;
     private Button registration_btn;
 
     private ArrayList countries;
     private ArrayAdapter adapterForSpinner;
     private Spinner spinner;
+    private String userID;
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +53,8 @@ public class TakeNoteActivity extends AppCompatActivity {
         countries.add("Акушер-гинеколог");
         countries.add("Аллерголог-иммунолог");
         countries.add("Аллерголог");
-        countries.add("Ангиохирург");
-
-
-
-
+        countries.add("Хирург");
+        
         adapterForSpinner = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, countries);
         adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterForSpinner);
@@ -48,32 +62,13 @@ public class TakeNoteActivity extends AppCompatActivity {
         registration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(view.getId() == R.id.registration_btn){
+                if (view.getId() == R.id.registration_btn) {
                     Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                     startActivity(intent);
                 }
             }
         });
-
-
-        CalendarView calendarView = findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year,
-                                            int month, int dayOfMonth) {
-                int mYear = year;
-                int mMonth = month;
-                int mDay = dayOfMonth;
-                String selectedDate = new StringBuilder().append(mMonth + 1)
-                        .append("-").append(mDay).append("-").append(mYear)
-                        .append(" ").toString();
-                Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
-            }
-        });
-
     }
-
 
     //иницилизация
 
@@ -86,12 +81,54 @@ public class TakeNoteActivity extends AppCompatActivity {
         data = findViewById(R.id.data);
         snils = findViewById(R.id.snils);
         email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
         phone = findViewById(R.id.phone);
         polis = findViewById(R.id.polis);
         polis_number = findViewById(R.id.polis_number);
 
         registration_btn = findViewById(R.id.registration_btn);
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                showData(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void showData(DataSnapshot snapshot) {
+        for (DataSnapshot ds : snapshot.getChildren()){
+            User uInfo = new User();
+            uInfo.setFirstname(ds.child(userID).getValue(User.class).getFirstname());
+            uInfo.setLastname(ds.child(userID).getValue(User.class).getLastname());
+            uInfo.setMiddlename(ds.child(userID).getValue(User.class).getMiddlename());
+            uInfo.setBirhday(ds.child(userID).getValue(User.class).getBirhday());
+            uInfo.setSnils(ds.child(userID).getValue(User.class).getSnils());
+            uInfo.setEmail(ds.child(userID).getValue(User.class).getEmail());
+            uInfo.setPhone(ds.child(userID).getValue(User.class).getPhone());
+            uInfo.setSeriaOMS(ds.child(userID).getValue(User.class).getSeriaOMS());
+            uInfo.setNomerOMS(ds.child(userID).getValue(User.class).getNomerOMS());
+
+            surname.setText(uInfo.lastname);
+            name.setText(uInfo.firstname);
+            name_of_father.setText(uInfo.middlename);
+            data.setText(uInfo.birhday);
+            snils.setText(uInfo.snils);
+            email.setText(uInfo.email);
+            phone.setText(uInfo.phone);
+            polis.setText(uInfo.seriaOMS);
+            polis_number.setText(uInfo.nomerOMS);
+        }
     }
 }
 
