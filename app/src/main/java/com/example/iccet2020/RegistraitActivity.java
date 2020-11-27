@@ -108,9 +108,11 @@ public class RegistraitActivity extends AppCompatActivity {
                     String seria_oms = seriaOMS.getText().toString();
                     String nomer_oms = nomerOMS.getText().toString();
 
-                    User user = new User(lastname, Name, middleName, birhtday, SNILS, email, Phone,
-                            seria_oms, nomer_oms);
-                    mDataBase.push().setValue(user);
+
+                    User user = new User(birhtday, email, Name, lastname, middleName, nomer_oms, Phone,
+                            seria_oms, SNILS);
+                    mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+
 
                     Intent intent = new Intent(getApplicationContext(), TakeNoteActivity.class);
                     startActivity(intent);
