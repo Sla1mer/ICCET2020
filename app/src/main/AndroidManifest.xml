@@ -13,19 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".AddShedule" />
         <activity android:name=".RegistraitActivity" />
         <activity android:name=".MenuActivity" />
-
-
         <activity
             android:name=".TakeNoteActivity"
             android:label="@string/take_note"
             android:theme="@style/AppTheme2" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/sign_in"
-            android:theme="@style/AppTheme2" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
