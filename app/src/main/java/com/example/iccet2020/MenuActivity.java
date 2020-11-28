@@ -22,8 +22,8 @@ private Button goToMap;
             @Override
             public void onClick(View view) {
                 if(view.getId() == R.id.goToMap){
-                    Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+//                    startActivity(intent);
                 }
             }
         });

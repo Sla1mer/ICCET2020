@@ -7,13 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".TakeNoteActivity">
 
-
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0">
 
         <LinearLayout
-            android:padding="50dp"
+            android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -33,15 +37,12 @@
             app:layout_constraintVertical_bias="0.416">
 
 
-
-
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/surname"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/surname"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -49,7 +50,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -57,7 +58,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/name_of_father"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -65,7 +66,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/data"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -73,7 +74,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/snils"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -85,19 +86,11 @@
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:paddingTop="10dp" />
-
-            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/phone"
-                android:inputType="textPassword"
+                android:inputType="number"
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -105,7 +98,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/polis"
-                android:inputType="textPassword"
+                android:inputType="number"
                 android:paddingTop="10dp" />
 
             <com.google.android.material.textfield.TextInputEditText
@@ -113,52 +106,69 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/polis_number"
-                android:inputType="textPassword"
+                android:inputType="number"
                 android:paddingTop="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = "Выберите врача "
-                android:textStyle = "bold"
-                android:textSize = "18dp"
-                />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="297dp"
-                android:layout_height="38dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = "Выберите удобное время записи "
-                android:textStyle = "bold"
-                android:textSize = "18dp"
-                />
-
-            <CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="302dp"
-                android:selectedWeekBackgroundColor="#ff0000"
-                android:weekNumberColor="#0000ff"
-                android:weekSeparatorLineColor="#00ff00" />
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/registration_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="47dp"
-                android:layout_gravity="center"
-                android:paddingTop="10dp"
-                android:text="@string/btnTakeNoteText" />
-
-
-
         </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chooseDoctor"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="297dp"
+        android:layout_height="38dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "Выберите удобное время записи "
+        android:textStyle = "bold"
+        android:textSize = "18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registration_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        android:text="@string/btnTakeNoteText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98"/>
+
+    <ListView
+        android:layout_width="320dp"
+        android:layout_height="80dp"
+        android:id="@+id/listView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
 
 
 
