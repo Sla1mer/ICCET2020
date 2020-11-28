@@ -20,5 +20,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="seriaOMS">Серия полиса ОМС (При наличии)</string>
     <string name="nomerOMS">Номер полиса ОМС</string>
+    <string name="line_distance_textview">0.0 km</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiZmVzaGFydDUwMCIsImEiOiJja2kwcTQyc3MwaXY4Mnltc3RjdGo0cWV1In0.nciMMKY38q8p37kx3uwzmw</string>
 </resources>
