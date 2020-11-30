@@ -97,4 +97,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), TakeNoteActivity.class);
+            startActivity(intent);
+        }
+    }
 }
