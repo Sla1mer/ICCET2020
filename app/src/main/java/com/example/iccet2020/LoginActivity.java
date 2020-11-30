@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), RegistraitActivity.class);
                 startActivity(intent);
             }else if(v.getId() == R.id.textForgetPassoword){
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),ForgetPasswordActivity.class);
                 startActivity(intent);
             }
         }
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             //Вот здесь ты должен на другое окно переход сделать
-                            Intent intent = new Intent(getApplicationContext(), TakeNoteActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.

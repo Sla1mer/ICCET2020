@@ -132,11 +132,11 @@
 
         <Button
             android:id="@+id/registration_btn"
-            android:layout_width="374dp"
-            android:layout_height="52dp"
+            android:layout_width="276dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/zapis1"
+            android:background="@drawable/btn"
             android:paddingTop="10dp"
             android:text="@string/registrait" />
 

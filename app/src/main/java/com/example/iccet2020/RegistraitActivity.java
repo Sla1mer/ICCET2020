@@ -114,7 +114,7 @@ public class RegistraitActivity extends AppCompatActivity {
                     mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
 
-                    Intent intent = new Intent(getApplicationContext(), TakeNoteActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }else {
                     Toast.makeText(RegistraitActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
