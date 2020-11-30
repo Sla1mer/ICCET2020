@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), RegistraitActivity.class);
                 startActivity(intent);
             }else if(v.getId() == R.id.textForgetPassoword){
-                Intent intent = new Intent(getApplicationContext(),ForgetPasswordActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }
         }
