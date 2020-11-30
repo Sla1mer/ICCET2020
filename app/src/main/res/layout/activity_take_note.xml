@@ -10,12 +10,14 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0">
+        android:layout_height="match_parent">
+
+<!--    >>>>>>> b23aba14c5b89a4334b820400da3b74869780312-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintLeft_toLeftOf="parent"-->
+<!--    app:layout_constraintRight_toRightOf="parent"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintVertical_bias="0">-->
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -133,35 +135,23 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/polis_number"
                 android:inputType="number"
+
                 android:paddingTop="10dp"
                 android:enabled="false"
                 android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColor="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/chooseDoctor"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.64" />
+                android:layout_gravity="center"/>
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="297dp"
                 android:layout_height="38dp"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.7" />
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,10 +160,6 @@
                 android:text="Выберите удобное время записи "
                 android:textSize="18dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.75" />
 
             <com.google.android.material.button.MaterialButton
@@ -189,17 +175,22 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+<!--            <ListView-->
+<!--                android:layout_width="320dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:id="@+id/listView"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="0.87" />-->
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/registration_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:paddingTop="10dp"
-                android:text="@string/btnTakeNoteText"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
     </ScrollView>
@@ -213,9 +204,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0" />
-
-
-
+        app:layout_constraintVertical_bias="0.7"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

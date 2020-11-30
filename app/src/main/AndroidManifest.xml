@@ -18,14 +18,18 @@
         <activity android:name=".RegistraitActivity" />
         <activity android:name=".MenuActivity" />
         <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme2">
+
+        </activity>
+        <activity android:name=".MapActivity" />
+        <activity android:name=".ForgetPasswordActivity" />
+        <activity
             android:name=".TakeNoteActivity"
             android:label="@string/take_note"
             android:theme="@style/AppTheme2" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/sign_in"
-            android:theme="@style/AppTheme2" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -6,23 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".RegistraitActivity">
 
+
     <LinearLayout
-        android:padding="50dp"
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="393dp"
+        android:layout_height="606dp"
+        android:background="@drawable/back"
         android:orientation="vertical"
+        android:padding="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416">
+        app:layout_constraintVertical_bias="0.254">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Регистрация"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/surname"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/surname"
             android:inputType="text"
             android:paddingTop="10dp" />
@@ -31,6 +43,8 @@
             android:id="@+id/name"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/name"
             android:inputType="text"
             android:paddingTop="10dp" />
@@ -39,6 +53,8 @@
             android:id="@+id/name_of_father"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/name_of_father"
             android:inputType="text"
             android:paddingTop="10dp" />
@@ -47,6 +63,8 @@
             android:id="@+id/data"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/data"
             android:inputType="text"
             android:paddingTop="10dp" />
@@ -55,6 +73,8 @@
             android:id="@+id/snils"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/snils"
             android:inputType="number"
             android:paddingTop="10dp" />
@@ -63,6 +83,8 @@
             android:id="@+id/email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingTop="10dp" />
@@ -71,6 +93,8 @@
             android:id="@+id/password"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:paddingTop="10dp" />
@@ -79,32 +103,40 @@
             android:id="@+id/phone"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/phone"
             android:inputType="number"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/seriaOMS"
-            android:layout_width="300dp"
+            android:layout_width="298dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/seriaOMS"
             android:inputType="number"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nomerOMS"
-            android:layout_width="300dp"
+            android:layout_width="297dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorForBackEdit"
             android:hint="@string/nomerOMS"
             android:inputType="number"
             android:paddingTop="10dp" />
 
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/registration_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="276dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn"
             android:paddingTop="10dp"
             android:text="@string/registrait" />
 
