@@ -46,8 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.signin){
-                Intent intent = new Intent(getApplicationContext(), TakeNoteActivity.class);
-                startActivity(intent);
                 signin(email.getText().toString(), password.getText().toString());
             }
         }

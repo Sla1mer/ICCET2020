@@ -17,6 +17,7 @@ public class AddShedule extends AppCompatActivity {
     private MaterialButton send;
     private DatabaseReference mDataBase;
     private String USER_KEY = "User";
+    private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,21 @@ public class AddShedule extends AppCompatActivity {
                 String timeMSG = time.getText().toString();
                 String nameMSG = name.getText().toString();
                 Shedule shedule = new Shedule(dateMSG, timeMSG);
+                dateMSG = removePunct2(date.getText().toString());
 
-                mDataBase.child(nameMSG).child(timeMSG).setValue(shedule);
+                mDataBase.child(nameMSG).child(dateMSG).child(timeMSG).setValue(shedule);
             }
         });
+    }
+
+    public static String removePunct2(String str) {
+        StringBuilder result = new StringBuilder(str.length());
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (PUNCT.indexOf(c) < 0) {
+                result.append(c);
+            }
+        }
+        return result.toString();
     }
 }

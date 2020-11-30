@@ -8,7 +8,8 @@
     tools:context=".TakeNoteActivity">
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -17,24 +18,17 @@
         app:layout_constraintVertical_bias="0">
 
         <LinearLayout
-            android:padding="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-
-        <LinearLayout
-
             android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.416">
+            app:layout_constraintVertical_bias="0">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -43,7 +37,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/surname"
                 android:inputType="text"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
@@ -51,7 +49,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:inputType="text"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_of_father"
@@ -59,7 +61,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name_of_father"
                 android:inputType="text"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/data"
@@ -67,7 +73,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/data"
                 android:inputType="text"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/snils"
@@ -75,7 +85,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/snils"
                 android:inputType="number"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -83,7 +97,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
@@ -91,7 +109,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/phone"
                 android:inputType="number"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/polis"
@@ -99,7 +121,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/polis"
                 android:inputType="number"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/polis_number"
@@ -107,67 +133,87 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/polis_number"
                 android:inputType="number"
-                android:paddingTop="10dp" />
-        </LinearLayout>
+                android:paddingTop="10dp"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
+                android:textColorHighlight="@color/gray"
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/chooseDoctor"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.64" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="297dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Выберите удобное время записи "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.75" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/openCalendar"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:text="Выбрать дату записи"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/registration_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:text="@string/btnTakeNoteText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/chooseDoctor"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="297dp"
-        android:layout_height="38dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text = "Выберите удобное время записи "
-        android:textStyle = "bold"
-        android:textSize = "18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/registration_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:paddingTop="10dp"
-        android:text="@string/btnTakeNoteText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98"/>
-
     <ListView
+        android:id="@+id/listView"
         android:layout_width="320dp"
         android:layout_height="80dp"
-        android:id="@+id/listView"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0" />
 
 
 

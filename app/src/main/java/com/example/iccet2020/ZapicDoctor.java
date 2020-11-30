@@ -2,9 +2,9 @@ package com.example.iccet2020;
 
 public class ZapicDoctor {
     private String lastname, name, middlename, birthday, snils, email, phone,
-    seriaOMS, nomerOMS, doctor, data, time;
+    seriaOMS, nomerOMS, doctor, data, time, kabinet, coutnChangeTime, key;
 
-    public ZapicDoctor(String lastname, String name, String middlename, String birthday, String snils, String email, String phone, String seriaOMS, String nomerOMS, String doctor, String data, String time) {
+    public ZapicDoctor(String lastname, String name, String middlename, String birthday, String snils, String email, String phone, String seriaOMS, String nomerOMS, String doctor, String data, String time, String kabinet, String coutnChangeTime, String key) {
         this.lastname = lastname;
         this.name = name;
         this.middlename = middlename;
@@ -17,13 +17,40 @@ public class ZapicDoctor {
         this.doctor = doctor;
         this.data = data;
         this.time = time;
+        this.kabinet = kabinet;
+        this.coutnChangeTime = coutnChangeTime;
+        this.key = key;
     }
 
     public ZapicDoctor() {
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getCoutnChangeTime() {
+        return coutnChangeTime;
+    }
+
+    public void setCoutnChangeTime(String coutnChangeTime) {
+        this.coutnChangeTime = coutnChangeTime;
+    }
+
     public String getLastname() {
         return lastname;
+    }
+
+    public String getKabinet() {
+        return kabinet;
+    }
+
+    public void setKabinet(String kabinet) {
+        this.kabinet = kabinet;
     }
 
     public void setLastname(String lastname) {
