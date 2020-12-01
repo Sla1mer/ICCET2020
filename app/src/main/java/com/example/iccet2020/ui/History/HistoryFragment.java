@@ -11,28 +11,30 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
+        import androidx.fragment.app.Fragment;
+        import androidx.lifecycle.Observer;
+        import androidx.lifecycle.ViewModelProviders;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.iccet2020.MyAdapter;
-import com.example.iccet2020.R;
-import com.example.iccet2020.TakeNoteActivity;
-import com.example.iccet2020.ZapicDoctor;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+        import com.example.iccet2020.MyAdapter;
+        import com.example.iccet2020.R;
+        import com.example.iccet2020.TakeNoteActivity;
+        import com.example.iccet2020.ZapicDoctor;
+        import com.google.android.material.button.MaterialButton;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+        import java.util.ArrayList;
+        import java.util.Calendar;
 
-import static com.example.iccet2020.TakeNoteActivity.removePunct2;
+        import static com.example.iccet2020.TakeNoteActivity.removePunct2;
 
 public class HistoryFragment extends Fragment {
 
