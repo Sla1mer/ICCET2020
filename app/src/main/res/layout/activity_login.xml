@@ -78,7 +78,7 @@
                 android:id="@+id/textRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Регестрация"
+            android:text="Регистрация"
             android:textSize="17dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="25dp"/>
