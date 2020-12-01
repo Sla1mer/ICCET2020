@@ -111,13 +111,22 @@ public class TakeNoteActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                date = (day + String.valueOf(month) + year);
+                if (String.valueOf(day).length() == 1)
+                {
+                    date = ("0" + day + String.valueOf(month) + year);
+                }else if (String.valueOf(month).length() == 1)
+                {
+                    date = (day + "0" + String.valueOf(month) + year);
+                }else {
+                    date = ("0" + day + "0" + String.valueOf(month) + year);
+                }
                 date = removePunct2(date);
 
                 if (chosheDoctor.equals("Хирург")) {
                     shedule2.clear();
                     shedule3.clear();
                     myRef2 = mFirebaseDatabase.getReference("User").child("Хирург").child(date);
+
                     myRef2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -164,7 +173,7 @@ public class TakeNoteActivity extends AppCompatActivity {
 
                         }
                     });
-
+                    adapter.notifyDataSetChanged();
                 } else if (chosheDoctor.equals("Отоларинголог")) {
                     shedule2.clear();
                     shedule3.clear();
@@ -216,43 +225,6 @@ public class TakeNoteActivity extends AppCompatActivity {
         adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterForSpinner);
 
-//        myRef = mFirebaseDatabase.getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        User uInfo = new User();
-//                        uInfo.setFirstname(dataSnapshot.child(userID).getValue(User.class).getFirstname());
-//                        uInfo.setLastname(dataSnapshot.child(userID).getValue(User.class).getLastname());
-//                        uInfo.setMiddlename(dataSnapshot.child(userID).getValue(User.class).getMiddlename());
-//                        uInfo.setBirhday(dataSnapshot.child(userID).getValue(User.class).getBirhday());
-//                        uInfo.setSnils(dataSnapshot.child(userID).getValue(User.class).getSnils());
-//                        uInfo.setEmail(dataSnapshot.child(userID).getValue(User.class).getEmail());
-//                        uInfo.setPhone(dataSnapshot.child(userID).getValue(User.class).getPhone());
-//                        uInfo.setSeriaOMS(dataSnapshot.child(userID).getValue(User.class).getSeriaOMS());
-//                        uInfo.setNomerOMS(dataSnapshot.child(userID).getValue(User.class).getNomerOMS());
-//
-//                        surname.setText(uInfo.getLastname());
-//                        name.setText(uInfo.getFirstname());
-//                        name_of_father.setText(uInfo.getMiddlename());
-//                        data.setText(uInfo.getBirhday());
-//                        snils.setText(uInfo.getSnils());
-//                        email.setText(uInfo.getEmail());
-//                        phone.setText(uInfo.getPhone());
-//                        polis.setText(uInfo.getSeriaOMS());
-//                        polis_number.setText(uInfo.getNomerOMS());
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
         ArrayList<String> arrayList = new ArrayList<>();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         mDataBase.child("User").child(currentUser.getUid());
@@ -294,27 +266,6 @@ public class TakeNoteActivity extends AppCompatActivity {
             }
         });
 
-//        byte i = 0;
-//
-//            data.setText(arrayList.get(i));
-//            i++;
-//            email.setText(arrayList.get(i));
-//            i++;
-//            name.setText(arrayList.get(i));
-//        i++;
-//            surname.setText(arrayList.get(i));
-//        i++;
-//            name_of_father.setText(arrayList.get(i));
-//        i++;
-//            polis_number.setText(arrayList.get(i));
-//        i++;
-//            phone.setText(arrayList.get(i));
-//        i++;
-//            polis_number.setText(arrayList.get(i));
-//        i++;
-//            snils.setText(arrayList.get(i));
-//        arrayList.clear();
-
         registration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -349,11 +300,13 @@ public class TakeNoteActivity extends AppCompatActivity {
 
                 if (doctor.equals("Отоларинголог")) {
                     myRef3.child("Запись отоларинголог").child(date).child(time).setValue(zapicDoctor);
-//                    myRef4.child("Отоларинголог").child(date).child(time).removeValue();
+                    myRef4 = mFirebaseDatabase.getReference("User").child(zapicDoctor.getDoctor()).child(date);
                     ZapicDoctor finalZapicDoctor = zapicDoctor;
                     String finalDate = date;
-                    myRef4.child("Отоларинголог").child(date);
-                    myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                    System.out.println(finalDate);
+                    System.out.println(finalZapicDoctor.getTime());
+                    System.out.println(zapicDoctor.getDoctor());
+                    myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists())
@@ -361,6 +314,7 @@ public class TakeNoteActivity extends AppCompatActivity {
                                 for (DataSnapshot datas : snapshot.getChildren())
                                 {
                                     String key = datas.getKey();
+                                    System.out.println(key);
                                     myRef4 = mFirebaseDatabase.getReference("User").child(finalZapicDoctor.getDoctor()).child(finalDate)
                                             .child(key);
                                     myRef4.removeValue();
@@ -378,7 +332,7 @@ public class TakeNoteActivity extends AppCompatActivity {
                     intent.putExtra("time", zapicDoctor.getTime());
                     intent.putExtra("doctor", zapicDoctor.getDoctor());
                     intent.putExtra("snils", zapicDoctor.getSnils());
-                    startService(intent);
+                    startForegroundService(intent);
                 } else if (doctor.equals("Терапевт")) {
                     myRef3.child("Запись терапевт").child(date).child(time).setValue(zapicDoctor);
                     myRef4 = mFirebaseDatabase.getReference("User").child(zapicDoctor.getDoctor()).child(date);
@@ -413,13 +367,16 @@ public class TakeNoteActivity extends AppCompatActivity {
                     intent.putExtra("time", zapicDoctor.getTime());
                     intent.putExtra("doctor", zapicDoctor.getDoctor());
                     intent.putExtra("snils", zapicDoctor.getSnils());
-                    startService(intent);
+                    startForegroundService(intent);
                 } else if (doctor.equals("Хирург")) {
                     myRef3.child("Запись хирург").child(date).child(time).setValue(zapicDoctor);
+                    myRef4 = mFirebaseDatabase.getReference("User").child(zapicDoctor.getDoctor()).child(date);
                     ZapicDoctor finalZapicDoctor = zapicDoctor;
                     String finalDate = date;
-                    myRef4.child("Хирург").child(date);
-                    myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                    System.out.println(finalDate);
+                    System.out.println(finalZapicDoctor.getTime());
+                    System.out.println(zapicDoctor.getDoctor());
+                    myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists())
@@ -427,6 +384,7 @@ public class TakeNoteActivity extends AppCompatActivity {
                                 for (DataSnapshot datas : snapshot.getChildren())
                                 {
                                     String key = datas.getKey();
+                                    System.out.println(key);
                                     myRef4 = mFirebaseDatabase.getReference("User").child(finalZapicDoctor.getDoctor()).child(finalDate)
                                             .child(key);
                                     myRef4.removeValue();
@@ -444,6 +402,7 @@ public class TakeNoteActivity extends AppCompatActivity {
                     intent.putExtra("time", zapicDoctor.getTime());
                     intent.putExtra("doctor", zapicDoctor.getDoctor());
                     intent.putExtra("snils", zapicDoctor.getSnils());
+                    startForegroundService(intent);
                 }
             }
         });
@@ -455,10 +414,13 @@ public class TakeNoteActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 chosheDoctor = ((TextView) view).getText().toString();
 
+                date = removePunct2(date);
+
                 if (chosheDoctor.equals("Хирург")) {
                     shedule2.clear();
                     shedule3.clear();
                     myRef2 = mFirebaseDatabase.getReference("User").child("Хирург").child(date);
+
                     myRef2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -505,7 +467,7 @@ public class TakeNoteActivity extends AppCompatActivity {
 
                         }
                     });
-
+                    adapter.notifyDataSetChanged();
                 } else if (chosheDoctor.equals("Отоларинголог")) {
                     shedule2.clear();
                     shedule3.clear();
@@ -535,7 +497,6 @@ public class TakeNoteActivity extends AppCompatActivity {
                 }
                 System.out.println(shedule2);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 

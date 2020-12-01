@@ -151,7 +151,15 @@ public class TakeNoteFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                date = (day + String.valueOf(month) + year);
+                if (String.valueOf(day).length() == 1)
+                {
+                    date = ("0" + day + String.valueOf(month) + year);
+                }else if (String.valueOf(month).length() == 1)
+                {
+                    date = (day + "0" + String.valueOf(month) + year);
+                }else {
+                    date = ("0" + day + "0" + String.valueOf(month) + year);
+                }
                 date = removePunct2(date);
 
                 if (chosheDoctor.equals("Хирург")) {
@@ -435,6 +443,7 @@ public class TakeNoteFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 chosheDoctor = ((TextView) view).getText().toString();
+                System.out.println(chosheDoctor);
 
                 if (chosheDoctor.equals("Хирург")) {
                     shedule2.clear();

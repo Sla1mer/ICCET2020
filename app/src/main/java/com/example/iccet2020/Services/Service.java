@@ -68,6 +68,7 @@ public class Service extends android.app.Service {
                             zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
                             zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
                             zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                            zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
                             System.out.println(zapicDoctor.getSnils());
                             System.out.println(zapicDoctor.getTime());
 
@@ -76,17 +77,36 @@ public class Service extends android.app.Service {
                                 {
 
                                 }else {
-                                    Intent intent2 = new Intent(context, DoctorActivity.class);
-                                    PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
-                                    Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
-                                            .setContentTitle("Iccet2020")
-                                            .setContentText("Запись к " + zapicDoctor.getDoctor().toLowerCase() + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime())
-                                            .setSmallIcon(R.drawable.ic_launcher_background)
-                                            .setContentIntent(pendingIntent2).build();
-                                    startForeground(1, notification2);
-                                    System.out.println(lastTime);
-                                    System.out.println(zapicDoctor.getTime());
-                                    lastTime = zapicDoctor.getTime();
+                                    if (zapicDoctor.getTime().charAt(0) != '0' && zapicDoctor.getTime().charAt(1) != '1'){
+
+                                        String bigText = "Запись к " + zapicDoctor.getDoctor().toLowerCase() + "у" + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet() + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
+                                        Intent intent2 = new Intent(context, DoctorActivity.class);
+                                        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
+                                        Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
+                                                .setContentTitle("Iccet2020")
+                                                .setContentText("Запись к " + zapicDoctor.getDoctor().toLowerCase() + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet() + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.")
+                                                .setSmallIcon(R.drawable.ic_launcher_background)
+                                                .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
+                                                .setContentIntent(pendingIntent2).build();
+                                        startForeground(1, notification2);
+                                        System.out.println(lastTime);
+                                        System.out.println(zapicDoctor.getTime());
+                                        lastTime = zapicDoctor.getTime();
+                                    }else {
+                                        String bigText = "Запись к " + zapicDoctor.getDoctor().toLowerCase()  + "у" + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet();
+                                        Intent intent2 = new Intent(context, DoctorActivity.class);
+                                        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
+                                        Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
+                                                .setContentTitle("Iccet2020")
+                                                .setContentText("Запись к " + zapicDoctor.getDoctor().toLowerCase()  + "у" + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet())
+                                                .setSmallIcon(R.drawable.ic_launcher_background)
+                                                .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
+                                                .setContentIntent(pendingIntent2).build();
+                                        startForeground(1, notification2);
+                                        System.out.println(lastTime);
+                                        System.out.println(zapicDoctor.getTime());
+                                        lastTime = zapicDoctor.getTime();
+                                    }
                                 }
                             }
                         }
@@ -97,18 +117,17 @@ public class Service extends android.app.Service {
 
                     }
                 });
-
-                // Здесь будет код сравнивая данных с сервера и будет вызываться push-notification если нужно
-//                Intent intent2 = new Intent(context, MainActivity.class);
-//                PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
-//                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
-//                        .setContentTitle("Iccet2020")
-//                        .setContentText("Foreground Notification")
-//                        .setSmallIcon(R.drawable.ic_launcher_background)
-//                        .setContentIntent(pendingIntent2).build();
-//                startForeground(1, notification2);
             }
-        }, 0, 5000);;
+        }, 0, 5000);
+
+        Intent intent2 = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
+        Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
+                .setContentTitle("Iccet2020")
+                .setContentText("Идёт отслеживание времени приёма")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentIntent(pendingIntent2).build();
+        startForeground(1, notification2);
         return START_STICKY;
     }
 
