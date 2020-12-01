@@ -12,30 +12,19 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.iccet2020.R;
 
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iccet2020.Shedule;
-import com.example.iccet2020.TakeNoteActivity;
 import com.example.iccet2020.User;
 import com.example.iccet2020.ZapicDoctor;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,19 +33,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
-import java.util.TimerTask;
 
-import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 public class TakeNoteFragment extends Fragment {
 
-    private HistoryViewModel dashboardViewModel;
+    private TakeNoteViewModel dashboardViewModel;
     private EditText surname, name, name_of_father, data, snils, email, phone, polis, polis_number;
     private Button registration_btn, openCalendar;
     private ListView listView;
@@ -86,7 +72,7 @@ public class TakeNoteFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
-                ViewModelProviders.of(this).get(HistoryViewModel.class);
+                ViewModelProviders.of(this).get(TakeNoteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_take_note, container, false);
 
 
@@ -134,7 +120,7 @@ public class TakeNoteFragment extends Fragment {
         countries.add("Хирург");
         mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
 
-        adapterForSpinner = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, countries) {
+        adapterForSpinner = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, countries) {
             @Override
             public boolean isEnabled(int position) {
                 if (position == 0) {
@@ -368,12 +354,12 @@ public class TakeNoteFragment extends Fragment {
 
                         }
                     });
-                    Intent intent = new Intent(getApplicationContext(), com.example.iccet2020.Services.Service.class);
+                    Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                     intent.putExtra("date", zapicDoctor.getData());
                     intent.putExtra("time", zapicDoctor.getTime());
                     intent.putExtra("doctor", zapicDoctor.getDoctor());
                     intent.putExtra("snils", zapicDoctor.getSnils());
-                    startService(intent);
+                    getActivity().startService(intent);
                 } else if (doctor.equals("Терапевт")) {
                     myRef3.child("Запись терапевт").child(date).child(time).setValue(zapicDoctor);
                     myRef4 = mFirebaseDatabase.getReference("User").child(zapicDoctor.getDoctor()).child(date);
@@ -403,12 +389,12 @@ public class TakeNoteFragment extends Fragment {
 
                         }
                     });
-                    Intent intent = new Intent(getApplicationContext(), com.example.iccet2020.Services.Service.class);
+                    Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                     intent.putExtra("date", zapicDoctor.getData());
                     intent.putExtra("time", zapicDoctor.getTime());
                     intent.putExtra("doctor", zapicDoctor.getDoctor());
                     intent.putExtra("snils", zapicDoctor.getSnils());
-                    startService(intent);
+                    getActivity().startService(intent);
                 } else if (doctor.equals("Хирург")) {
                     myRef3.child("Запись хирург").child(date).child(time).setValue(zapicDoctor);
                     ZapicDoctor finalZapicDoctor = zapicDoctor;
@@ -434,7 +420,7 @@ public class TakeNoteFragment extends Fragment {
 
                         }
                     });
-                    Intent intent = new Intent(getApplicationContext(), com.example.iccet2020.Services.Service.class);
+                    Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                     intent.putExtra("date", zapicDoctor.getData());
                     intent.putExtra("time", zapicDoctor.getTime());
                     intent.putExtra("doctor", zapicDoctor.getDoctor());
