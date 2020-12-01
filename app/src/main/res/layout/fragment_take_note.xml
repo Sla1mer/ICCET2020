@@ -10,144 +10,144 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="match_parent">
 
 
 
         <LinearLayout
+
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0">
 
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/surname"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/surname"
                 android:inputType="text"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/name"
                 android:inputType="text"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_of_father"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/name_of_father"
                 android:inputType="text"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/data"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/data"
                 android:inputType="text"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/snils"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/snils"
                 android:inputType="number"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/phone"
                 android:inputType="number"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/polis"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/polis"
                 android:inputType="number"
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/polis_number"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:hint="@string/polis_number"
-
                 android:inputType="number"
+
                 android:paddingTop="10dp"
-                android:textColor="@color/gray"
+                android:enabled="false"
+                android:textColorHint="@color/gray"
                 android:textColorHighlight="@color/gray"
-                android:textColorHint="@color/gray" />
+                android:textColor="@color/gray"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"/>
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="297dp"
                 android:layout_height="38dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -157,6 +157,18 @@
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintVertical_bias="0.75" />
+
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="320dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+                app:layout_constraintVertical_bias="0.7"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/openCalendar"
@@ -171,34 +183,16 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--            <ListView-->
-            <!--                android:layout_width="320dp"-->
-            <!--                android:layout_height="80dp"-->
-            <!--                android:id="@+id/listView"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintLeft_toLeftOf="parent"-->
-            <!--                app:layout_constraintRight_toRightOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent"-->
-            <!--                app:layout_constraintVertical_bias="0.87" />-->
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/registration_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
+                android:text="Записаться"
                 android:layout_gravity="center"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ListView
-                android:id="@+id/listView"
-                android:layout_width="320dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-                app:layout_constraintVertical_bias="0.7"/>
         </LinearLayout>
     </ScrollView>
 
