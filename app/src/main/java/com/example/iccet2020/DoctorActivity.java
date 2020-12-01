@@ -41,10 +41,7 @@ public class DoctorActivity extends AppCompatActivity {
     private DatabaseReference myRef2;
     private String USER_KEY = "User";
     private FirebaseDatabase mFirebaseDatabase;
-    private Timer timer = new Timer();
-    private int time = 0;
     private Chronometer mChronometer;
-    private String timePriem;
     private ArrayList<ZapicDoctor> zapicDoctorsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
@@ -127,7 +124,15 @@ public class DoctorActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                date.setText(day + String.valueOf(month) + year);
+                if (String.valueOf(day).length() == 1)
+                {
+                    date.setText("0" + day + String.valueOf(month) + year);
+                }else if (String.valueOf(month).length() == 1)
+                {
+                    date.setText(day + "0" + String.valueOf(month) + year);
+                }else {
+                    date.setText("0" + day + "0" + String.valueOf(month) + year);
+                }
                 getData(chosheDoctor, date.getText().toString());
                 myAdapter = new MyAdapter(getApplicationContext(), zapicDoctorsList, mChronometer, myRef2, date.getText().toString(), mFirebaseDatabase, chosheDoctor);
                 recyclerView.setAdapter(myAdapter);

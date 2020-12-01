@@ -105,7 +105,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                         if (elapsedMillis > 1000 && elapsedMillis < 10000)
                         {
-                            Toast.makeText(context, "Время приёма заканчивается", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Время приёма заканчивается", Toast.LENGTH_SHORT).show();
                         }
                         // Если время больше 20 минут
                         else if (elapsedMillis > 5000 && flag1)
@@ -174,11 +174,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                             shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
                                             shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
                                             String resultTime2 = сalculatingTime(shedule.getTime());
-
-                                            myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
-                                            String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
-                                            System.out.println(date);
-                                            myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
+                                            if (resultTime2.charAt(0) != '2')
+                                            {
+                                                myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
+                                                String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
+                                                System.out.println(date);
+                                                myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
+                                            }
                                         }
                                     }
                                 }
@@ -225,6 +227,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                                     zapicDoctor.getData(), resultTime, zapicDoctor.getKabinet(), zapicDoctor.getCoutnChangeTime(), zapicDoctor.getKey());
 
                                             myRef.child(zapicDoctor2.getKey()).child("time").setValue(resultTime);
+                                            char resultDoctor = zapicDoctor2.getDoctor().charAt(0);
+                                            String resultDoctor2 = String.valueOf(resultDoctor);
+                                            byte index = (byte) zapicDoctor2.getDoctor().length();
+                                            String finishDoctor = resultDoctor2.toUpperCase() + zapicDoctor2.getDoctor().substring(1, index);
+                                            doctor = finishDoctor;
+                                            doctor = doctor.substring(0, 1).toUpperCase() + doctor.substring(1).toLowerCase();
+
                                         }
                                     }
                                 }
@@ -234,6 +243,39 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                                 }
                             });
+
+
+                            doctor = doctor.substring(0, 1).toUpperCase() + doctor.substring(1).toLowerCase();
+                            myRef2 = mFirebaseDatabase.getReference("User").child(doctor).child(date);
+                            myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists())
+                                    {
+                                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren())
+                                        {
+                                            Shedule shedule = new Shedule();
+
+                                            shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
+                                            shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
+                                            String resultTime2 = сalculatingTime(shedule.getTime());
+                                            if (resultTime2.charAt(0) != '2')
+                                            {
+                                                myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
+                                                String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
+                                                System.out.println(date);
+                                                myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
                             notifyDataSetChanged();
                         }
                     }
