@@ -1,4 +1,4 @@
-package com.example.iccet2020.ui.notifications;
+package com.example.iccet2020.ui.History;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
@@ -11,9 +11,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,9 +34,9 @@ import java.util.Calendar;
 
 import static com.example.iccet2020.TakeNoteActivity.removePunct2;
 
-public class NotificationsFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private HistoryViewModel notificationsViewModel;
     private RecyclerView recyclerView;
     private ArrayList<ZapicDoctor> arrayList;
     private DatabaseReference myRef;
@@ -56,7 +54,7 @@ public class NotificationsFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
+                ViewModelProviders.of(this).get(HistoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         myRef = FirebaseDatabase.getInstance().getReference(USER_KEY);
         mFirebaseDatabase = FirebaseDatabase.getInstance();

@@ -1,4 +1,4 @@
-package com.example.iccet2020.ui.notifications;
+package com.example.iccet2020.ui.History;
 
 import android.content.Context;
 import android.view.LayoutInflater;

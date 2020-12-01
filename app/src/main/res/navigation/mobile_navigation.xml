@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.iccet2020.ui.dashboard.DashboardFragment"
+        android:name="com.example.iccet2020.ui.TakeNote.DashboardFragment"
         android:label="Запись на прием"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_take_note" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.iccet2020.ui.notifications.NotificationsFragment"
+        android:name="com.example.iccet2020.ui.History.HistoryFragment"
         android:label="История"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
