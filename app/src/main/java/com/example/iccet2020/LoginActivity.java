@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Вход в аккаунт
     private void signin(String email, String password){
+        try{
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -102,10 +103,15 @@ public class LoginActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void signIn(FirebaseUser firebaseUser)
     {
+
+        try{
         if (firebaseUser != null){
             mDataBase.child("User").child(firebaseUser.getUid());
             System.out.println(firebaseUser.getUid());
@@ -137,6 +143,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
+        }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 
