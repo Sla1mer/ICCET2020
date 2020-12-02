@@ -22,6 +22,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -34,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "mAuth";
     private TextView textRegister, textForgetPassoword;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private DatabaseReference mDataBase;
+    private String USER_KEY = "User";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         mAuth = FirebaseAuth.getInstance();
+        mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
     }
 
     // Вход в аккаунт
@@ -83,9 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            //Вот здесь ты должен на другое окно переход сделать
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                            signIn(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -98,14 +104,78 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    private void signIn(FirebaseUser firebaseUser)
+    {
+        if (firebaseUser != null){
+            mDataBase.child("User").child(firebaseUser.getUid());
+            System.out.println(firebaseUser.getUid());
+            System.out.println(firebaseUser.getEmail());
+            mDataBase.orderByChild("email").equalTo(firebaseUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            User user = new User();
+                            user.setStatus(dataSnapshot.getValue(User.class).getStatus());
+                            System.out.println("blablabla");
+
+                            if (user.getStatus().equals("patient"))
+                            {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                            }else
+                            {
+                                Intent intent = new Intent(getApplicationContext(), DoctorActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+            mDataBase.child("User").child(currentUser.getUid());
+            System.out.println(currentUser.getUid());
+            System.out.println(currentUser.getEmail());
+            mDataBase.orderByChild("email").equalTo(currentUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            User user = new User();
+                            user.setStatus(dataSnapshot.getValue(User.class).getStatus());
+                            System.out.println("blablabla");
+
+                            if (user.getStatus().equals("patient"))
+                            {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), DoctorActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 }

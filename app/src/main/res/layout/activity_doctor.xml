@@ -55,6 +55,7 @@
         android:id="@+id/takeDate"
         app:backgroundTint="#3d7894"/>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="500dp"

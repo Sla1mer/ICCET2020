@@ -54,6 +54,15 @@ public class RegistraitActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date = day + "." + month + "." + year;
+                if (String.valueOf(day).length() == 1)
+                {
+                    date = ("0" + day + "." + String.valueOf(month) + "." + year);
+                }else if (String.valueOf(month).length() == 1)
+                {
+                    date = (day + ".0" + String.valueOf(month) + "." + year);
+                }else {
+                    date = ("0" + day + ".0" + String.valueOf(month) + "." + year);
+                }
                 data.setText(date);
             }
         };
@@ -108,9 +117,10 @@ public class RegistraitActivity extends AppCompatActivity {
                     String seria_oms = seriaOMS.getText().toString();
                     String nomer_oms = nomerOMS.getText().toString();
 
+                    String status = "patient";
 
                     User user = new User(birhtday, email, Name, lastname, middleName, nomer_oms, Phone,
-                            seria_oms, SNILS);
+                            seria_oms, SNILS, status);
                     mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
 

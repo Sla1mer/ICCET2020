@@ -2,12 +2,12 @@ package com.example.iccet2020;
 
 public class User {
     private String birhday, email, firstname, lastname, middlename, nomerOMS,
-            phone, seriaOMS, snils;
+            phone, seriaOMS, snils, status;
 
     public User(){
 
     }
-    public User(String birhday, String email, String firstname, String lastname, String middlename, String nomerOMS, String phone, String seriaOMS, String snils) {
+    public User(String birhday, String email, String firstname, String lastname, String middlename, String nomerOMS, String phone, String seriaOMS, String snils, String status) {
         this.birhday = birhday;
         this.email = email;
         this.firstname = firstname;
@@ -17,6 +17,15 @@ public class User {
         this.phone = phone;
         this.seriaOMS = seriaOMS;
         this.snils = snils;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getBirhday() {
