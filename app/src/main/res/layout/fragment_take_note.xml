@@ -184,10 +184,12 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:paddingTop="10dp"
+                    app:backgroundTint="#3d7894"
                     android:text="Выбрать дату записи" />
 
 
                 <com.google.android.material.button.MaterialButton
+                    app:backgroundTint="#3d7894"
                     android:id="@+id/registration_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"

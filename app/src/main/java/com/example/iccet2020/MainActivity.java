@@ -26,7 +26,7 @@ private Button btnChange;
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#a7e7fc")));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

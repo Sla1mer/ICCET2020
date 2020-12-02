@@ -3,6 +3,8 @@ package com.example.iccet2020;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +19,7 @@ private Button changedBtn;
         setContentView(R.layout.activity_changes);
 
         changedBtn = findViewById(R.id.changedBtn);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
         changedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

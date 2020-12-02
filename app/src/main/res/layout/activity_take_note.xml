@@ -185,7 +185,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:backgroundTint="#3d7894"/>
 
 <!--            <ListView-->
 <!--                android:layout_width="320dp"-->
@@ -204,7 +205,8 @@
                 android:text="Записаться"
                 android:layout_gravity="center"
                 android:gravity="center"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:backgroundTint="#3d7894"/>
         </LinearLayout>
     </ScrollView>
 

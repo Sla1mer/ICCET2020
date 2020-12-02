@@ -58,6 +58,9 @@ public class DoctorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
+
         myRef = FirebaseDatabase.getInstance().getReference(USER_KEY);
         myRef2 = FirebaseDatabase.getInstance().getReference(USER_KEY);
         mFirebaseDatabase = FirebaseDatabase.getInstance();

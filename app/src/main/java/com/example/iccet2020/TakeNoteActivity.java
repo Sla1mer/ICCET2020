@@ -72,14 +72,14 @@ public class TakeNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_note);
 
         init();//вызов метода
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#a7e7fc")));
         countries = new ArrayList<>();
         countries.add("Выберите врача");
         countries.add("Отоларинголог");
         countries.add("Терапевт");
         countries.add("Хирург");
         mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
         adapterForSpinner = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, countries) {
             @Override
             public boolean isEnabled(int position) {

@@ -228,6 +228,7 @@
                 </LinearLayout>
 
                 <Button
+                    app:backgroundTint="#3d7894"
                     android:id="@+id/changeBtn"
                     android:layout_width="225dp"
                     android:layout_height="52dp"
