@@ -53,9 +53,10 @@ public class DoctorActivity extends AppCompatActivity {
     private Spinner spinner;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String chosheDoctor = " ";
-    private MaterialButton takeDate;
+    private MaterialButton takeDate, startTimer, stopTimer;
     private MaterialTextView date;
     private Button btnExit;
+    private long time2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +71,117 @@ public class DoctorActivity extends AppCompatActivity {
         mChronometer = findViewById(R.id.chronometer);
         spinner = findViewById(R.id.spinner);
         takeDate = findViewById(R.id.takeDate);
+        startTimer = findViewById(R.id.startTimer);
+        stopTimer = findViewById(R.id.stopTimer);
         date = findViewById(R.id.date);
         myAdapter = new MyAdapter(this, zapicDoctorsList, mChronometer, myRef2, date.getText().toString(), mFirebaseDatabase, chosheDoctor);
         btnExit = findViewById(R.id.exit);
 
+        startTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mChronometer.setBase(SystemClock.elapsedRealtime());
+                mChronometer.start();
+
+                mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                    @Override
+                    public void onChronometerTick(Chronometer chronometer) {
+                        long elapsedMillis = SystemClock.elapsedRealtime()
+                                - chronometer.getBase();
+
+                        time2 = elapsedMillis / 60000;
+                    }
+                });
+            }
+        });
+
+        stopTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mChronometer.stop();
+                mChronometer.setBase(SystemClock.elapsedRealtime());
+
+                myRef = mFirebaseDatabase.getReference("User").child("Запись " + chosheDoctor).child(date.getText().toString());
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                ZapicDoctor zapicDoctor = new ZapicDoctor();
+                                zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+                                zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+                                zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+                                zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+                                zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+                                zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+                                zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+                                zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+                                zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+                                zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+                                zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+                                zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+                                zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                                zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+                                zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+                                String time = zapicDoctor.getTime();
+                                String resultTime = сalculatingTime(time);
+                                ZapicDoctor zapicDoctor2 = new ZapicDoctor(zapicDoctor.getLastname(),
+                                        zapicDoctor.getName(), zapicDoctor.getMiddlename(), zapicDoctor.getBirthday(),
+                                        zapicDoctor.getSnils(), zapicDoctor.getEmail(), zapicDoctor.getPhone(),
+                                        zapicDoctor.getSeriaOMS(), zapicDoctor.getNomerOMS(), zapicDoctor.getDoctor(),
+                                        zapicDoctor.getData(), resultTime, zapicDoctor.getKabinet(), zapicDoctor.getCoutnChangeTime(), zapicDoctor.getKey());
+
+                                myRef.child(zapicDoctor2.getKey()).child("time").setValue(resultTime);
+                                char resultDoctor = zapicDoctor2.getDoctor().charAt(0);
+                                String resultDoctor2 = String.valueOf(resultDoctor);
+                                byte index = (byte) zapicDoctor2.getDoctor().length();
+                                String finishDoctor = resultDoctor2.toUpperCase() + zapicDoctor2.getDoctor().substring(1, index);
+                                chosheDoctor = finishDoctor;
+                                chosheDoctor = chosheDoctor.substring(0, 1).toUpperCase() + chosheDoctor.substring(1).toLowerCase();
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+                chosheDoctor = chosheDoctor.substring(0, 1).toUpperCase() + chosheDoctor.substring(1).toLowerCase();
+                myRef2 = mFirebaseDatabase.getReference("User").child(chosheDoctor).child(date.getText().toString());
+                myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists())
+                        {
+                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren())
+                            {
+                                Shedule shedule = new Shedule();
+
+                                shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
+                                shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
+                                String resultTime2 = сalculatingTime(shedule.getTime());
+                                if (resultTime2.charAt(0) != '2')
+                                {
+                                    myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
+                                    String dateFinaly = date.getText().toString().substring(0, 2) + "." + date.getText().toString().substring(2, 4) + "." + date.getText().toString().substring(4);
+                                    System.out.println(date);
+                                    myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
 
 
         btnExit.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +288,110 @@ public class DoctorActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+    private String сalculatingTime(String time) {
+        String resultTime = null;
+
+        if (time.charAt(0) == '0' && time.charAt(3) != '0') {
+            char timeHour = time.charAt(1);
+            System.out.println("timeHoSur " + timeHour);
+            String timeMinute = time.substring(3, 5);
+            int timeMinutePlus = Math.toIntExact(Integer.parseInt(timeMinute) + time2);
+            int timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
+            String  timeHourPlus2 = null;
+            String timeMinutePlus2 = null;
+
+            timeHourPlus2 = String.valueOf(timeHourPlus);
+            timeMinutePlus2 = String.valueOf(timeMinutePlus);
+            System.out.println("timeMinutePlus " + timeMinutePlus);
+            System.out.println("timeHourPlus " + timeHourPlus);
+            if (timeMinutePlus > 59) {
+                timeMinutePlus = timeMinutePlus - 60;
+                timeMinutePlus2 = String.valueOf(timeMinutePlus);
+                timeHourPlus = Integer.parseInt(String.valueOf(timeHour)) + 1;
+                timeHourPlus2 = String.valueOf(timeHourPlus);
+            }
+
+            if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 1)
+            {
+                resultTime = '0' + timeHourPlus2 + ":" + "0" + timeMinutePlus2;
+            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 1)
+            {
+                resultTime = timeHourPlus2 + ":" + "0" + timeMinutePlus2;
+            }else if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 2)
+            {
+                resultTime = '0' + timeHourPlus2 + ":" + timeMinutePlus2;
+            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 2)
+            {
+                resultTime = timeHourPlus2 + ":" + timeMinutePlus2;
+            }
+            System.out.println(resultTime);
+        } else if (time.charAt(0) != '0' && time.charAt(3) == '0')
+        {
+            String timeHour = time.substring(0, 2);
+            System.out.println("timeHoSur " + timeHour);
+            char timeMinute = time.charAt(4);
+            int timeMinutePlus = Math.toIntExact(Integer.parseInt(String.valueOf(timeMinute)) + time2);
+            int timeHourPlus = Integer.parseInt(timeHour);
+            System.out.println("timeMinutePlus " + timeMinutePlus);
+            System.out.println("timeHourPlus " + timeHourPlus);
+
+            resultTime = timeHourPlus + ":" + timeMinutePlus;
+        } else if (time.charAt(0) == '0' && time.charAt(3) == '0')
+        {
+            System.out.println("ejje " + time);
+            char timeHour = time.charAt(1);
+            char timeMinute = time.charAt(4);
+            System.out.println("timeMinute" + timeMinute);
+            System.out.println("timeHourPlus " + timeHour);
+
+            int timeMinutePlus = Integer.parseInt(String.valueOf(timeMinute));
+            timeMinutePlus = Math.toIntExact(timeMinutePlus + time2);
+            int timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
+            System.out.println("dasdsadasdas" + timeHourPlus);
+
+            resultTime = '0' + time.charAt(1) + ":" + timeMinutePlus;
+
+        }else if (time.charAt(0) != '0' && time.charAt(3) != '0')
+        {
+            String timeHour = time.substring(0, 2);
+            String timeMinute = time.substring(3, 5);
+            System.out.println("timeMinute" + timeMinute);
+            System.out.println("timeHourPlus " + timeHour);
+
+            int timeMinutePlus = Math.toIntExact(Integer.parseInt(timeMinute) + time2);
+            int timeHourPlus = Integer.parseInt(timeHour);
+            String  timeHourPlus2 = null;
+            String timeMinutePlus2 = null;
+
+            timeHourPlus2 = String.valueOf(timeHourPlus);
+            timeMinutePlus2 = String.valueOf(timeMinutePlus);
+            System.out.println("timeMinutePlus " + timeMinutePlus);
+            System.out.println("timeHourPlus " + timeHourPlus);
+            if (timeMinutePlus > 59) {
+                timeMinutePlus = timeMinutePlus - 60;
+                timeMinutePlus2 = String.valueOf(timeMinutePlus);
+                timeHourPlus = Integer.parseInt(String.valueOf(timeHour)) + 1;
+                timeHourPlus2 = String.valueOf(timeHourPlus);
+            }
+
+            if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 1)
+            {
+                resultTime = '0' + timeHourPlus2 + ":" + "0" + timeMinutePlus2;
+            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 1)
+            {
+                resultTime = timeHourPlus2 + ":" + "0" + timeMinutePlus2;
+            }else if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 2)
+            {
+                resultTime = '0' + timeHourPlus2 + ":" + timeMinutePlus2;
+            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 2)
+            {
+                resultTime = timeHourPlus2 + ":" + timeMinutePlus2;
+            }
+        }
+
+        return resultTime;
     }
 
     private void getData(String pathDoctor, String date)

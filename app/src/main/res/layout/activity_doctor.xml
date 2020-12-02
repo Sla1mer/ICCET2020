@@ -6,6 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".DoctorActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Выбрать дату"
+            android:id="@+id/takeDate"
+            app:backgroundTint="#3d7894"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:textSize="10sp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.935"
+            android:text="Отойти"
+            android:id="@+id/startTimer"
+            app:backgroundTint="#3d7894"
+            android:layout_marginRight="10dp"
+            android:textSize="10sp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.935"
+            android:text="Остановить таймер"
+            android:id="@+id/stopTimer"
+            app:backgroundTint="#3d7894"
+            android:textSize="10sp"/>
+
+    </LinearLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/exit"
         android:layout_width="54dp"
@@ -16,21 +66,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Время заканчивается"
-        android:textSize="35sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676" />
+        app:layout_constraintVertical_bias="1"/>
 
     <Chronometer
         android:id="@+id/chronometer"
@@ -54,19 +90,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.99"
         android:textSize="20sp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.935"
-        android:text="Выбрать дату"
-        android:id="@+id/takeDate"
-        app:backgroundTint="#3d7894"/>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
