@@ -25,7 +25,9 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme2"></activity>
+            android:theme="@style/AppTheme2">
+
+        </activity>
 
         <activity android:name=".ForgetPasswordActivity" />
 

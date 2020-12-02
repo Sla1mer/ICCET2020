@@ -2,6 +2,8 @@ package com.example.iccet2020;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,7 +25,7 @@ public class AddShedule extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_shedule);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
         send = findViewById(R.id.send);

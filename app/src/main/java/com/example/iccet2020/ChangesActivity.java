@@ -87,6 +87,7 @@ public class ChangesActivity extends AppCompatActivity {
             }
         });
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
         changedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

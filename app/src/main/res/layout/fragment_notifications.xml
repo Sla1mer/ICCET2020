@@ -18,6 +18,7 @@
         android:scrollbars="vertical"/>
 
     <com.google.android.material.button.MaterialButton
+        app:backgroundTint="#3d7894"
         android:id="@+id/takeDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

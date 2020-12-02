@@ -6,7 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import android.widget.EditText;
+
+import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.iccet2020.ChangesActivity;
+import com.example.iccet2020.LoginActivity;
 import com.example.iccet2020.MainActivity;
 import com.example.iccet2020.R;
 import com.example.iccet2020.User;
@@ -39,12 +44,15 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private Button changeBtn;
+
     private MaterialTextView nameOfPerson, data, snils, email, phone, polisSeria, polisNumber;
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
     private String USER_KEY = "User";
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
+
+    private Button exit;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +66,7 @@ public class HomeFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         changeBtn = root.findViewById(R.id.changeBtn);
+
         nameOfPerson = root.findViewById(R.id.nameOfPerson);
         data = root.findViewById(R.id.dataOfBirthday);
         snils = root.findViewById(R.id.snils);
@@ -65,6 +74,9 @@ public class HomeFragment extends Fragment {
         phone = root.findViewById(R.id.phoneNumber);
         polisSeria = root.findViewById(R.id.polisSeria);
         polisNumber = root.findViewById(R.id.polisNumber);
+
+        exit = root.findViewById(R.id.exit);
+
 
         changeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +88,21 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         getData();
+
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.exit){
+
+                    //также как и выше
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         return root;
     }
