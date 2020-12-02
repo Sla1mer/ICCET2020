@@ -186,7 +186,6 @@ public class TakeNoteFragment extends Fragment {
 
                         }
                     });
-                    adapter.notifyDataSetChanged();
                 } else if (chosheDoctor.equals("Терапевт")) {
                     shedule2.clear();
                     shedule3.clear();
@@ -353,6 +352,7 @@ public class TakeNoteFragment extends Fragment {
                                     myRef4 = mFirebaseDatabase.getReference("User").child(finalZapicDoctor.getDoctor()).child(finalDate)
                                             .child(key);
                                     myRef4.removeValue();
+                                    adapter.notifyDataSetChanged();
                                 }
                             }
                         }
@@ -388,6 +388,7 @@ public class TakeNoteFragment extends Fragment {
                                     myRef4 = mFirebaseDatabase.getReference("User").child(finalZapicDoctor.getDoctor()).child(finalDate)
                                             .child(key);
                                     myRef4.removeValue();
+                                    adapter.notifyDataSetChanged();
                                 }
                             }
                         }
@@ -419,6 +420,7 @@ public class TakeNoteFragment extends Fragment {
                                     myRef4 = mFirebaseDatabase.getReference("User").child(finalZapicDoctor.getDoctor()).child(finalDate)
                                             .child(key);
                                     myRef4.removeValue();
+                                    adapter.notifyDataSetChanged();
                                 }
                             }
                         }
