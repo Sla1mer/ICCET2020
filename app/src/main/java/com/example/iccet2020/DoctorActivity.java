@@ -20,10 +20,8 @@ import android.widget.Chronometer;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,9 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Timer;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DoctorActivity extends AppCompatActivity {
 
@@ -90,6 +85,7 @@ public class DoctorActivity extends AppCompatActivity {
                                 - chronometer.getBase();
 
                         time2 = elapsedMillis / 60000;
+                        System.out.println(time2);
                     }
                 });
             }
@@ -99,46 +95,22 @@ public class DoctorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mChronometer.stop();
-                mChronometer.setBase(SystemClock.elapsedRealtime());
+                System.out.println(time2 + " йзцущзкцйшзкйцзкйцлщзд");
 
                 myRef = mFirebaseDatabase.getReference("User").child("Запись " + chosheDoctor).child(date.getText().toString());
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                ZapicDoctor zapicDoctor = new ZapicDoctor();
-                                zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
-                                zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
-                                zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
-                                zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
-                                zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
-                                zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
-                                zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
-                                zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
-                                zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
-                                zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
-                                zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
-                                zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
-                                zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
-                                zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
-                                zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
-                                String time = zapicDoctor.getTime();
-                                String resultTime = сalculatingTime(time);
-                                ZapicDoctor zapicDoctor2 = new ZapicDoctor(zapicDoctor.getLastname(),
-                                        zapicDoctor.getName(), zapicDoctor.getMiddlename(), zapicDoctor.getBirthday(),
-                                        zapicDoctor.getSnils(), zapicDoctor.getEmail(), zapicDoctor.getPhone(),
-                                        zapicDoctor.getSeriaOMS(), zapicDoctor.getNomerOMS(), zapicDoctor.getDoctor(),
-                                        zapicDoctor.getData(), resultTime, zapicDoctor.getKabinet(), zapicDoctor.getCoutnChangeTime(), zapicDoctor.getKey());
+                        if (snapshot.exists())
+                        {
+                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren())
+                            {
+                                Shedule shedule = new Shedule();
 
-                                myRef.child(zapicDoctor2.getKey()).child("time").setValue(resultTime);
-                                char resultDoctor = zapicDoctor2.getDoctor().charAt(0);
-                                String resultDoctor2 = String.valueOf(resultDoctor);
-                                byte index = (byte) zapicDoctor2.getDoctor().length();
-                                String finishDoctor = resultDoctor2.toUpperCase() + zapicDoctor2.getDoctor().substring(1, index);
-                                chosheDoctor = finishDoctor;
-                                chosheDoctor = chosheDoctor.substring(0, 1).toUpperCase() + chosheDoctor.substring(1).toLowerCase();
-
+                                shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
+                                shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
+                                String resultTime2 = сalculatingTime(shedule.getTime());
+                                myRef.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
                             }
                         }
                     }
@@ -164,13 +136,10 @@ public class DoctorActivity extends AppCompatActivity {
                                 shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
                                 shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
                                 String resultTime2 = сalculatingTime(shedule.getTime());
-                                if (resultTime2.charAt(0) != '2')
-                                {
-                                    myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
-                                    String dateFinaly = date.getText().toString().substring(0, 2) + "." + date.getText().toString().substring(2, 4) + "." + date.getText().toString().substring(4);
-                                    System.out.println(date);
-                                    myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
-                                }
+                                myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
+                                String dateFinaly = date.getText().toString().substring(0, 2) + "." + date.getText().toString().substring(2, 4) + "." + date.getText().toString().substring(4);
+                                System.out.println(date);
+                                myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
                             }
                         }
                     }
@@ -292,13 +261,14 @@ public class DoctorActivity extends AppCompatActivity {
 
     private String сalculatingTime(String time) {
         String resultTime = null;
+        System.out.println("TIME 0" + time2);
 
         if (time.charAt(0) == '0' && time.charAt(3) != '0') {
             char timeHour = time.charAt(1);
             System.out.println("timeHoSur " + timeHour);
             String timeMinute = time.substring(3, 5);
-            int timeMinutePlus = Math.toIntExact(Integer.parseInt(timeMinute) + time2);
-            int timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
+            long timeMinutePlus = Integer.parseInt(timeMinute) + time2;
+            long timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
             String  timeHourPlus2 = null;
             String timeMinutePlus2 = null;
 
@@ -332,8 +302,8 @@ public class DoctorActivity extends AppCompatActivity {
             String timeHour = time.substring(0, 2);
             System.out.println("timeHoSur " + timeHour);
             char timeMinute = time.charAt(4);
-            int timeMinutePlus = Math.toIntExact(Integer.parseInt(String.valueOf(timeMinute)) + time2);
-            int timeHourPlus = Integer.parseInt(timeHour);
+            long timeMinutePlus = Integer.parseInt(String.valueOf(timeMinute)) + time2;
+            long timeHourPlus = Integer.parseInt(timeHour);
             System.out.println("timeMinutePlus " + timeMinutePlus);
             System.out.println("timeHourPlus " + timeHourPlus);
 
@@ -346,12 +316,18 @@ public class DoctorActivity extends AppCompatActivity {
             System.out.println("timeMinute" + timeMinute);
             System.out.println("timeHourPlus " + timeHour);
 
-            int timeMinutePlus = Integer.parseInt(String.valueOf(timeMinute));
-            timeMinutePlus = Math.toIntExact(timeMinutePlus + time2);
-            int timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
+            long timeMinutePlus = Integer.parseInt(String.valueOf(timeMinute)) + time2;
+            long timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
             System.out.println("dasdsadasdas" + timeHourPlus);
+            System.out.println("afsa1231" + timeMinutePlus);
 
-            resultTime = '0' + time.charAt(1) + ":" + timeMinutePlus;
+            if (timeMinutePlus < 10)
+            {
+                resultTime = "0" + timeHourPlus + ":" + "0" + timeMinutePlus;
+            }else {
+                resultTime = "0" + timeHourPlus + ":" + timeMinutePlus;
+            }
+            System.out.println(resultTime);
 
         }else if (time.charAt(0) != '0' && time.charAt(3) != '0')
         {
@@ -360,8 +336,8 @@ public class DoctorActivity extends AppCompatActivity {
             System.out.println("timeMinute" + timeMinute);
             System.out.println("timeHourPlus " + timeHour);
 
-            int timeMinutePlus = Math.toIntExact(Integer.parseInt(timeMinute) + time2);
-            int timeHourPlus = Integer.parseInt(timeHour);
+            long timeMinutePlus = Integer.parseInt(timeMinute) + time2;
+            long timeHourPlus = Integer.parseInt(timeHour);
             String  timeHourPlus2 = null;
             String timeMinutePlus2 = null;
 

@@ -262,47 +262,8 @@ public class TakeNoteFragment extends Fragment {
         adapterForSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterForSpinner);
 
+        getData();
 
-        ArrayList<String> arrayList = new ArrayList<>();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        mDataBase.child("User").child(currentUser.getUid());
-        System.out.println(currentUser.getUid());
-        mDataBase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (arrayList.size() == 0) {
-                            User user = new User();
-                            user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
-                            data.setText(user.getBirhday());
-                            arrayList.add("dasd");
-                            user.setEmail(dataSnapshot.getValue(User.class).getEmail());
-                            email.setText(user.getEmail());
-                            user.setFirstname(dataSnapshot.getValue(User.class).getFirstname());
-                            name.setText(user.getFirstname());
-                            user.setLastname(dataSnapshot.getValue(User.class).getLastname());
-                            surname.setText(user.getLastname());
-                            user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
-                            name_of_father.setText(user.getMiddlename());
-                            user.setNomerOMS(dataSnapshot.getValue(User.class).getNomerOMS());
-                            polis_number.setText(user.getNomerOMS());
-                            user.setPhone(dataSnapshot.getValue(User.class).getPhone());
-                            phone.setText(user.getPhone());
-                            user.setSeriaOMS(dataSnapshot.getValue(User.class).getSeriaOMS());
-                            polis.setText(user.getSeriaOMS());
-                            user.setSnils(dataSnapshot.getValue(User.class).getSnils());
-                            snils.setText(user.getSnils());
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         registration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -552,28 +513,44 @@ public class TakeNoteFragment extends Fragment {
         return result.toString();
     }
 
-    private void showData(DataSnapshot snapshot) {
-        for (DataSnapshot ds : snapshot.getChildren()){
-            User uInfo = new User();
-            uInfo.setFirstname(ds.child(userID).getValue(User.class).getFirstname());
-            uInfo.setLastname(ds.child(userID).getValue(User.class).getLastname());
-            uInfo.setMiddlename(ds.child(userID).getValue(User.class).getMiddlename());
-            uInfo.setBirhday(ds.child(userID).getValue(User.class).getBirhday());
-            uInfo.setSnils(ds.child(userID).getValue(User.class).getSnils());
-            uInfo.setEmail(ds.child(userID).getValue(User.class).getEmail());
-            uInfo.setPhone(ds.child(userID).getValue(User.class).getPhone());
-            uInfo.setSeriaOMS(ds.child(userID).getValue(User.class).getSeriaOMS());
-            uInfo.setNomerOMS(ds.child(userID).getValue(User.class).getNomerOMS());
+    private void getData() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        mDataBase.child("User").child(currentUser.getUid());
+        System.out.println(currentUser.getUid());
+        mDataBase.orderByChild("email").equalTo(currentUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        User user = new User();
+                        user.setFirstname(dataSnapshot.getValue(User.class).getFirstname());
+                        user.setLastname(dataSnapshot.getValue(User.class).getLastname());
+                        user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
+                        user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
+                        user.setSnils(dataSnapshot.getValue(User.class).getSnils());
+                        user.setEmail(dataSnapshot.getValue(User.class).getEmail());
+                        user.setPhone(dataSnapshot.getValue(User.class).getPhone());
+                        user.setSeriaOMS(dataSnapshot.getValue(User.class).getSeriaOMS());
+                        user.setNomerOMS(dataSnapshot.getValue(User.class).getNomerOMS());
 
-            surname.setText(uInfo.getLastname());
-            name.setText(uInfo.getFirstname());
-            name_of_father.setText(uInfo.getMiddlename());
-            data.setText(uInfo.getBirhday());
-            snils.setText(uInfo.getSnils());
-            email.setText(uInfo.getEmail());
-            phone.setText(uInfo.getPhone());
-            polis.setText(uInfo.getSeriaOMS());
-            polis_number.setText(uInfo.getNomerOMS());
-        }
+                        name.setText(user.getFirstname());
+                        surname.setText(user.getLastname());
+                        name_of_father.setText(user.getMiddlename());
+                        data.setText(user.getBirhday());
+                        snils.setText(user.getSnils());
+                        email.setText(user.getEmail());
+                        phone.setText(user.getPhone());
+                        polis.setText(user.getSeriaOMS());
+                        polis_number.setText(user.getNomerOMS());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
