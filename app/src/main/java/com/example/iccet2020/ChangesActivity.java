@@ -87,7 +87,7 @@ public class ChangesActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
         changedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,8 +104,52 @@ public class ChangesActivity extends AppCompatActivity {
 
                     User user = new User(birhtday, email.getText().toString(), Name, lastname, middleName, nomer_oms, Phone,
                             seria_oms, SNILS, "patient");
-                    FirebaseAuth.getInstance().getCurrentUser().updateEmail(email.getText().toString());
-                    mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+
+                    if (!email.getText().toString().equals(""))
+                    {
+                        FirebaseAuth.getInstance().getCurrentUser().updateEmail(email.getText().toString());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").setValue(user.getEmail());
+                    }
+
+                    if (!data.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("birhday").setValue(user.getBirhday());
+                    }
+
+                    if (!name.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("firstname").setValue(user.getFirstname());
+                    }
+
+                    if (!surname.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("lastname").setValue(user.getLastname());
+                    }
+
+                    if (!name_of_father.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("middlename").setValue(user.getMiddlename());
+                    }
+
+                    if (!polis.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("seriaOMS").setValue(user.getSeriaOMS());
+                    }
+
+                    if (!polis_number.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("nomerOMS").setValue(user.getNomerOMS());
+                    }
+
+                    if (!phone.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("phone").setValue(user.getPhone());
+                    }
+
+                    if (!snils.getText().toString().equals(""))
+                    {
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("snils").setValue(user.getPhone());
+                    }
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);

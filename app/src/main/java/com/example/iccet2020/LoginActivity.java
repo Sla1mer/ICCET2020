@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            onStart();
+                            signIn(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -102,6 +102,42 @@ public class LoginActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    private void signIn(FirebaseUser firebaseUser)
+    {
+        if (firebaseUser != null){
+            mDataBase.child("User").child(firebaseUser.getUid());
+            System.out.println(firebaseUser.getUid());
+            System.out.println(firebaseUser.getEmail());
+            mDataBase.orderByChild("email").equalTo(firebaseUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            User user = new User();
+                            user.setStatus(dataSnapshot.getValue(User.class).getStatus());
+                            System.out.println("blablabla");
+
+                            if (user.getStatus().equals("patient"))
+                            {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                            }else
+                            {
+                                Intent intent = new Intent(getApplicationContext(), DoctorActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -125,6 +161,10 @@ public class LoginActivity extends AppCompatActivity {
                             if (user.getStatus().equals("patient"))
                             {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), DoctorActivity.class);
                                 startActivity(intent);
                             }
                         }

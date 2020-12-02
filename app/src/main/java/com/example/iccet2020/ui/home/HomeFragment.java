@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
 
-    private Button exit;
+    private Button exit, refresh;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +76,14 @@ public class HomeFragment extends Fragment {
         polisNumber = root.findViewById(R.id.polisNumber);
 
         exit = root.findViewById(R.id.exit);
+        refresh = root.findViewById(R.id.reload);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getData();
+            }
+        });
 
 
         changeBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,11 +106,15 @@ public class HomeFragment extends Fragment {
                 if(view.getId() == R.id.exit){
 
                     //также как и выше
+                    mAuth.signOut();
                     Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
             }
         });
+
+
 
         return root;
     }
@@ -121,7 +133,7 @@ public class HomeFragment extends Fragment {
                         user.setLastname(dataSnapshot.getValue(User.class).getLastname());
                         user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
 
-                        String fio = user.getLastname() + user.getFirstname() + user.getMiddlename();
+                        String fio = user.getLastname() + " " + user.getFirstname() + " " + user.getMiddlename();
                         user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
                         user.setSnils(dataSnapshot.getValue(User.class).getSnils());
                         user.setEmail(dataSnapshot.getValue(User.class).getEmail());
