@@ -59,6 +59,15 @@
                         android:textSize="25dp" />
                 </LinearLayout>
 
+
+                <Button
+                    android:id="@+id/reload"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/reload"
+                    app:backgroundTint="#3d7894" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -241,13 +250,16 @@
                     android:layout_marginTop="20dp"
                     android:text="Редактировать" />
 
-                <ImageView
+
+                <Button
                     android:id="@+id/exit"
                     android:layout_width="50dp"
-                    android:layout_height="46dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="45dp"
                     android:layout_marginTop="35dp"
-                    android:src="@drawable/exit" />
+                    android:background="@drawable/exit"
+                    app:backgroundTint="#3d7894" />
+
                 </LinearLayout>
 
             </LinearLayout>

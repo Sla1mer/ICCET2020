@@ -19,7 +19,7 @@ private Button changedBtn;
         setContentView(R.layout.activity_changes);
 
         changedBtn = findViewById(R.id.changedBtn);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
         changedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
