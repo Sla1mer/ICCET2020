@@ -226,7 +226,12 @@
                         android:textSize="20dp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
                 <Button
                     app:backgroundTint="#3d7894"
                     android:id="@+id/changeBtn"
@@ -235,6 +240,15 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:text="Редактировать" />
+
+                <ImageView
+                    android:id="@+id/exit"
+                    android:layout_width="50dp"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="35dp"
+                    android:src="@drawable/exit" />
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
