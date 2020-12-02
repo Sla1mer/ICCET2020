@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TakeNoteActivity"
@@ -11,16 +12,17 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       >
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="347dp"
-                android:layout_height="716dp"
+                android:layout_width="354dp"
+                android:layout_height="781dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/back"
@@ -29,7 +31,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0">
+                app:layout_constraintVertical_bias="1.0">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -41,6 +43,7 @@
                     android:enabled="false"
                     android:hint="@string/surname"
                     android:inputType="text"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -54,6 +57,7 @@
                     android:enabled="false"
                     android:hint="@string/name"
                     android:inputType="text"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -67,6 +71,7 @@
                     android:enabled="false"
                     android:hint="@string/name_of_father"
                     android:inputType="text"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -80,6 +85,7 @@
                     android:enabled="false"
                     android:hint="@string/data"
                     android:inputType="text"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -93,6 +99,7 @@
                     android:enabled="false"
                     android:hint="@string/snils"
                     android:inputType="number"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -106,6 +113,7 @@
                     android:enabled="false"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -119,6 +127,7 @@
                     android:enabled="false"
                     android:hint="@string/phone"
                     android:inputType="number"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -132,6 +141,7 @@
                     android:enabled="false"
                     android:hint="@string/polis"
                     android:inputType="number"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -142,10 +152,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-
                     android:enabled="false"
                     android:hint="@string/polis_number"
+
                     android:inputType="number"
+
                     android:textColor="@color/gray"
                     android:textColorHighlight="@color/gray"
                     android:textColorHint="@color/gray" />
@@ -173,8 +184,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-60dp"
                     android:gravity="center"
+                    android:paddingTop="10dp"
                     android:text="Выбрать дату записи"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
