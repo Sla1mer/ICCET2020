@@ -9,7 +9,6 @@
     tools:context=".ui.home.HomeFragment">
 
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,8 +19,8 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="374dp"
-                android:layout_height="648dp"
+                android:layout_width="380dp"
+                android:layout_height="654dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/back"
                 android:orientation="vertical"
@@ -235,6 +234,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:text="Редактировать" />
+
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

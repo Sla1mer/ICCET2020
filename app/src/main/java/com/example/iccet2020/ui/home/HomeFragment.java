@@ -1,5 +1,6 @@
 package com.example.iccet2020.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.iccet2020.ChangesActivity;
+import com.example.iccet2020.MainActivity;
 import com.example.iccet2020.R;
-import com.example.iccet2020.ui.Changes.ChangesFragment;
-import com.google.android.gms.dynamic.FragmentWrapper;
+
 
 public class HomeFragment extends Fragment {
 
@@ -30,22 +32,16 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         changeBtn = root.findViewById(R.id.changeBtn);
+
         changeBtn.setOnClickListener(new View.OnClickListener() {
-            Fragment fragment = null;
             @Override
             public void onClick(View view) {
-
-                    if(view.getId() == R.id.changeBtn){
-                        fragment = new ChangesFragment();
-                    }
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.navigation_home, fragment);
-                    ft.commit();
-
+                if(view.getId() == R.id.changeBtn){
+                    Intent intent = new Intent(getContext(), ChangesActivity.class);
+                    startActivity(intent);
+                }
             }
         });
-
 
         return root;
     }

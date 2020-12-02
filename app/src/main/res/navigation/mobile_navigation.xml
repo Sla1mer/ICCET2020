@@ -20,6 +20,7 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.iccet2020.ui.History.HistoryFragment"
-        android:label="История"
+        android:label="Активные записи"
         tools:layout="@layout/fragment_notifications" />
+
 </navigation>
