@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button signinBtn;
     private FirebaseAuth mAuth;
     private static final String TAG = "mAuth";
-    private TextView textRegister, textForgetPassoword;
+    private Button textRegister, textForgetPassoword;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private DatabaseReference mDataBase;
     private String USER_KEY = "User";
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
        signinBtn.setOnClickListener(BTNs);
        textRegister.setOnClickListener(BTNs);
-       textForgetPassoword.setOnClickListener(BTNs);
+
     }
     View.OnClickListener BTNs = new View.OnClickListener() {
         @Override
@@ -61,9 +61,6 @@ public class LoginActivity extends AppCompatActivity {
             }else if(v.getId() == R.id.textRegister){
                 Intent intent = new Intent(getApplicationContext(), RegistraitActivity.class);
                 startActivity(intent);
-            }else if(v.getId() == R.id.textForgetPassoword){
-                Intent intent = new Intent(getApplicationContext(),ForgetPasswordActivity.class);
-                startActivity(intent);
             }
         }
     };
@@ -71,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
     // Инициализация элементов интерфейса
     private void init()
     {
-        textForgetPassoword = findViewById(R.id.textForgetPassoword);
+
         textRegister = findViewById(R.id.textRegister);
         signinBtn = findViewById(R.id.signin);
         email = findViewById(R.id.email);
