@@ -36,7 +36,6 @@
             android:layout_marginTop="30dp"
             android:background="@color/colorForBackEdit"
             android:hint="@string/surname"
-            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -46,7 +45,6 @@
             android:layout_marginTop="5dp"
             android:background="@color/colorForBackEdit"
             android:hint="@string/name"
-            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -56,7 +54,6 @@
             android:layout_marginTop="5dp"
             android:background="@color/colorForBackEdit"
             android:hint="@string/name_of_father"
-            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -66,7 +63,6 @@
             android:layout_marginTop="5dp"
             android:background="@color/colorForBackEdit"
             android:hint="@string/data"
-            android:inputType="text"
             android:paddingTop="10dp" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -130,17 +126,22 @@
             android:paddingTop="10dp" />
 
 
-        <Button
-            android:id="@+id/registration_btn"
-            android:layout_width="276dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn"
-            android:paddingTop="10dp"
-            android:text="@string/registrait"
-            app:backgroundTint="#3d7894"/>
+
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/registration_btn"
+        android:layout_width="276dp"
+        android:layout_height="48dp"
+        android:background="@drawable/btn"
+        android:text="@string/registrait"
+        app:backgroundTint="#3d7894"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
