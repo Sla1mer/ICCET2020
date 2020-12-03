@@ -31,10 +31,13 @@ import androidx.annotation.Nullable;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ValueEventListener;
 
-        import java.util.ArrayList;
+import java.sql.Time;
+import java.util.ArrayList;
         import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
-        import static com.example.iccet2020.TakeNoteActivity.removePunct2;
+import static com.example.iccet2020.TakeNoteActivity.removePunct2;
 
 public class HistoryFragment extends Fragment {
 
@@ -50,6 +53,8 @@ public class HistoryFragment extends Fragment {
     private MaterialButton materialButton;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private Timer timer = new Timer();
+    private boolean flag = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +66,15 @@ public class HistoryFragment extends Fragment {
         myRef = FirebaseDatabase.getInstance().getReference(USER_KEY);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         materialButton = root.findViewById(R.id.takeDate);
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (flag){
+                    getData(date);
+                }
+            }
+        }, 0, 1000);
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -109,6 +123,7 @@ public class HistoryFragment extends Fragment {
     private void getData(String date)
     {
         myRef = mFirebaseDatabase.getReference("User").child("Запись терапевт").child(date);
+        arrayList.clear();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -138,8 +153,6 @@ public class HistoryFragment extends Fragment {
                         arrayList.add(zapicDoctor);
                         System.out.println(arrayList);
                         historyAdapter.notifyDataSetChanged();
-//                        historyAdapter = new HistoryAdapter(getContext(), arrayList);
-//                        recyclerView.setAdapter(historyAdapter);
                     }
                     System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 }
@@ -176,13 +189,12 @@ public class HistoryFragment extends Fragment {
                     System.out.println(date);
                     System.out.println(zapicDoctor.getEmail());
 
-                    if (zapicDoctor.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                    if (zapicDoctor.getEmail().equals(currentUser.getEmail()))
                     {
                         arrayList.add(zapicDoctor);
                         System.out.println(arrayList);
                         historyAdapter.notifyDataSetChanged();
-//                        historyAdapter = new HistoryAdapter(getContext(), arrayList);
-//                        recyclerView.setAdapter(historyAdapter);
                     }
                     System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 }
@@ -224,8 +236,6 @@ public class HistoryFragment extends Fragment {
                         arrayList.add(zapicDoctor);
                         System.out.println(arrayList);
                         historyAdapter.notifyDataSetChanged();
-//                        historyAdapter = new HistoryAdapter(getContext(), arrayList);
-//                        recyclerView.setAdapter(historyAdapter);
                     }
                     System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 }
@@ -236,5 +246,7 @@ public class HistoryFragment extends Fragment {
 
             }
         });
+
+        flag = true;
     }
 }

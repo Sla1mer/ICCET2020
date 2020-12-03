@@ -381,15 +381,19 @@ public class TakeNoteFragment extends Fragment {
                         getActivity().startService(intent);
                     } else if (doctor.equals("Хирург")) {
                         myRef3.child("Запись хирург").child(date).child(time).setValue(zapicDoctor);
+                        myRef4 = mFirebaseDatabase.getReference("User").child(zapicDoctor.getDoctor()).child(date);
                         ZapicDoctor finalZapicDoctor = zapicDoctor;
                         String finalDate = date;
-                        myRef4.child("Хирург").child(date);
-                        myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                        System.out.println(finalDate);
+                        System.out.println(finalZapicDoctor.getTime());
+                        System.out.println(zapicDoctor.getDoctor());
+                        myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
                                     for (DataSnapshot datas : snapshot.getChildren()) {
                                         String key = datas.getKey();
+                                        System.out.println(key);
                                         myRef4 = mFirebaseDatabase.getReference("User").child(finalZapicDoctor.getDoctor()).child(finalDate)
                                                 .child(key);
                                         myRef4.removeValue();
@@ -408,6 +412,7 @@ public class TakeNoteFragment extends Fragment {
                         intent.putExtra("time", zapicDoctor.getTime());
                         intent.putExtra("doctor", zapicDoctor.getDoctor());
                         intent.putExtra("snils", zapicDoctor.getSnils());
+                        getActivity().startService(intent);
                     }
                 }catch (Exception ex){
                     System.out.println(ex.getMessage());
@@ -550,8 +555,8 @@ public class TakeNoteFragment extends Fragment {
                         user.setNomerOMS(dataSnapshot.getValue(User.class).getNomerOMS());
 
                         name.setText(user.getFirstname());
-                        surname.setText(user.getLastname());
                         name_of_father.setText(user.getMiddlename());
+                        surname.setText(user.getLastname());
                         data.setText(user.getBirhday());
                         snils.setText(user.getSnils());
                         email.setText(user.getEmail());

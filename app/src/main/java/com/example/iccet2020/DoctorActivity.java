@@ -95,9 +95,9 @@ public class DoctorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mChronometer.stop();
-                System.out.println(time2 + " йзцущзкцйшзкйцзкйцлщзд");
 
-                myRef = mFirebaseDatabase.getReference("User").child("Запись " + chosheDoctor).child(date.getText().toString());
+                String choseDoctor2 = chosheDoctor.toLowerCase();
+                myRef = mFirebaseDatabase.getReference("User").child("Запись " + choseDoctor2).child(date.getText().toString());
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -263,110 +263,55 @@ public class DoctorActivity extends AppCompatActivity {
 
     private String сalculatingTime(String time) {
         String resultTime = null;
-        System.out.println("TIME 0" + time2);
 
-        if (time.charAt(0) == '0' && time.charAt(3) != '0') {
-            char timeHour = time.charAt(1);
-            System.out.println("timeHoSur " + timeHour);
-            String timeMinute = time.substring(3, 5);
-            long timeMinutePlus = Integer.parseInt(timeMinute) + time2;
-            long timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
-            String  timeHourPlus2 = null;
-            String timeMinutePlus2 = null;
+        String timeHour = time.substring(0, 2);
+        String timeMinute = time.substring(3, 5);
 
-            timeHourPlus2 = String.valueOf(timeHourPlus);
-            timeMinutePlus2 = String.valueOf(timeMinutePlus);
-            System.out.println("timeMinutePlus " + timeMinutePlus);
-            System.out.println("timeHourPlus " + timeHourPlus);
-            if (timeMinutePlus > 59) {
-                timeMinutePlus = timeMinutePlus - 60;
-                timeMinutePlus2 = String.valueOf(timeMinutePlus);
-                timeHourPlus = Integer.parseInt(String.valueOf(timeHour)) + 1;
-                timeHourPlus2 = String.valueOf(timeHourPlus);
-            }
+        int tMinute = (int) (Integer.parseInt(timeMinute) + time2);
 
-            if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 1)
-            {
-                resultTime = '0' + timeHourPlus2 + ":" + "0" + timeMinutePlus2;
-            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 1)
-            {
-                resultTime = timeHourPlus2 + ":" + "0" + timeMinutePlus2;
-            }else if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 2)
-            {
-                resultTime = '0' + timeHourPlus2 + ":" + timeMinutePlus2;
-            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 2)
-            {
-                resultTime = timeHourPlus2 + ":" + timeMinutePlus2;
-            }
-            System.out.println(resultTime);
-        } else if (time.charAt(0) != '0' && time.charAt(3) == '0')
+        if (tMinute > 59)
         {
-            String timeHour = time.substring(0, 2);
-            System.out.println("timeHoSur " + timeHour);
-            char timeMinute = time.charAt(4);
-            long timeMinutePlus = Integer.parseInt(String.valueOf(timeMinute)) + time2;
-            long timeHourPlus = Integer.parseInt(timeHour);
-            System.out.println("timeMinutePlus " + timeMinutePlus);
-            System.out.println("timeHourPlus " + timeHourPlus);
+            String h = null;
+            String m = null;
+            int tHour = Integer.parseInt(timeHour) + 1;
+            tMinute = tMinute - 60;
 
-            resultTime = timeHourPlus + ":" + timeMinutePlus;
-        } else if (time.charAt(0) == '0' && time.charAt(3) == '0')
-        {
-            System.out.println("ejje " + time);
-            char timeHour = time.charAt(1);
-            char timeMinute = time.charAt(4);
-            System.out.println("timeMinute" + timeMinute);
-            System.out.println("timeHourPlus " + timeHour);
-
-            long timeMinutePlus = Integer.parseInt(String.valueOf(timeMinute)) + time2;
-            long timeHourPlus = Integer.parseInt(String.valueOf(timeHour));
-            System.out.println("dasdsadasdas" + timeHourPlus);
-            System.out.println("afsa1231" + timeMinutePlus);
-
-            if (timeMinutePlus < 10)
+            if (tMinute < 10)
             {
-                resultTime = "0" + timeHourPlus + ":" + "0" + timeMinutePlus;
+                m = "0" + tMinute;
             }else {
-                resultTime = "0" + timeHourPlus + ":" + timeMinutePlus;
+                m = String.valueOf(tMinute);
             }
-            System.out.println(resultTime);
 
-        }else if (time.charAt(0) != '0' && time.charAt(3) != '0')
+            if (tHour < 10)
+            {
+                h = "0" + tHour;
+            }else {
+                h = String.valueOf(tHour);
+            }
+
+            resultTime = h + ":" + m;
+        }else
         {
-            String timeHour = time.substring(0, 2);
-            String timeMinute = time.substring(3, 5);
-            System.out.println("timeMinute" + timeMinute);
-            System.out.println("timeHourPlus " + timeHour);
+            String h = null;
+            String m = null;
+            int tHour = Integer.parseInt(timeHour);
 
-            long timeMinutePlus = Integer.parseInt(timeMinute) + time2;
-            long timeHourPlus = Integer.parseInt(timeHour);
-            String  timeHourPlus2 = null;
-            String timeMinutePlus2 = null;
-
-            timeHourPlus2 = String.valueOf(timeHourPlus);
-            timeMinutePlus2 = String.valueOf(timeMinutePlus);
-            System.out.println("timeMinutePlus " + timeMinutePlus);
-            System.out.println("timeHourPlus " + timeHourPlus);
-            if (timeMinutePlus > 59) {
-                timeMinutePlus = timeMinutePlus - 60;
-                timeMinutePlus2 = String.valueOf(timeMinutePlus);
-                timeHourPlus = Integer.parseInt(String.valueOf(timeHour)) + 1;
-                timeHourPlus2 = String.valueOf(timeHourPlus);
+            if (tMinute < 10)
+            {
+                m = "0" + tMinute;
+            }else {
+                m = String.valueOf(tMinute);
             }
 
-            if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 1)
+            if (tHour < 10)
             {
-                resultTime = '0' + timeHourPlus2 + ":" + "0" + timeMinutePlus2;
-            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 1)
-            {
-                resultTime = timeHourPlus2 + ":" + "0" + timeMinutePlus2;
-            }else if (timeHourPlus2.length() == 1 && timeMinutePlus2.length() == 2)
-            {
-                resultTime = '0' + timeHourPlus2 + ":" + timeMinutePlus2;
-            }else if (timeHourPlus2.length() == 2 && timeMinutePlus2.length() == 2)
-            {
-                resultTime = timeHourPlus2 + ":" + timeMinutePlus2;
+                h = "0" + tHour;
+            }else {
+                h = String.valueOf(tHour);
             }
+
+            resultTime = h + ":" + m;
         }
 
         return resultTime;

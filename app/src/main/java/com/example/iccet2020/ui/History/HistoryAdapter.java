@@ -46,10 +46,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ZapicDoctor zapicDoctor = arrayList.get(position);
-        holder.date.setText(arrayList.get(position).getData());
-        holder.time.setText(arrayList.get(position).getTime());
-        holder.kab.setText(arrayList.get(position).getKabinet());
-        holder.doctor.setText(arrayList.get(position).getDoctor());
+        holder.date.setText("Дата: " + arrayList.get(position).getData());
+        holder.time.setText("Время: " + arrayList.get(position).getTime());
+        holder.kab.setText("Кабинет: " + arrayList.get(position).getKabinet());
+        holder.doctor.setText("Доктор: " + arrayList.get(position).getDoctor());
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
