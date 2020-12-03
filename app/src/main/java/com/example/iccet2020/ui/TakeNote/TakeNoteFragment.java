@@ -162,82 +162,96 @@ public class TakeNoteFragment extends Fragment {
                 }
                 date = removePunct2(date);
 
-                if (chosheDoctor.equals("Хирург")) {
-                    shedule2.clear();
-                    shedule3.clear();
-                    myRef2 = mFirebaseDatabase.getReference("User").child("Хирург").child(date);
-                    myRef2.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            shedule2.clear();
-                            shedule3.clear();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                Shedule shedule = new Shedule();
-                                shedule.setDate(dataSnapshot.getValue(Shedule.class).getDate());
-                                shedule.setTime(dataSnapshot.getValue(Shedule.class).getTime());
-                                shedule2.add(shedule);
-                                shedule3.add("Дата: " + shedule.getDate() + "\n" + "Время: " + shedule.getTime());
-                                adapter.notifyDataSetChanged();
+                System.out.println(date + " dasqwepqweqw");
+                System.out.println(chosheDoctor + " dasqwepqweqw");
+
+                switch (chosheDoctor) {
+                    case "Хирург":
+                        shedule2.clear();
+                        shedule3.clear();
+                        myRef2 = mFirebaseDatabase.getReference("User").child("Хирург").child(date);
+                        myRef2.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                shedule2.clear();
+                                shedule3.clear();
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    Shedule shedule = new Shedule();
+                                    shedule.setDate(dataSnapshot.getValue(Shedule.class).getDate());
+                                    shedule.setTime(dataSnapshot.getValue(Shedule.class).getTime());
+                                    shedule2.add(shedule);
+                                    shedule3.add("Дата: " + shedule.getDate() + "\n" + "Время: " + shedule.getTime());
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
-                } else if (chosheDoctor.equals("Терапевт")) {
-                    shedule2.clear();
-                    shedule3.clear();
-                    myRef2 = mFirebaseDatabase.getReference("User").child("Терапевт").child(date);
-
-                    myRef2.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            shedule2.clear();
-                            shedule3.clear();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                Shedule shedule = new Shedule();
-                                shedule.setDate(dataSnapshot.getValue(Shedule.class).getDate());
-                                shedule.setTime(dataSnapshot.getValue(Shedule.class).getTime());
-                                shedule2.add(shedule);
-                                shedule3.add("Дата: " + shedule.getDate() + "\n" + "Время: " + shedule.getTime());
-                                adapter.notifyDataSetChanged();
                             }
-                        }
+                        });
+                        break;
+                    case "Терапевт":
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                        mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
+                        myRef = mDataBase.child("Терапевт").child(date);
+                        mDataBase.child("Терпавет").child(date);
+                        System.out.println(date);
 
-                        }
-                    });
+                        myRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                shedule2.clear();
+                                shedule3.clear();
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        Shedule shedule = new Shedule();
+                                        shedule.setDate(dataSnapshot.getValue(Shedule.class).getDate());
+                                        shedule.setTime(dataSnapshot.getValue(Shedule.class).getTime());
+                                        System.out.println(shedule.getDate() + " " + shedule.getTime());
+                                        shedule2.add(shedule);
+                                        shedule3.add("Дата: " + shedule.getDate() + "\n" + "Время: " + shedule.getTime());
+                                        System.out.println(shedule3);
+                                        adapter.notifyDataSetChanged();
 
-                } else if (chosheDoctor.equals("Отоларинголог")) {
-                    shedule2.clear();
-                    shedule3.clear();
-                    myRef2 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(date);
-
-                    myRef2.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            shedule2.clear();
-                            shedule3.clear();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                Shedule shedule = new Shedule();
-                                shedule.setDate(dataSnapshot.getValue(Shedule.class).getDate());
-                                shedule.setTime(dataSnapshot.getValue(Shedule.class).getTime());
-                                shedule2.add(shedule);
-                                shedule3.add("Дата: " + shedule.getDate() + "\n" + "Время: " + shedule.getTime());
-                                adapter.notifyDataSetChanged();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
-                    adapter.notifyDataSetChanged();
+                            }
+                        });
+
+                        adapter.notifyDataSetChanged();
+
+                        break;
+                    case "Отоларинголог":
+                        shedule2.clear();
+                        shedule3.clear();
+                        myRef2 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(date);
+
+                        myRef2.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                shedule2.clear();
+                                shedule3.clear();
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    Shedule shedule = new Shedule();
+                                    shedule.setDate(dataSnapshot.getValue(Shedule.class).getDate());
+                                    shedule.setTime(dataSnapshot.getValue(Shedule.class).getTime());
+                                    shedule2.add(shedule);
+                                    shedule3.add("Дата: " + shedule.getDate() + "\n" + "Время: " + shedule.getTime());
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        adapter.notifyDataSetChanged();
+                        break;
                 }
                 System.out.println(shedule2);
 

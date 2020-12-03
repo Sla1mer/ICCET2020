@@ -122,6 +122,8 @@ public class TakeNoteActivity extends AppCompatActivity {
                 }
                 date = removePunct2(date);
 
+                System.out.println(date + " dasdasqqwpeqw");
+
                 if (chosheDoctor.equals("Хирург")) {
                     shedule2.clear();
                     shedule3.clear();
