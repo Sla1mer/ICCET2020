@@ -46,12 +46,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        TextView text = findViewById(R.id.text);
         init();
 
        signinBtn.setOnClickListener(BTNs);
        textRegister.setOnClickListener(BTNs);
-        text.setOnClickListener(BTNs);
     }
     View.OnClickListener BTNs = new View.OnClickListener() {
         @Override
@@ -60,9 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                 signin(email.getText().toString(), password.getText().toString());
             }else if(v.getId() == R.id.textRegister){
                 Intent intent = new Intent(getApplicationContext(), RegistraitActivity.class);
-                startActivity(intent);
-            }else if(v.getId() == R.id.text){
-                Intent intent = new Intent(getApplicationContext(), AddShedule.class);
                 startActivity(intent);
             }
         }
