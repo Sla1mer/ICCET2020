@@ -225,12 +225,14 @@ public class DoctorActivity extends AppCompatActivity {
                 month = month + 1;
                 if (String.valueOf(day).length() == 1)
                 {
-                    date.setText("0" + day + String.valueOf(month) + year);
+                    date.setText(("0" + day + String.valueOf(month) + year));
                 }else if (String.valueOf(month).length() == 1)
                 {
-                    date.setText(day + "0" + String.valueOf(month) + year);
+                    date.setText((day + "0" + String.valueOf(month) + year));
+                }else if (String.valueOf(month).length() == 1 && String.valueOf(day).length() == 1){
+                    date.setText(("0" + day + "0" + String.valueOf(month) + year));
                 }else {
-                    date.setText("0" + day + "0" + String.valueOf(month) + year);
+                    date.setText((day + String.valueOf(month) + year));
                 }
                 getData(chosheDoctor, date.getText().toString());
                 myAdapter = new MyAdapter(getApplicationContext(), zapicDoctorsList, mChronometer, myRef2, date.getText().toString(), mFirebaseDatabase, chosheDoctor);
