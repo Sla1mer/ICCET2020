@@ -46,12 +46,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         init();
 
        signinBtn.setOnClickListener(BTNs);
        textRegister.setOnClickListener(BTNs);
-
     }
     View.OnClickListener BTNs = new View.OnClickListener() {
         @Override
