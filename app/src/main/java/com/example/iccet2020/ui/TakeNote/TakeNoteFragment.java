@@ -157,8 +157,10 @@ public class TakeNoteFragment extends Fragment {
                 }else if (String.valueOf(month).length() == 1)
                 {
                     date = (day + "0" + String.valueOf(month) + year);
-                }else {
+                }else if (String.valueOf(month).length() == 1 && String.valueOf(day).length() == 1){
                     date = ("0" + day + "0" + String.valueOf(month) + year);
+                }else {
+                    date = (day + String.valueOf(month) + year);
                 }
                 date = removePunct2(date);
 
