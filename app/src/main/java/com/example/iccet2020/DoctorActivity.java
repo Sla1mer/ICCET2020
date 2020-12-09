@@ -52,6 +52,7 @@ public class DoctorActivity extends AppCompatActivity {
     private MaterialTextView date;
     private Button btnExit;
     private long time2 = 0;
+    private Shifr shifr = new Shifr();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +99,7 @@ public class DoctorActivity extends AppCompatActivity {
 
                 String choseDoctor2 = chosheDoctor.toLowerCase();
                 myRef = mFirebaseDatabase.getReference("User").child("Запись " + choseDoctor2).child(date.getText().toString());
+
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -120,7 +122,6 @@ public class DoctorActivity extends AppCompatActivity {
 
                     }
                 });
-
 
                 chosheDoctor = chosheDoctor.substring(0, 1).toUpperCase() + chosheDoctor.substring(1).toLowerCase();
                 myRef2 = mFirebaseDatabase.getReference("User").child(chosheDoctor).child(date.getText().toString());
@@ -222,18 +223,22 @@ public class DoctorActivity extends AppCompatActivity {
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
+                String date2 = day + "." + month + "." + year;
+                String m = String.valueOf(month);
+                String d = String.valueOf(day);
+                System.out.println("MONTH " + month);
                 if (String.valueOf(day).length() == 1)
                 {
-                    date.setText(("0" + day + String.valueOf(month) + year));
-                }else if (String.valueOf(month).length() == 1)
-                {
-                    date.setText((day + "0" + String.valueOf(month) + year));
-                }else if (String.valueOf(month).length() == 1 && String.valueOf(day).length() == 1){
-                    date.setText(("0" + day + "0" + String.valueOf(month) + year));
-                }else {
-                    date.setText((day + String.valueOf(month) + year));
+                    d = ("0" + day);
                 }
+
+                if (String.valueOf(month).length() == 1)
+                {
+                    m = ("0" + month);
+                }
+
+                date2 = d + "." + m + "." + year;
+                date.setText(date2);
                 getData(chosheDoctor, date.getText().toString());
                 myAdapter = new MyAdapter(getApplicationContext(), zapicDoctorsList, mChronometer, myRef2, date.getText().toString(), mFirebaseDatabase, chosheDoctor);
                 recyclerView.setAdapter(myAdapter);
@@ -342,6 +347,22 @@ public class DoctorActivity extends AppCompatActivity {
                     zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
                     zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
                     zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+
+                    zapicDoctor.setKabinet(shifr.dehifator(zapicDoctor.getKabinet()));
+                    zapicDoctor.setSnils(shifr.dehifator(zapicDoctor.getSnils()));
+                    zapicDoctor.setData(shifr.dehifator(zapicDoctor.getData()));
+                    zapicDoctor.setDoctor(shifr.dehifator(zapicDoctor.getDoctor()));
+                    zapicDoctor.setKey(shifr.dehifator(zapicDoctor.getKey()));
+                    zapicDoctor.setCoutnChangeTime(shifr.dehifator(zapicDoctor.getCoutnChangeTime()));
+                    zapicDoctor.setSeriaOMS(shifr.dehifator(zapicDoctor.getSeriaOMS()));
+                    zapicDoctor.setPhone(shifr.dehifator(zapicDoctor.getPhone()));
+                    zapicDoctor.setNomerOMS(shifr.dehifator(zapicDoctor.getNomerOMS()));
+                    zapicDoctor.setName(shifr.dehifator(zapicDoctor.getName()));
+                    zapicDoctor.setMiddlename(shifr.dehifator(zapicDoctor.getMiddlename()));
+                    zapicDoctor.setLastname(shifr.dehifator(zapicDoctor.getLastname()));
+                    zapicDoctor.setEmail(shifr.dehifatorEmail(zapicDoctor.getEmail()));
+                    zapicDoctor.setBirthday(shifr.dehifator(zapicDoctor.getBirthday()));
+
                     zapicDoctorsList.add(zapicDoctor);
                     System.out.println(zapicDoctorsList);
                     myAdapter.notifyDataSetChanged();

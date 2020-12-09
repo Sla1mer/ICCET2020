@@ -20,7 +20,8 @@ import androidx.annotation.Nullable;
 
         import com.example.iccet2020.MyAdapter;
         import com.example.iccet2020.R;
-        import com.example.iccet2020.TakeNoteActivity;
+import com.example.iccet2020.Shifr;
+import com.example.iccet2020.TakeNoteActivity;
         import com.example.iccet2020.ZapicDoctor;
         import com.google.android.material.button.MaterialButton;
         import com.google.firebase.auth.FirebaseAuth;
@@ -55,6 +56,7 @@ public class HistoryFragment extends Fragment {
     private FirebaseUser currentUser;
     private Timer timer = new Timer();
     private boolean flag = false;
+    private Shifr shifr = new Shifr();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class HistoryFragment extends Fragment {
                 }
                 date = removePunct2(date);
                 getData(date);
-                historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef);
+                historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef, date);
                 recyclerView.setAdapter(historyAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             }
@@ -124,6 +126,8 @@ public class HistoryFragment extends Fragment {
     {
         myRef = mFirebaseDatabase.getReference("User").child("Запись терапевт").child(date);
         arrayList.clear();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        System.out.println("dasdasdasdas " + currentUser.getEmail());
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -148,7 +152,7 @@ public class HistoryFragment extends Fragment {
                     System.out.println(date);
                     System.out.println(zapicDoctor.getEmail());
 
-                    if (zapicDoctor.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                    if (zapicDoctor.getEmail().equals(shifr.hifr_zezaryaEmail(currentUser.getEmail())))
                     {
                         arrayList.add(zapicDoctor);
                         System.out.println(arrayList);
@@ -190,7 +194,7 @@ public class HistoryFragment extends Fragment {
                     System.out.println(zapicDoctor.getEmail());
 
                     FirebaseUser currentUser = mAuth.getCurrentUser();
-                    if (zapicDoctor.getEmail().equals(currentUser.getEmail()))
+                    if (zapicDoctor.getEmail().equals(shifr.dehifatorEmail(currentUser.getEmail())))
                     {
                         arrayList.add(zapicDoctor);
                         System.out.println(arrayList);
@@ -231,7 +235,7 @@ public class HistoryFragment extends Fragment {
                     System.out.println(date);
                     System.out.println(zapicDoctor.getEmail());
 
-                    if (zapicDoctor.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                    if (zapicDoctor.getEmail().equals(shifr.dehifatorEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())))
                     {
                         arrayList.add(zapicDoctor);
                         System.out.println(arrayList);

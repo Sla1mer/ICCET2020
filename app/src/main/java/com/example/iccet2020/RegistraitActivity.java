@@ -34,6 +34,7 @@ public class RegistraitActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "mAuth";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private Shifr shifr = new Shifr();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -54,15 +55,22 @@ public class RegistraitActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date = day + "." + month + "." + year;
+                String m = String.valueOf(month);
+                String d = String.valueOf(day);
+                System.out.println("MONTH " + month);
                 if (String.valueOf(day).length() == 1)
                 {
-                    date = ("0" + day + "." + String.valueOf(month) + "." + year);
-                }else if (String.valueOf(month).length() == 1)
-                {
-                    date = (day + ".0" + String.valueOf(month) + "." + year);
-                }else {
-                    date = ("0" + day + ".0" + String.valueOf(month) + "." + year);
+                    d = ("0" + day);
                 }
+
+                if (String.valueOf(month).length() == 1)
+                {
+                    m = ("0" + month);
+                }
+
+                date = d + "." + m + "." + year;
+
+
                 data.setText(date);
             }
         };
@@ -116,10 +124,20 @@ public class RegistraitActivity extends AppCompatActivity {
                     String Phone = phone.getText().toString();
                     String seria_oms = seriaOMS.getText().toString();
                     String nomer_oms = nomerOMS.getText().toString();
-
                     String status = "patient";
 
-                    User user = new User(birhtday, email, Name, lastname, middleName, nomer_oms, Phone,
+                    lastname = shifr.hifr_zezarya(lastname);
+                    Name = shifr.hifr_zezarya(Name);
+                    middleName = shifr.hifr_zezarya(middleName);
+                    birhtday = shifr.hifr_zezarya(birhtday);
+                    SNILS = shifr.hifr_zezarya(SNILS);
+                    Phone = shifr.hifr_zezarya(Phone);
+                    seria_oms = shifr.hifr_zezarya(seria_oms);
+                    nomer_oms = shifr.hifr_zezarya(nomer_oms);
+                    status = shifr.hifr_zezarya(status);
+                    String Email = shifr.hifr_zezaryaEmail(email);
+
+                    User user = new User(birhtday, Email, Name, lastname, middleName, nomer_oms, Phone,
                             seria_oms, SNILS, status);
                     mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 

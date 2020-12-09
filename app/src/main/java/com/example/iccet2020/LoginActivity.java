@@ -28,7 +28,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Calendar;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private DatabaseReference mDataBase;
     private String USER_KEY = "User";
+    private Shifr shifr = new Shifr();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     };
+
 
     // Инициализация элементов интерфейса
     private void init()
@@ -111,21 +127,22 @@ public class LoginActivity extends AppCompatActivity {
             mDataBase.child("User").child(firebaseUser.getUid());
             System.out.println(firebaseUser.getUid());
             System.out.println(firebaseUser.getEmail());
-            mDataBase.orderByChild("email").equalTo(firebaseUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(firebaseUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             User user = new User();
                             user.setStatus(dataSnapshot.getValue(User.class).getStatus());
-                            System.out.println("blablabla");
 
-                            if (user.getStatus().equals("patient"))
+                            user.setStatus(shifr.dehifator(user.getStatus()));
+
+                            if (user.getStatus().contains("patient"))
                             {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
-                            }else
-                            {
+                            }
+                            else {
                                 Intent intent = new Intent(getApplicationContext(), DoctorActivity.class);
                                 startActivity(intent);
                             }
@@ -153,16 +170,17 @@ public class LoginActivity extends AppCompatActivity {
             mDataBase.child("User").child(currentUser.getUid());
             System.out.println(currentUser.getUid());
             System.out.println(currentUser.getEmail());
-            mDataBase.orderByChild("email").equalTo(currentUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             User user = new User();
                             user.setStatus(dataSnapshot.getValue(User.class).getStatus());
-                            System.out.println("blablabla");
 
-                            if (user.getStatus().equals("patient"))
+                            user.setStatus(shifr.dehifator(user.getStatus()));
+
+                            if (user.getStatus().contains("patient"))
                             {
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);

@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iccet2020.R;
+import com.example.iccet2020.Shifr;
 import com.example.iccet2020.ZapicDoctor;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.database.DataSnapshot;
@@ -27,12 +28,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     DatabaseReference myRef;
     FirebaseDatabase mFirebaseDatabase;
     private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+    private Shifr shifr = new Shifr();
+    String data = "";
 
-    public HistoryAdapter(Context ct, ArrayList<ZapicDoctor> arrayList, FirebaseDatabase firebaseDatabase, DatabaseReference databaseReference){
+    public HistoryAdapter(Context ct, ArrayList<ZapicDoctor> arrayList, FirebaseDatabase firebaseDatabase, DatabaseReference databaseReference, String data){
         this.context = ct;
         this.arrayList = arrayList;
         myRef = databaseReference;
         mFirebaseDatabase = firebaseDatabase;
+        this.data = data;
     }
 
     @NonNull
@@ -46,16 +50,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ZapicDoctor zapicDoctor = arrayList.get(position);
-        holder.date.setText("Дата: " + arrayList.get(position).getData());
+        holder.date.setText("Дата: " + shifr.dehifator(arrayList.get(position).getData()));
         holder.time.setText("Время: " + arrayList.get(position).getTime());
-        holder.kab.setText("Кабинет: " + arrayList.get(position).getKabinet());
-        holder.doctor.setText("Доктор: " + arrayList.get(position).getDoctor());
+        holder.kab.setText("Кабинет: " + shifr.dehifator(arrayList.get(position).getKabinet()));
+        holder.doctor.setText("Доктор: " + shifr.dehifator(arrayList.get(position).getDoctor()));
+        StringBuilder sb = new StringBuilder(shifr.dehifator(arrayList.get(position).getDoctor()));
+        String doctor = sb.delete(0, 1).toString().toLowerCase();
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String date = removePunct2(zapicDoctor.getData());
-                myRef = mFirebaseDatabase.getReference("User").child("Запись " + zapicDoctor.getDoctor().toLowerCase()).child(date);
+                String date = removePunct2(data);
+                myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date);
                 myRef.orderByChild("time").equalTo(zapicDoctor.getTime()).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -64,7 +70,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
                             for (DataSnapshot datas : snapshot.getChildren())
                             {
                                 String key = datas.getKey();
-                                myRef = mFirebaseDatabase.getReference("User").child("Запись " + zapicDoctor.getDoctor().toLowerCase()).child(date)
+                                myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date)
                                         .child(key);
                                 myRef.removeValue();
                                 arrayList.remove(arrayList.get(position));

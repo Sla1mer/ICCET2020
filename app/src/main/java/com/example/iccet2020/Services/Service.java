@@ -18,6 +18,7 @@ import com.example.iccet2020.DoctorActivity;
 import com.example.iccet2020.MainActivity;
 import com.example.iccet2020.R;
 import com.example.iccet2020.Shedule;
+import com.example.iccet2020.Shifr;
 import com.example.iccet2020.ZapicDoctor;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +41,7 @@ public class Service extends android.app.Service {
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
     private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-
+    private Shifr shifr = new Shifr();
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -52,6 +53,8 @@ public class Service extends android.app.Service {
         time = intent.getStringExtra("time");
         doctor = intent.getStringExtra("doctor");
         snils = intent.getStringExtra("snils");
+        System.out.println(snils + " SNILS");
+        System.out.println(doctor + " DOCTOR");
         date = removePunct2(date);
         System.out.println(snils);
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -59,7 +62,7 @@ public class Service extends android.app.Service {
             public void run() {
                 myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor.toLowerCase()).child(date);
 
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                myRef.orderByChild("snils").equalTo(snils).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
@@ -77,14 +80,17 @@ public class Service extends android.app.Service {
                                     if (lastTime.equals(zapicDoctor.getTime())) {
 
                                     } else {
-                                        if (zapicDoctor.getTime().charAt(0) != '0' && zapicDoctor.getTime().charAt(1) != '1') {
+                                        String secondNum = time.substring(0, 2);
+                                        int s = Integer.parseInt(secondNum);
+                                        System.out.println("OPAAPAPPAPAPA " + s);
+                                        if (s >= 20) {
 
-                                            String bigText = "Запись к " + zapicDoctor.getDoctor().toLowerCase() + "у" + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet() + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
+                                            String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
                                             Intent intent2 = new Intent(context, MainActivity.class);
                                             PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
                                             Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
                                                     .setContentTitle("Iccet2020")
-                                                    .setContentText("Запись к " + zapicDoctor.getDoctor().toLowerCase() + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet() + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.")
+                                                    .setContentText("Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.")
                                                     .setSmallIcon(R.drawable.ic_launcher_background)
                                                     .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                     .setContentIntent(pendingIntent2).build();
@@ -93,12 +99,12 @@ public class Service extends android.app.Service {
                                             System.out.println(zapicDoctor.getTime());
                                             lastTime = zapicDoctor.getTime();
                                         } else {
-                                            String bigText = "Запись к " + zapicDoctor.getDoctor().toLowerCase() + "у" + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet();
+                                            String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet());
                                             Intent intent2 = new Intent(context, MainActivity.class);
                                             PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
                                             Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
                                                     .setContentTitle("Iccet2020")
-                                                    .setContentText("Запись к " + zapicDoctor.getDoctor().toLowerCase() + "у" + "\n" + "Дата: " + zapicDoctor.getData() + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + zapicDoctor.getKabinet())
+                                                    .setContentText("Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()))
                                                     .setSmallIcon(R.drawable.ic_launcher_background)
                                                     .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                     .setContentIntent(pendingIntent2).build();
@@ -134,7 +140,6 @@ public class Service extends android.app.Service {
         startForeground(1, notification2);
         return START_STICKY;
     }
-
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)

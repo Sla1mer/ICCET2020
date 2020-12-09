@@ -35,6 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ArrayList<ZapicDoctor> zapicDoctorLast = new ArrayList<>();
     private ArrayList<ZapicDoctor> zapicDoctorNow = new ArrayList<>();
     private ArrayList<DoctorHelper> arrayListKey = new ArrayList<>();
+    private Shifr shifr = new Shifr();
     String doctor;
 
     public MyAdapter(Context ct, ArrayList<ZapicDoctor> aL, Chronometer mChronometr,
@@ -70,7 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 flag1 = true;
                 flag2 = true;
                 chronometer.stop();
-                myRef = mFirebaseDatabase.getReference("User").child("Запись " + zapicDoctor.getDoctor().toLowerCase()).child(date);
+                myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date);
                 myRef.orderByChild("time").equalTo(zapicDoctor.getTime()).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -79,7 +80,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             for (DataSnapshot datas : snapshot.getChildren())
                             {
                                 String key = datas.getKey();
-                                myRef = mFirebaseDatabase.getReference("User").child("Запись " + zapicDoctor.getDoctor().toLowerCase()).child(date)
+                                myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date)
                                         .child(key);
                                 myRef.removeValue();
                                 notifyDataSetChanged();
@@ -110,7 +111,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         else if (elapsedMillis > 5000 && flag1)
                         {
                             flag1 = false;
-                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + zapicDoctor.getDoctor().toLowerCase()).child(date);
+                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date);
                             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -190,10 +191,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                             notifyDataSetChanged();
                             // если время больше 30 минут
-                        }else if (elapsedMillis > 30000000 && flag2)
-                        {
+                        }else if (elapsedMillis > 1800000 && flag2) {
                             flag2 = false;
-                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + zapicDoctor.getDoctor().toLowerCase()).child(date);
+                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date);
                             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -256,13 +256,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                             shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
                                             shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
                                             String resultTime2 = сalculatingTime(shedule.getTime());
-                                            if (resultTime2.charAt(0) != '2')
-                                            {
-                                                myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
-                                                String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
-                                                System.out.println(date);
-                                                myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
-                                            }
+
+                                            myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
+                                            String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
+                                            System.out.println(date);
+                                            myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
                                         }
                                     }
                                 }
