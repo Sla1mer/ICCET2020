@@ -25,6 +25,7 @@ import com.example.iccet2020.ChangesActivity;
 import com.example.iccet2020.LoginActivity;
 import com.example.iccet2020.MainActivity;
 import com.example.iccet2020.R;
+import com.example.iccet2020.Shifr;
 import com.example.iccet2020.User;
 import com.example.iccet2020.ZapicDoctor;
 import com.google.android.material.textfield.TextInputEditText;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment {
     private String USER_KEY = "User";
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
+    private Shifr shifr = new Shifr();
 
     private Button exit, refresh;
 
@@ -123,7 +125,7 @@ public class HomeFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         mDataBase.child("User").child(currentUser.getUid());
         System.out.println(currentUser.getUid());
-        mDataBase.orderByChild("email").equalTo(currentUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -133,6 +135,10 @@ public class HomeFragment extends Fragment {
                         user.setLastname(dataSnapshot.getValue(User.class).getLastname());
                         user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
 
+                        user.setFirstname(shifr.dehifator(user.getFirstname()));
+                        user.setLastname(shifr.dehifator(user.getLastname()));
+                        user.setMiddlename(shifr.dehifator(user.getMiddlename()));
+
                         String fio = user.getLastname() + " " + user.getFirstname() + " " + user.getMiddlename();
                         user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
                         user.setSnils(dataSnapshot.getValue(User.class).getSnils());
@@ -140,6 +146,16 @@ public class HomeFragment extends Fragment {
                         user.setPhone(dataSnapshot.getValue(User.class).getPhone());
                         user.setSeriaOMS(dataSnapshot.getValue(User.class).getSeriaOMS());
                         user.setNomerOMS(dataSnapshot.getValue(User.class).getNomerOMS());
+
+                        user.setBirhday(shifr.dehifator(user.getBirhday()));
+                        user.setSnils(shifr.dehifator(user.getSnils()));
+                        user.setEmail(shifr.dehifatorEmail(user.getEmail()));
+                        user.setPhone(shifr.dehifator(user.getPhone()));
+                        user.setSeriaOMS(shifr.dehifator(user.getSeriaOMS()));
+                        user.setNomerOMS(shifr.dehifator(user.getNomerOMS()));
+
+                        System.out.println(fio);
+                        System.out.println(user.getBirhday());
 
                         nameOfPerson.setText(fio);
                         data.setText(user.getBirhday());

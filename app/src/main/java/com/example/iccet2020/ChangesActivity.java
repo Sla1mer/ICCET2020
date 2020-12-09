@@ -33,6 +33,7 @@ public class ChangesActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     private TextInputEditText data, email, name, surname, name_of_father, polis_number, phone, polis, snils;
+    private Shifr shifr = new Shifr();
 
 
 
@@ -59,15 +60,21 @@ public class ChangesActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date = day + "." + month + "." + year;
+                String m = String.valueOf(month);
+                String d = String.valueOf(day);
+                System.out.println("MONTH " + month);
                 if (String.valueOf(day).length() == 1)
                 {
-                    date = ("0" + day + "." + String.valueOf(month) + "." + year);
-                }else if (String.valueOf(month).length() == 1)
-                {
-                    date = (day + ".0" + String.valueOf(month) + "." + year);
-                }else {
-                    date = ("0" + day + ".0" + String.valueOf(month) + "." + year);
+                    d = ("0" + day);
                 }
+
+                if (String.valueOf(month).length() == 1)
+                {
+                    m = ("0" + month);
+                }
+
+                date = d + "." + m + "." + year;
+
                 data.setText(date);
             }
         };
@@ -113,42 +120,42 @@ public class ChangesActivity extends AppCompatActivity {
 
                     if (!data.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("birhday").setValue(user.getBirhday());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("birhday").setValue(shifr.hifr_zezarya(user.getBirhday()));
                     }
 
                     if (!name.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("firstname").setValue(user.getFirstname());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("firstname").setValue(shifr.hifr_zezarya(user.getFirstname()));
                     }
 
                     if (!surname.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("lastname").setValue(user.getLastname());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("lastname").setValue(shifr.hifr_zezarya(user.getLastname()));
                     }
 
                     if (!name_of_father.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("middlename").setValue(user.getMiddlename());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("middlename").setValue(shifr.hifr_zezarya(user.getMiddlename()));
                     }
 
                     if (!polis.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("seriaOMS").setValue(user.getSeriaOMS());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("seriaOMS").setValue(shifr.hifr_zezarya(user.getSeriaOMS()));
                     }
 
                     if (!polis_number.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("nomerOMS").setValue(user.getNomerOMS());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("nomerOMS").setValue(shifr.hifr_zezarya(user.getNomerOMS()));
                     }
 
                     if (!phone.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("phone").setValue(user.getPhone());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("phone").setValue(shifr.hifr_zezarya(user.getPhone()));
                     }
 
                     if (!snils.getText().toString().equals(""))
                     {
-                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("snils").setValue(user.getPhone());
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("snils").setValue(shifr.hifr_zezarya(user.getPhone()));
                     }
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
