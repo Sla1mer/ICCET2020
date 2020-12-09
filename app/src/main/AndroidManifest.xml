@@ -14,24 +14,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ChangesActivity"></activity>
+        <activity android:name=".ChangesActivity"
+            android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".DoctorActivity" />
+        <activity android:name=".DoctorActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
-        <activity android:name=".AddShedule" />
+        <activity android:name=".AddShedule"
+            android:screenOrientation="portrait">
 
-        <activity android:name=".RegistraitActivity" />
+        </activity>
+
+        <activity android:name=".RegistraitActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme2">
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ForgetPasswordActivity" />
+        <activity android:name=".ForgetPasswordActivity"
+            android:screenOrientation="portrait">
 
-        <activity android:name=".LoginActivity">
+        </activity>
+
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
