@@ -127,7 +127,6 @@ public class HistoryFragment extends Fragment {
         myRef = mFirebaseDatabase.getReference("User").child("Запись терапевт").child(date);
         arrayList.clear();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        System.out.println("dasdasdasdas " + currentUser.getEmail());
 
         myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
             @Override
