@@ -16,18 +16,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapActivity">
+
+
+        <activity android:name=".ChangesActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".DoctorActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ChangesActivity" />
-        <activity android:name=".DoctorActivity" />
-        <activity android:name=".AddShedule" />
-        <activity android:name=".RegistraitActivity" />
+
+        <activity android:name=".AddShedule"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".RegistraitActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme2" />
-        <activity android:name=".ForgetPasswordActivity" />
-        <activity android:name=".LoginActivity">
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ForgetPasswordActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,10 +60,6 @@
         </activity>
 
         <service android:name=".Services.Service" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBnBwA72FSZcnbwTp9YMedJIjhuOklHUDo" />
 
         <service
             android:name=".Services.FetchAddressIntentService"
