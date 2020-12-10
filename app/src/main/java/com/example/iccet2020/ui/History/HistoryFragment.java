@@ -129,7 +129,7 @@ public class HistoryFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         System.out.println("dasdasdasdas " + currentUser.getEmail());
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -152,12 +152,9 @@ public class HistoryFragment extends Fragment {
                     System.out.println(date);
                     System.out.println(zapicDoctor.getEmail());
 
-                    if (zapicDoctor.getEmail().equals(shifr.hifr_zezaryaEmail(currentUser.getEmail())))
-                    {
-                        arrayList.add(zapicDoctor);
-                        System.out.println(arrayList);
-                        historyAdapter.notifyDataSetChanged();
-                    }
+                    arrayList.add(zapicDoctor);
+                    System.out.println(arrayList);
+                    historyAdapter.notifyDataSetChanged();
                     System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 }
             }
@@ -170,7 +167,7 @@ public class HistoryFragment extends Fragment {
 
         myRef = mFirebaseDatabase.getReference("User").child("Запись хирург").child(date);
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -194,12 +191,9 @@ public class HistoryFragment extends Fragment {
                     System.out.println(zapicDoctor.getEmail());
 
                     FirebaseUser currentUser = mAuth.getCurrentUser();
-                    if (zapicDoctor.getEmail().equals(shifr.dehifatorEmail(currentUser.getEmail())))
-                    {
-                        arrayList.add(zapicDoctor);
-                        System.out.println(arrayList);
-                        historyAdapter.notifyDataSetChanged();
-                    }
+                    arrayList.add(zapicDoctor);
+                    System.out.println(arrayList);
+                    historyAdapter.notifyDataSetChanged();
                     System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 }
             }
@@ -212,7 +206,7 @@ public class HistoryFragment extends Fragment {
 
         myRef = mFirebaseDatabase.getReference("User").child("Запись отоларинголог").child(date);
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -235,12 +229,9 @@ public class HistoryFragment extends Fragment {
                     System.out.println(date);
                     System.out.println(zapicDoctor.getEmail());
 
-                    if (zapicDoctor.getEmail().equals(shifr.dehifatorEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())))
-                    {
-                        arrayList.add(zapicDoctor);
-                        System.out.println(arrayList);
-                        historyAdapter.notifyDataSetChanged();
-                    }
+                    arrayList.add(zapicDoctor);
+                    System.out.println(arrayList);
+                    historyAdapter.notifyDataSetChanged();
                     System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 }
             }
