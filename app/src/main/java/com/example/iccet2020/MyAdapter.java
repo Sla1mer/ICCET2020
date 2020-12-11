@@ -174,11 +174,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                             shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
                                             shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
                                             String resultTime2 = сalculatingTime(shedule.getTime());
-
+                                            String secondNum = resultTime2.substring(0, 2);
+                                            int s = Integer.parseInt(secondNum);
+                                            if (s >= 20){
+                                                myRef2.child(dataSnapshot1.getKey()).removeValue();
+                                            }else {
                                                 myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
                                                 String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
                                                 System.out.println(date);
                                                 myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
+                                            }
                                         }
                                     }
                                 }

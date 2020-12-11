@@ -361,7 +361,7 @@ public class TakeNoteFragment extends Fragment {
                                         Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                                         intent.putExtra("date", date);
                                         intent.putExtra("time", zapicDoctor.getTime());
-                                        intent.putExtra("doctor", "отоларинголог");
+                                        intent.putExtra("doctorO", "отоларинголог");
                                         intent.putExtra("snils", zapicDoctor.getSnils());
                                         getActivity().startService(intent);
                                         getActivity().startService(intent);
@@ -400,7 +400,7 @@ public class TakeNoteFragment extends Fragment {
                                         Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                                         intent.putExtra("date", date);
                                         intent.putExtra("time", zapicDoctor.getTime());
-                                        intent.putExtra("doctor", "терапевт");
+                                        intent.putExtra("doctorT", "терапевт");
                                         intent.putExtra("snils", zapicDoctor.getSnils());
                                         getActivity().startService(intent);
                                     } else if (doctor.equals("Хирург")) {
@@ -438,7 +438,7 @@ public class TakeNoteFragment extends Fragment {
                                         Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                                         intent.putExtra("date", date);
                                         intent.putExtra("time", zapicDoctor.getTime());
-                                        intent.putExtra("doctor", "хирург");
+                                        intent.putExtra("doctorX", "хирург");
                                         intent.putExtra("snils", zapicDoctor.getSnils());
                                         getActivity().startService(intent);
                                     }
