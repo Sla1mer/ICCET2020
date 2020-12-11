@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ChangesActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -17,158 +14,275 @@
             >
 
             <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="363dp"
-                android:layout_height="625dp"
+                android:id="@+id/linearLayout"
+                android:layout_width="352dp"
+                android:layout_height="639dp"
                 android:background="@drawable/back"
                 android:orientation="vertical"
+                android:padding="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.8">
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
                     android:text="Редактирование профиля"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputEditText
-
-                    android:id="@+id/surname"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:hint="@string/surname"
-                    android:inputType="text"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/name"
-                    android:inputType="text"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name_of_father"
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/surname"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/surname"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/name_of_father"
-                    android:inputType="text"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/data"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/name"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/data"
-                    android:inputType="text"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/snils"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name_of_father"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:hint="@string/name_of_father"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/snils"
-                    android:inputType="number"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/data"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:hint="@string/data"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phone"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/snils"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:hint="@string/snils"
+                        android:inputType="number"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/phone"
-                    android:inputType="number"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/polis"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/polis"
-                    android:inputType="number"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/polis_number"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/polis_number"
-                    android:inputType="number"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/gray"
-                    android:textColorHighlight="@color/gray"
-                    android:textColorHint="@color/gray" />
+                    android:background="@drawable/rounded">
 
-                <com.google.android.material.button.MaterialButton
-                    app:backgroundTint="#3d7894"
-                    android:id="@+id/changedBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:text="Изменить"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:hint="@string/phone"
+                        android:inputType="number"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/seriaOMS"
+                        android:layout_width="290dp"
+                        android:layout_height="34dp"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/seriaOMS"
+                        android:inputType="number"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nomerOMS"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@android:color/transparent"
+                        android:hint="@string/nomerOMS"
+                        android:inputType="number"
+                        android:paddingTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.355"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.02" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/changedBtn"
+                android:layout_width="248dp"
+                android:layout_height="38dp"
+                android:background="@drawable/btn"
+                android:text="Изменить"
+                app:backgroundTint="#3d7894"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.9" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
