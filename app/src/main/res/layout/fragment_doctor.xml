@@ -63,12 +63,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/takeDate2"
-        android:layout_width="170dp"
-        android:layout_height="52dp"
+        android:layout_width="218dp"
+        android:layout_height="66dp"
         android:layout_marginTop="68dp"
         android:layout_weight="1"
         android:text="закончить прием"
-        android:textSize="10sp"
+        android:textSize="15dp"
         app:backgroundTint="#3d7894"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
