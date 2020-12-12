@@ -12,12 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--    >>>>>>> b23aba14c5b89a4334b820400da3b74869780312-->
-<!--    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--    app:layout_constraintLeft_toLeftOf="parent"-->
-<!--    app:layout_constraintRight_toRightOf="parent"-->
-<!--    app:layout_constraintTop_toTopOf="parent"-->
-<!--    app:layout_constraintVertical_bias="0">-->
+
 
         <LinearLayout
             android:id="@+id/linearLayout"

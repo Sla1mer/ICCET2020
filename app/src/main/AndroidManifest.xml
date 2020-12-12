@@ -16,42 +16,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity android:name=".ChangesActivity"
+        <activity
+            android:name=".ChangesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DoctorActivity"
             android:screenOrientation="portrait"></activity>
-
-        <activity android:name=".DoctorActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".AddShedule"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".RegistraitActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+        <activity
+            android:name=".AddShedule"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".RegistraitActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2"></activity>
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".LoginActivity"
             android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity android:name=".ForgetPasswordActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-
-        <activity android:name=".LoginActivity"
-            android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,11 +47,9 @@
         </activity>
 
         <service android:name=".Services.Service" />
-
         <service
             android:name=".Services.FetchAddressIntentService"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -35,7 +35,7 @@
                 android:layout_width="380dp"
                 android:layout_height="705dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/back"
+                android:background="@drawable/seriy_fon"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -56,7 +56,7 @@
                     app:layout_constraintHorizontal_bias="0.363"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.162">
+                    app:layout_constraintVertical_bias="0.119">
 
 
                     <TextView
@@ -77,7 +77,7 @@
                     app:layout_constraintHorizontal_bias="0.516"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.317">
+                    app:layout_constraintVertical_bias="0.277">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -100,10 +100,10 @@
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.542"
+                    app:layout_constraintHorizontal_bias="0.457"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.402">
+                    app:layout_constraintVertical_bias="0.368">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -127,9 +127,10 @@
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.527"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.478">
+                    app:layout_constraintVertical_bias="0.448">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,10 +155,10 @@
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.575"
+                    app:layout_constraintHorizontal_bias="0.515"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.559">
+                    app:layout_constraintVertical_bias="0.529">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -178,15 +179,15 @@
 
                 <LinearLayout
                     android:id="@+id/linearLayout8"
-                    android:layout_width="345dp"
-                    android:layout_height="38dp"
+                    android:layout_width="347dp"
+                    android:layout_height="71dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.6"
+                    app:layout_constraintHorizontal_bias="0.515"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.637">
+                    app:layout_constraintVertical_bias="0.645">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -206,12 +207,12 @@
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
-                    android:layout_width="343dp"
+                    android:layout_width="351dp"
                     android:layout_height="67dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.621"
+                    app:layout_constraintHorizontal_bias="0.586"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.744">
