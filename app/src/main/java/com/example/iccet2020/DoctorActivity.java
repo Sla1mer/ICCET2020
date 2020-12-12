@@ -53,6 +53,7 @@ public class DoctorActivity extends AppCompatActivity {
     private Button btnExit;
     private long time2 = 0;
     private Shifr shifr = new Shifr();
+    private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class DoctorActivity extends AppCompatActivity {
                 mChronometer.stop();
 
                 String choseDoctor2 = chosheDoctor.toLowerCase();
-                myRef = mFirebaseDatabase.getReference("User").child("Запись " + choseDoctor2).child(date.getText().toString());
+                myRef = mFirebaseDatabase.getReference("User").child("Запись " + choseDoctor2).child(removePunct2(date.getText().toString()));
 
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -124,7 +125,7 @@ public class DoctorActivity extends AppCompatActivity {
                 });
 
                 chosheDoctor = chosheDoctor.substring(0, 1).toUpperCase() + chosheDoctor.substring(1).toLowerCase();
-                myRef2 = mFirebaseDatabase.getReference("User").child(chosheDoctor).child(date.getText().toString());
+                myRef2 = mFirebaseDatabase.getReference("User").child(chosheDoctor).child(removePunct2(date.getText().toString()));
                 myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -223,6 +224,7 @@ public class DoctorActivity extends AppCompatActivity {
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
                 String date2 = day + "." + month + "." + year;
                 String m = String.valueOf(month);
                 String d = String.valueOf(day);
@@ -264,6 +266,17 @@ public class DoctorActivity extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+    public static String removePunct2(String str) {
+        StringBuilder result = new StringBuilder(str.length());
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (PUNCT.indexOf(c) < 0) {
+                result.append(c);
+            }
+        }
+        return result.toString();
     }
 
     private String сalculatingTime(String time) {
@@ -324,6 +337,7 @@ public class DoctorActivity extends AppCompatActivity {
 
     private void getData(String pathDoctor, String date)
     {
+        date = removePunct2(date);
         myRef2 = mFirebaseDatabase.getReference("User").child("Запись " + pathDoctor).child(date);
 
         myRef2.addValueEventListener(new ValueEventListener() {

@@ -312,6 +312,7 @@ public class TakeNoteFragment extends Fragment {
                                     String date = shedule.getDate();
                                     String time = shedule.getTime();
                                     date = removePunct2(date);
+                                    System.out.println(date + "DATE PLK");
 
                                     ZapicDoctor zapicDoctor = null;
 
@@ -360,7 +361,7 @@ public class TakeNoteFragment extends Fragment {
                                         });
                                         Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                                         intent.putExtra("date", date);
-                                        intent.putExtra("time", zapicDoctor.getTime());
+                                        intent.putExtra("timeO", zapicDoctor.getTime());
                                         intent.putExtra("doctorO", "отоларинголог");
                                         intent.putExtra("snils", zapicDoctor.getSnils());
                                         getActivity().startService(intent);
@@ -399,7 +400,7 @@ public class TakeNoteFragment extends Fragment {
                                         });
                                         Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                                         intent.putExtra("date", date);
-                                        intent.putExtra("time", zapicDoctor.getTime());
+                                        intent.putExtra("timeT", zapicDoctor.getTime());
                                         intent.putExtra("doctorT", "терапевт");
                                         intent.putExtra("snils", zapicDoctor.getSnils());
                                         getActivity().startService(intent);
@@ -437,7 +438,7 @@ public class TakeNoteFragment extends Fragment {
                                         });
                                         Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
                                         intent.putExtra("date", date);
-                                        intent.putExtra("time", zapicDoctor.getTime());
+                                        intent.putExtra("timeX", zapicDoctor.getTime());
                                         intent.putExtra("doctorX", "хирург");
                                         intent.putExtra("snils", zapicDoctor.getSnils());
                                         getActivity().startService(intent);

@@ -33,8 +33,9 @@ public class Service extends android.app.Service {
 
     private Timer timer = new Timer();
     private Context context = this;
-    private String lastTime = "";
-    private String time = "";
+    private String timeT = "";
+    private String timeX = "";
+    private String timeO = "";
     private String snils = "";
     private String date = "";
     private String doctorT = "";
@@ -51,8 +52,9 @@ public class Service extends android.app.Service {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         date = intent.getStringExtra("date");
-        lastTime = intent.getStringExtra("time");
-        time = intent.getStringExtra("time");
+        timeT = intent.getStringExtra("timeT");
+        timeX = intent.getStringExtra("timeX");
+        timeO = intent.getStringExtra("timeO");
         doctorT = intent.getStringExtra("doctorT");
         doctorX = intent.getStringExtra("doctorX");
         doctorO = intent.getStringExtra("doctorO");
@@ -62,7 +64,7 @@ public class Service extends android.app.Service {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (!doctorO.equals(""))
+                if (doctorO != null)
                 {
                     myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctorO.toLowerCase()).child(date);
 
@@ -81,14 +83,15 @@ public class Service extends android.app.Service {
                                     System.out.println(zapicDoctor.getTime());
 
                                     if (zapicDoctor.getSnils().equals(snils)) {
-                                        if (lastTime.equals(zapicDoctor.getTime())) {
+                                        if (timeO.equals(zapicDoctor.getTime())) {
 
                                         } else {
-                                            String secondNum = time.substring(0, 2);
+                                            String doctorq = shifr.dehifator(zapicDoctor.getDoctor());
+                                            String secondNum = timeO.substring(0, 2);
                                             int s = Integer.parseInt(secondNum);
                                             if (s >= 20) {
                                                     
-                                                String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
+                                                String bigText = "Запись к " + doctorq.toLowerCase() + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
                                                 Intent intent2 = new Intent(context, MainActivity.class);
                                                 PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
                                                 Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
@@ -98,11 +101,11 @@ public class Service extends android.app.Service {
                                                         .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                         .setContentIntent(pendingIntent2).build();
                                                 startForeground(1, notification2);
-                                                System.out.println(lastTime);
+                                                System.out.println(timeO);
                                                 System.out.println(zapicDoctor.getTime());
-                                                lastTime = zapicDoctor.getTime();
+                                                timeO = zapicDoctor.getTime();
                                             } else {
-                                                String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet());
+                                                String bigText = "Запись к " + doctorq.toLowerCase() + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet());
                                                 Intent intent2 = new Intent(context, MainActivity.class);
                                                 PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
                                                 Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
@@ -112,9 +115,9 @@ public class Service extends android.app.Service {
                                                         .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                         .setContentIntent(pendingIntent2).build();
                                                 startForeground(1, notification2);
-                                                System.out.println(lastTime);
+                                                System.out.println(timeO);
                                                 System.out.println(zapicDoctor.getTime());
-                                                lastTime = zapicDoctor.getTime();
+                                                timeO = zapicDoctor.getTime();
                                             }
                                         }
                                     }else {
@@ -131,7 +134,7 @@ public class Service extends android.app.Service {
                     });
                 }
 
-                if (!doctorT.equals(""))
+                if (doctorT != null)
                 {
                     myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctorT.toLowerCase()).child(date);
 
@@ -150,40 +153,40 @@ public class Service extends android.app.Service {
                                     System.out.println(zapicDoctor.getTime());
 
                                     if (zapicDoctor.getSnils().equals(snils)) {
-                                        if (lastTime.equals(zapicDoctor.getTime())) {
+                                        if (timeT.equals(zapicDoctor.getTime())) {
 
                                         } else {
-                                            String secondNum = time.substring(0, 2);
+                                            String secondNum = timeT.substring(0, 2);
                                             int s = Integer.parseInt(secondNum);
+                                            String doctorq = shifr.dehifator(zapicDoctor.getDoctor());
                                             if (s >= 20) {
-
-                                                String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
+                                                String bigText = "Запись к " + doctorq.toLowerCase() + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
                                                 Intent intent2 = new Intent(context, MainActivity.class);
                                                 PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
-                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId2")
+                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
                                                         .setContentTitle("Iccet2020")
                                                         .setContentText("Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.")
                                                         .setSmallIcon(R.drawable.ic_launcher_background)
                                                         .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                         .setContentIntent(pendingIntent2).build();
                                                 startForeground(1, notification2);
-                                                System.out.println(lastTime);
+                                                System.out.println(timeT);
                                                 System.out.println(zapicDoctor.getTime());
-                                                lastTime = zapicDoctor.getTime();
+                                                timeT = zapicDoctor.getTime();
                                             } else {
-                                                String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet());
+                                                String bigText = "Запись к " + doctorq.toLowerCase() + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet());
                                                 Intent intent2 = new Intent(context, MainActivity.class);
                                                 PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
-                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId2")
+                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
                                                         .setContentTitle("Iccet2020")
                                                         .setContentText("Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()))
                                                         .setSmallIcon(R.drawable.ic_launcher_background)
                                                         .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                         .setContentIntent(pendingIntent2).build();
-                                                startForeground(1, notification2);
-                                                System.out.println(lastTime);
+                                                startForeground(2, notification2);
+                                                System.out.println(timeT);
                                                 System.out.println(zapicDoctor.getTime());
-                                                lastTime = zapicDoctor.getTime();
+                                                timeT = zapicDoctor.getTime();
                                             }
                                         }
                                     }else {
@@ -200,7 +203,7 @@ public class Service extends android.app.Service {
                     });
                 }
 
-                if (!doctorX.equals(""))
+                if (doctorX != null)
                 {
                     myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctorX.toLowerCase()).child(date);
 
@@ -219,40 +222,41 @@ public class Service extends android.app.Service {
                                     System.out.println(zapicDoctor.getTime());
 
                                     if (zapicDoctor.getSnils().equals(snils)) {
-                                        if (lastTime.equals(zapicDoctor.getTime())) {
+                                        if (timeX.equals(zapicDoctor.getTime())) {
 
                                         } else {
-                                            String secondNum = time.substring(0, 2);
+                                            String doctorq = shifr.dehifator(zapicDoctor.getDoctor());
+                                            String secondNum = timeX.substring(0, 2);
                                             int s = Integer.parseInt(secondNum);
                                             if (s >= 20) {
 
-                                                String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
+                                                String bigText = "Запись к " + doctorq.toLowerCase() + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.";
                                                 Intent intent2 = new Intent(context, MainActivity.class);
                                                 PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
-                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId3")
+                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
                                                         .setContentTitle("Iccet2020")
                                                         .setContentText("Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()) + "\n" + "К сожалению, приём задерживается. Доктор обязательно вас примет. Если для вас это не удобно, вы можете отменить приём и записаться на другую дату.")
                                                         .setSmallIcon(R.drawable.ic_launcher_background)
                                                         .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                         .setContentIntent(pendingIntent2).build();
                                                 startForeground(1, notification2);
-                                                System.out.println(lastTime);
+                                                System.out.println(timeX);
                                                 System.out.println(zapicDoctor.getTime());
-                                                lastTime = zapicDoctor.getTime();
+                                                timeX = zapicDoctor.getTime();
                                             } else {
-                                                String bigText = "Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet());
+                                                String bigText = "Запись к " + doctorq.toLowerCase() + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet());
                                                 Intent intent2 = new Intent(context, MainActivity.class);
                                                 PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
-                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId3")
+                                                Notification notification2 = new NotificationCompat.Builder(context, "ChannelId1")
                                                         .setContentTitle("Iccet2020")
                                                         .setContentText("Запись к " + shifr.dehifator(zapicDoctor.getDoctor().toLowerCase()) + "у" + "\n" + "Дата: " + shifr.dehifator(zapicDoctor.getData()) + "\n" + "Время: " + zapicDoctor.getTime() + "\n" + "Кабинет: " + shifr.dehifator(zapicDoctor.getKabinet()))
                                                         .setSmallIcon(R.drawable.ic_launcher_background)
                                                         .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
                                                         .setContentIntent(pendingIntent2).build();
-                                                startForeground(1, notification2);
-                                                System.out.println(lastTime);
+                                                startForeground(3, notification2);
+                                                System.out.println(timeX);
                                                 System.out.println(zapicDoctor.getTime());
-                                                lastTime = zapicDoctor.getTime();
+                                                timeX = zapicDoctor.getTime();
                                             }
                                         }
                                     }else {
