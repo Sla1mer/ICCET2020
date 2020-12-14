@@ -23,20 +23,22 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<ZapicDoctor> arrayList;
-    Chronometer chronometer;
-    DatabaseReference myRef;
-    DatabaseReference myRef2;
-    String date;
-    FirebaseDatabase mFirebaseDatabase;
+    private Context context;
+    private ArrayList<ZapicDoctor> arrayList;
+    private Chronometer chronometer;
+    private DatabaseReference myRef;
+    private DatabaseReference myRef2;
+    private DatabaseReference myRef3;
+    private String date;
+    private FirebaseDatabase mFirebaseDatabase;
     private boolean flag1 = true;
     private boolean flag2 = true;
     private ArrayList<ZapicDoctor> zapicDoctorLast = new ArrayList<>();
     private ArrayList<ZapicDoctor> zapicDoctorNow = new ArrayList<>();
     private ArrayList<DoctorHelper> arrayListKey = new ArrayList<>();
     private Shifr shifr = new Shifr();
-    String doctor;
+    private String doctor;
+    private long time = 0;
 
     public MyAdapter(Context ct, ArrayList<ZapicDoctor> aL, Chronometer mChronometr,
                      DatabaseReference databaseReference, String date1, FirebaseDatabase firebaseDatabase,
@@ -84,7 +86,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 flag1 = true;
                 flag2 = true;
                 chronometer.stop();
-                myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date);
+                if (time != 0){
+                    myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(date).child(zapicDoctor.getTime());
+                    CalculatingTimeSr calculatingTimeSr = new CalculatingTimeSr(shifr.hifr_zezarya(date), shifr.hifr_zezarya(String.valueOf(time)));
+                    myRef3.setValue(calculatingTimeSr);
+                }
+
+                String q = shifr.dehifator(zapicDoctor.getDoctor());
+                String q1 = q.substring(1);
+                myRef = mFirebaseDatabase.getReference("User").child("Запись " + q1.toLowerCase()).child(date);
                 myRef.orderByChild("time").equalTo(zapicDoctor.getTime()).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,7 +103,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             for (DataSnapshot datas : snapshot.getChildren())
                             {
                                 String key = datas.getKey();
-                                myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date)
+                                myRef = mFirebaseDatabase.getReference("User").child("Запись " + q1.toLowerCase()).child(date)
                                         .child(key);
                                 myRef.removeValue();
                                 notifyDataSetChanged();
@@ -116,6 +126,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         long elapsedMillis = SystemClock.elapsedRealtime()
                                 - chronometer.getBase();
 
+                        time = elapsedMillis / 60000;
+
                         if (elapsedMillis > 1000 && elapsedMillis < 10000)
                         {
                             Toast.makeText(context, "Время приёма заканчивается", Toast.LENGTH_SHORT).show();
@@ -124,7 +136,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         else if (elapsedMillis > 5000 && flag1)
                         {
                             flag1 = false;
-                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date);
+                            String q = shifr.dehifator(zapicDoctor.getDoctor());
+                            String q1 = q.substring(1);
+                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + q1.toLowerCase()).child(date);
                             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -171,10 +185,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                                 }
                             });
-
-
-                            doctor = doctor.substring(0, 1).toUpperCase() + doctor.substring(1).toLowerCase();
-                            myRef2 = mFirebaseDatabase.getReference("User").child(doctor).child(date);
+                            
+                            myRef2 = mFirebaseDatabase.getReference("User").child(q1).child(date);
                             myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -211,7 +223,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             // если время больше 30 минут
                         }else if (elapsedMillis > 1800000 && flag2) {
                             flag2 = false;
-                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date);
+                            String q = shifr.dehifator(zapicDoctor.getDoctor());
+                            String q1 = q.substring(1);
+                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + q1.toLowerCase()).child(date);
                             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -259,9 +273,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                 }
                             });
 
-
-                            doctor = doctor.substring(0, 1).toUpperCase() + doctor.substring(1).toLowerCase();
-                            myRef2 = mFirebaseDatabase.getReference("User").child(doctor).child(date);
+                            myRef2 = mFirebaseDatabase.getReference("User").child(q1).child(date);
                             myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -274,11 +286,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                             shedule.setDate(dataSnapshot1.getValue(Shedule.class).getDate());
                                             shedule.setTime(dataSnapshot1.getValue(Shedule.class).getTime());
                                             String resultTime2 = сalculatingTime(shedule.getTime());
-
-                                            myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
-                                            String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
-                                            System.out.println(date);
-                                            myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
+                                            String secondNum = resultTime2.substring(0, 2);
+                                            int s = Integer.parseInt(secondNum);
+                                            if (s >= 20){
+                                                myRef2.child(dataSnapshot1.getKey()).removeValue();
+                                            }else {
+                                                myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
+                                                String dateFinaly = date.substring(0, 2) + "." + date.substring(2, 4) + "." + date.substring(4);
+                                                System.out.println(date);
+                                                myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
+                                            }
                                         }
                                     }
                                 }

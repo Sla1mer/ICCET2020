@@ -49,7 +49,7 @@ public class ChangesActivity extends AppCompatActivity {
         name_of_father = findViewById(R.id.name_of_father);
         polis_number = findViewById(R.id.polis_number);
         phone = findViewById(R.id.phone);
-        polis = findViewById(R.id.polis);
+        polis = findViewById(R.id.seriaOMS);
         snils = findViewById(R.id.snils);
         mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
 
