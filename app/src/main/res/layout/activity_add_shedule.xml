@@ -25,14 +25,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Дата"
+            android:hint="Номер месяца"
             android:id="@+id/date"/>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="Время"
-            android:id="@+id/time"/>
 
         <com.google.android.material.button.MaterialButton
             app:backgroundTint="#3d7894"

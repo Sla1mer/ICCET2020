@@ -338,7 +338,8 @@ public class DoctorActivity extends AppCompatActivity {
     private void getData(String pathDoctor, String date)
     {
         date = removePunct2(date);
-        myRef2 = mFirebaseDatabase.getReference("User").child("Запись " + pathDoctor).child(date);
+        System.out.println(date + " DAAAAAATE");
+        myRef2 = mFirebaseDatabase.getReference("User").child("Запись " + pathDoctor.toLowerCase()).child(date);
 
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override

@@ -83,15 +83,21 @@ public class HistoryFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 arrayList.clear();
+                String date = day + "." + month + "." + year;
+                String m = String.valueOf(month);
+                String d = String.valueOf(day);
+                System.out.println("MONTH " + month);
                 if (String.valueOf(day).length() == 1)
                 {
-                    date = ("0" + day + String.valueOf(month) + year);
-                }else if (String.valueOf(month).length() == 1)
-                {
-                    date = (day + "0" + String.valueOf(month) + year);
-                }else {
-                    date = ("0" + day + "0" + String.valueOf(month) + year);
+                    d = ("0" + day);
                 }
+
+                if (String.valueOf(month).length() == 1)
+                {
+                    m = ("0" + month);
+                }
+
+                date = d + "." + m + "." + year;
                 date = removePunct2(date);
                 getData(date);
                 historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef, date);

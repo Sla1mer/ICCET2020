@@ -9,6 +9,9 @@ public class CalculatingTimeSr {
         this.date = date;
     }
 
+    public CalculatingTimeSr() {
+    }
+
     public String getDate() {
         return date;
     }

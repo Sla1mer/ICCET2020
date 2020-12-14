@@ -152,18 +152,22 @@ public class TakeNoteFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
+                String date2 = day + "." + month + "." + year;
+                String m = String.valueOf(month);
+                String d = String.valueOf(day);
+                System.out.println("MONTH " + month);
                 if (String.valueOf(day).length() == 1)
                 {
-                    date = ("0" + day + String.valueOf(month) + year);
-                }else if (String.valueOf(month).length() == 1)
-                {
-                    date = (day + "0" + String.valueOf(month) + year);
-                }else if (String.valueOf(month).length() == 1 && String.valueOf(day).length() == 1){
-                    date = ("0" + day + "0" + String.valueOf(month) + year);
-                }else {
-                    date = (day + String.valueOf(month) + year);
+                    d = ("0" + day);
                 }
-                date = removePunct2(date);
+
+                if (String.valueOf(month).length() == 1)
+                {
+                    m = ("0" + month);
+                }
+
+                date2 = d + "." + m + "." + year;
+                date = removePunct2(date2);
 
                 System.out.println(date + " dasqwepqweqw");
                 System.out.println(chosheDoctor + " dasqwepqweqw");

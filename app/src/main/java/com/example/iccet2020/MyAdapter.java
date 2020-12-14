@@ -1,6 +1,7 @@
 package com.example.iccet2020;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Shifr shifr = new Shifr();
     private String doctor;
     private long time = 0;
+    boolean flag4 = true;
+    int timeBr = 0;
 
     public MyAdapter(Context ct, ArrayList<ZapicDoctor> aL, Chronometer mChronometr,
                      DatabaseReference databaseReference, String date1, FirebaseDatabase firebaseDatabase,
@@ -80,20 +83,88 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.fio.setText("ФИО: " + zapicDoctor.getLastname() + " " +
                 zapicDoctor.getName() + " " + zapicDoctor.getMiddlename());
          holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 date = removePunct2(date);
                 flag1 = true;
                 flag2 = true;
                 chronometer.stop();
-                if (time != 0){
-                    myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(date).child(zapicDoctor.getTime());
-                    CalculatingTimeSr calculatingTimeSr = new CalculatingTimeSr(shifr.hifr_zezarya(date), shifr.hifr_zezarya(String.valueOf(time)));
-                    myRef3.setValue(calculatingTimeSr);
-                }
-
+                flag4 = true;
                 String q = shifr.dehifator(zapicDoctor.getDoctor());
                 String q1 = q.substring(1);
+                System.out.println(q1 + " pfvmlfpdofkvjkofdkmvkfl,c v");
+                myRef3 = mFirebaseDatabase.getReference("User").child("srednTime");
+                myRef3.orderByChild(q1).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            for (DataSnapshot snapshot1 : snapshot.getChildren())
+                            {
+                                String br =  snapshot1.getValue(String.class);
+                                String br1 = shifr.dehifator(br);
+                                br1 = br1.substring(1);
+                                timeBr = Integer.parseInt(br1);
+                                System.out.println(timeBr + " TIME BR");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                if (time != 0 && flag4){
+                    myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(q1).child(date).child(zapicDoctor.getTime());
+                    CalculatingTimeSr calculatingTimeSr = new CalculatingTimeSr(shifr.hifr_zezarya(date), shifr.hifr_zezarya(String.valueOf(time)));
+                    myRef3.setValue(calculatingTimeSr);
+
+                    flag4 = true;
+                    myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(q1).child("srTime");
+                    myRef3.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists() && flag4) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    SrTime srTime = new SrTime();
+                                    srTime.setCount(dataSnapshot.getValue(String.class));
+                                    srTime.setTime(dataSnapshot.getValue(String.class));
+                                    System.out.println("adasdasdasfqwfqw" + srTime.getTime());
+
+                                    String t = shifr.dehifator(srTime.getTime());
+                                    String c = shifr.dehifator(srTime.getCount());
+                                    t = t.substring(1);
+                                    c = c.substring(1);
+                                    int sr = Integer.parseInt(t);
+                                    int sc = Integer.parseInt(c);
+                                    String plusTime = shifr.dehifator(calculatingTimeSr.getTime());
+                                    plusTime = plusTime.substring(1);
+                                    sr = sr + Integer.parseInt(plusTime);
+                                    String sq = String.valueOf(sr);
+                                    SrTime srTime2 = new SrTime();
+                                    srTime2.setTime(shifr.hifr_zezarya(sq));
+
+                                    sc = sc + 1;
+                                    String cq = String.valueOf(sc);
+                                    srTime2.setCount(shifr.hifr_zezarya(cq));
+                                    myRef3.setValue(srTime2);
+                                    myRef3.onDisconnect();
+                                    flag4 = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+            }
+
                 myRef = mFirebaseDatabase.getReference("User").child("Запись " + q1.toLowerCase()).child(date);
                 myRef.orderByChild("time").equalTo(zapicDoctor.getTime()).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -138,6 +209,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             flag1 = false;
                             String q = shifr.dehifator(zapicDoctor.getDoctor());
                             String q1 = q.substring(1);
+                            System.out.println(q1 + " dasgbghnbghbng");
+                            System.out.println(date + " dasgbghnbghbng");
                             myRef = mFirebaseDatabase.getReference("User").child("Запись " + q1.toLowerCase()).child(date);
                             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -168,13 +241,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                                     zapicDoctor.getSeriaOMS(), zapicDoctor.getNomerOMS(), zapicDoctor.getDoctor(),
                                                     zapicDoctor.getData(), resultTime, zapicDoctor.getKabinet(), zapicDoctor.getCoutnChangeTime(), zapicDoctor.getKey());
 
-                                        myRef.child(zapicDoctor2.getKey()).child("time").setValue(resultTime);
-                                        char resultDoctor = zapicDoctor2.getDoctor().charAt(0);
-                                        String resultDoctor2 = String.valueOf(resultDoctor);
-                                        byte index = (byte) zapicDoctor2.getDoctor().length();
-                                        String finishDoctor = resultDoctor2.toUpperCase() + zapicDoctor2.getDoctor().substring(1, index);
-                                        doctor = finishDoctor;
-                                        doctor = doctor.substring(0, 1).toUpperCase() + doctor.substring(1).toLowerCase();
+                                            myRef = mFirebaseDatabase.getReference("User").child("Запись " + q1.toLowerCase()).child(date).child(zapicDoctor2.getKey()).child("time");
+                                            myRef.setValue(resultTime);
+                                            System.out.println(resultTime + " resulttime");
+                                            char resultDoctor = zapicDoctor2.getDoctor().charAt(0);
+                                            String resultDoctor2 = String.valueOf(resultDoctor);
+                                            byte index = (byte) zapicDoctor2.getDoctor().length();
+                                            String finishDoctor = resultDoctor2.toUpperCase() + zapicDoctor2.getDoctor().substring(1, index);
+                                            doctor = finishDoctor;
+                                            doctor = doctor.substring(0, 1).toUpperCase() + doctor.substring(1).toLowerCase();
 
                                         }
                                     }
@@ -185,7 +260,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                                 }
                             });
-                            
+
                             myRef2 = mFirebaseDatabase.getReference("User").child(q1).child(date);
                             myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -340,7 +415,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         String timeHour = time.substring(0, 2);
         String timeMinute = time.substring(3, 5);
 
-        int tMinute = Integer.parseInt(timeMinute) + 15;
+        int tMinute = Integer.parseInt(timeMinute) + timeBr;
 
         if (tMinute > 59)
         {

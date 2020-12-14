@@ -47,7 +47,7 @@ public class ChangesActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         surname = findViewById(R.id.surname);
         name_of_father = findViewById(R.id.name_of_father);
-        polis_number = findViewById(R.id.polis_number);
+        polis_number = findViewById(R.id.nomerOMS);
         phone = findViewById(R.id.phone);
         polis = findViewById(R.id.seriaOMS);
         snils = findViewById(R.id.snils);
