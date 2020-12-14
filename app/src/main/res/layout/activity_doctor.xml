@@ -9,51 +9,66 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.93"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
+        app:layout_constraintVertical_bias="0.93">
 
-        <com.google.android.material.button.MaterialButton
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/takeDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="Выбрать дату"
+                android:textSize="10sp"
+                app:backgroundTint="#3d7894" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/startTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Отойти"
+                android:textSize="10sp"
+                app:backgroundTint="#3d7894"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.935" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/stopTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Остановить таймер"
+                android:textSize="10sp"
+                app:backgroundTint="#3d7894"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.935" />
+
+        </LinearLayout>
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выбрать дату"
-            android:id="@+id/takeDate"
+            android:id="@+id/addNoteBtn"
+            android:text="Добавить запись"
+            android:textSize="10sp"
             app:backgroundTint="#3d7894"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:textSize="10sp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.935"
-            android:text="Отойти"
-            android:id="@+id/startTimer"
-            app:backgroundTint="#3d7894"
-            android:layout_marginRight="10dp"
-            android:textSize="10sp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.935"
-            android:text="Остановить таймер"
-            android:id="@+id/stopTimer"
-            app:backgroundTint="#3d7894"
-            android:textSize="10sp"/>
-
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton

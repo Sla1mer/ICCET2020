@@ -50,7 +50,7 @@ public class DoctorActivity extends AppCompatActivity {
     private String chosheDoctor = " ";
     private MaterialButton takeDate, startTimer, stopTimer;
     private MaterialTextView date;
-    private Button btnExit;
+    private Button btnExit, addNoteBtn;
     private long time2 = 0;
     private Shifr shifr = new Shifr();
     private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
@@ -73,6 +73,15 @@ public class DoctorActivity extends AppCompatActivity {
         date = findViewById(R.id.date);
         myAdapter = new MyAdapter(this, zapicDoctorsList, mChronometer, myRef2, date.getText().toString(), mFirebaseDatabase, chosheDoctor);
         btnExit = findViewById(R.id.exit);
+        addNoteBtn = findViewById(R.id.addNoteBtn);
+
+        addNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddShedule.class);
+                startActivity(intent);
+            }
+        });
 
         startTimer.setOnClickListener(new View.OnClickListener() {
             @Override

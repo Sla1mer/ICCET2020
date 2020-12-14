@@ -1,6 +1,7 @@
 package com.example.iccet2020;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -42,6 +43,11 @@ public class AddShedule extends AppCompatActivity {
         setContentView(R.layout.activity_add_shedule);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
@@ -1419,5 +1425,23 @@ public class AddShedule extends AppCompatActivity {
             }
         }
         return result.toString();
+    }
+
+    protected OnBackPressedListener onBackPressedListener;
+
+    public interface OnBackPressedListener {
+        void doBack();
+    }
+
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+        this.onBackPressedListener = onBackPressedListener;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (onBackPressedListener != null)
+            onBackPressedListener.doBack();
+        else
+            super.onBackPressed();
     }
 }
