@@ -19,10 +19,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="500dp">
+
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="349dp"
-                android:layout_height="658dp"
+                android:layout_height="620dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/seriy_fon"
@@ -43,11 +44,11 @@
 
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:enabled = "false"
                         android:id="@+id/surname"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:hint="@string/surname"
                         android:paddingTop="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,10 +68,10 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/name"
-                        android:enabled = "false"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:hint="@string/name"
                         android:paddingTop="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,11 +91,11 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/name_of_father"
-                        android:enabled = "false"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-
                         android:background="@android:color/transparent"
+
+                        android:enabled="false"
                         android:hint="@string/name_of_father"
                         android:paddingTop="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -115,11 +116,11 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/data"
-                        android:enabled = "false"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-
                         android:background="@android:color/transparent"
+
+                        android:enabled="false"
                         android:hint="@string/data"
                         android:paddingTop="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -141,8 +142,8 @@
                         android:id="@+id/snils"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:enabled = "false"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:hint="@string/snils"
                         android:inputType="number"
                         android:paddingTop="10dp"
@@ -164,8 +165,8 @@
                         android:id="@+id/email"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:enabled = "false"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
                         android:paddingTop="10dp"
@@ -188,8 +189,8 @@
                         android:id="@+id/phone"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:enabled = "false"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:hint="@string/phone"
                         android:inputType="number"
                         android:paddingTop="10dp"
@@ -212,8 +213,8 @@
                         android:id="@+id/polis"
                         android:layout_width="290dp"
                         android:layout_height="34dp"
-                        android:enabled = "false"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:hint="@string/seriaOMS"
                         android:inputType="number"
                         android:paddingTop="10dp"
@@ -236,8 +237,8 @@
                         android:id="@+id/polis_number"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:enabled = "false"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:hint="@string/nomerOMS"
                         android:inputType="number"
                         android:paddingTop="10dp"
@@ -267,40 +268,53 @@
                     app:backgroundTint="#3d7894" />
 
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/registration_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Записаться"
-                    app:backgroundTint="#3d7894"
-                    app:layout_constraintTop_toTopOf="parent" />
-
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <LinearLayout
         android:layout_width="349dp"
-        android:layout_height="207dp"
+        android:layout_height="221dp"
         android:background="@drawable/seriy_fon"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.95">
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="320dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="320dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.551"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/registration_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Записаться"
+                app:backgroundTint="#3d7894"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.849" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
