@@ -44,10 +44,8 @@ public class AddShedule extends AppCompatActivity {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);

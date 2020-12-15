@@ -69,20 +69,38 @@ public class HistoryFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         materialButton = root.findViewById(R.id.takeDate);
 
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (flag){
-                    getData(date);
-                }
-            }
-        }, 0, 1000);
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                if (flag){
+//                    getData(date, arrayList);
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            historyAdapter.notifyDataSetChanged();
+//                        }
+//                    });
+//                }
+//            }
+//        }, 0, 1000);
+
+        recyclerView = root.findViewById(R.id.recyclerHistory);
+        arrayList = new ArrayList<>();
+
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                if (flag)
+//                {
+//                    getData(date);
+//                }
+//            }
+//        }, 0, 1000);
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                arrayList.clear();
                 String date = day + "." + month + "." + year;
                 String m = String.valueOf(month);
                 String d = String.valueOf(day);
@@ -99,10 +117,15 @@ public class HistoryFragment extends Fragment {
 
                 date = d + "." + m + "." + year;
                 date = removePunct2(date);
+                ArrayList<ZapicDoctor> ar = new ArrayList<>();
                 getData(date);
-                historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef, date);
-                recyclerView.setAdapter(historyAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                if (flag)
+//                {
+//                    historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef, date);
+//                    recyclerView.setAdapter(historyAdapter);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//                    System.out.println(ar + " qwertyuiop[;lkjhgfdsazxcvbnm,.");
+//                }
             }
         };
 
@@ -121,46 +144,46 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-
-        recyclerView = root.findViewById(R.id.recyclerHistory);
-        arrayList = new ArrayList<>();
-
         return root;
     }
 
     private void getData(String date)
     {
-        myRef = mFirebaseDatabase.getReference("User").child("Запись терапевт").child(date);
         arrayList.clear();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        myRef = mFirebaseDatabase.getReference("User").child("Запись терапевт").child(date);
 
         myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ZapicDoctor zapicDoctor = new ZapicDoctor();
-                    zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
-                    zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
-                    zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
-                    zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
-                    zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
-                    zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
-                    zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
-                    zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
-                    zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
-                    zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
-                    zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
-                    zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
-                    zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
-                    zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
-                    zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
-                    System.out.println(date);
-                    System.out.println(zapicDoctor.getEmail());
+                if (snapshot.exists())
+                {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                    {
+                        ZapicDoctor zapicDoctor = new ZapicDoctor();
+                        zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+                        zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+                        zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+                        zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+                        zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+                        zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+                        zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+                        zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+                        zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+                        zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+                        zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+                        zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+                        zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                        zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+                        zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+                        System.out.println(date);
+                        System.out.println(zapicDoctor.getEmail());
 
-                    arrayList.add(zapicDoctor);
-                    System.out.println(arrayList);
-                    historyAdapter.notifyDataSetChanged();
-                    System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        arrayList.add(zapicDoctor);
+                        historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef, date);
+                        recyclerView.setAdapter(historyAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    }
                 }
             }
 
@@ -175,31 +198,34 @@ public class HistoryFragment extends Fragment {
         myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ZapicDoctor zapicDoctor = new ZapicDoctor();
-                    zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
-                    zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
-                    zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
-                    zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
-                    zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
-                    zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
-                    zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
-                    zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
-                    zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
-                    zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
-                    zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
-                    zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
-                    zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
-                    zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
-                    zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
-                    System.out.println(date);
-                    System.out.println(zapicDoctor.getEmail());
+                if (snapshot.exists())
+                {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                    {
+                        ZapicDoctor zapicDoctor = new ZapicDoctor();
+                        zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+                        zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+                        zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+                        zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+                        zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+                        zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+                        zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+                        zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+                        zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+                        zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+                        zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+                        zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+                        zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                        zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+                        zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+                        System.out.println(date);
+                        System.out.println(zapicDoctor.getEmail());
 
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    arrayList.add(zapicDoctor);
-                    System.out.println(arrayList);
-                    historyAdapter.notifyDataSetChanged();
-                    System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        arrayList.add(zapicDoctor);
+                        historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef, date);
+                        recyclerView.setAdapter(historyAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    }
                 }
             }
 
@@ -214,30 +240,34 @@ public class HistoryFragment extends Fragment {
         myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ZapicDoctor zapicDoctor = new ZapicDoctor();
-                    zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
-                    zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
-                    zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
-                    zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
-                    zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
-                    zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
-                    zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
-                    zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
-                    zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
-                    zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
-                    zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
-                    zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
-                    zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
-                    zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
-                    zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
-                    System.out.println(date);
-                    System.out.println(zapicDoctor.getEmail());
+                if (snapshot.exists())
+                {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                    {
+                        ZapicDoctor zapicDoctor = new ZapicDoctor();
+                        zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+                        zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+                        zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+                        zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+                        zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+                        zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+                        zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+                        zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+                        zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+                        zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+                        zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+                        zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+                        zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                        zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+                        zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+                        System.out.println(date);
+                        System.out.println(zapicDoctor.getEmail());
 
-                    arrayList.add(zapicDoctor);
-                    System.out.println(arrayList);
-                    historyAdapter.notifyDataSetChanged();
-                    System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        arrayList.add(zapicDoctor);
+                        historyAdapter = new HistoryAdapter(getContext(), arrayList, mFirebaseDatabase, myRef, date);
+                        recyclerView.setAdapter(historyAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    }
                 }
             }
 
@@ -247,6 +277,142 @@ public class HistoryFragment extends Fragment {
             }
         });
 
+        myRef = mFirebaseDatabase.getReference("User").child("Запись отоларинголог").child(date);
+
         flag = true;
+
+        System.out.println("ARRAYLIST " + arrayList);
+
+//        arrayList2.clear();
+//
+//        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    ZapicDoctor zapicDoctor = new ZapicDoctor();
+//                    zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+//                    zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+//                    zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+//                    zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+//                    zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+//                    zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+//                    zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+//                    zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+//                    zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+//                    zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+//                    zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+//                    zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+//                    zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+//                    zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+//                    zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+//                    System.out.println(date);
+//                    System.out.println(zapicDoctor.getEmail());
+//
+//                    arrayList2.add(zapicDoctor);
+//                    System.out.println(arrayList2);
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    historyAdapter.notifyDataSetChanged();
+//                    System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//        myRef = mFirebaseDatabase.getReference("User").child("Запись хирург").child(date);
+//
+//        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    ZapicDoctor zapicDoctor = new ZapicDoctor();
+//                    zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+//                    zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+//                    zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+//                    zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+//                    zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+//                    zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+//                    zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+//                    zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+//                    zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+//                    zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+//                    zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+//                    zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+//                    zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+//                    zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+//                    zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+//                    System.out.println(date);
+//                    System.out.println(zapicDoctor.getEmail());
+//
+//                    FirebaseUser currentUser = mAuth.getCurrentUser();
+//                    arrayList2.add(zapicDoctor);
+//                    System.out.println(arrayList2);
+//                    historyAdapter.notifyDataSetChanged();
+//                    System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//        myRef = mFirebaseDatabase.getReference("User").child("Запись отоларинголог").child(date);
+//        System.out.println(date + " DATE");
+//
+//        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    ZapicDoctor zapicDoctor = new ZapicDoctor();
+//                    zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+//                    zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+//                    zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+//                    zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+//                    zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+//                    zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+//                    zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+//                    zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+//                    zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+//                    zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+//                    zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+//                    zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+//                    zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+//                    zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+//                    zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+//                    System.out.println(date);
+//                    System.out.println(zapicDoctor.getEmail());
+//
+//                    arrayList2.add(zapicDoctor);
+//                    System.out.println(arrayList2 + "ARRAYLIST2222");
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    System.out.println();
+//                    historyAdapter.notifyDataSetChanged();
+//                    System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//        flag = true;
     }
 }
