@@ -7,12 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iccet2020.R;
 import com.example.iccet2020.Shifr;
 import com.example.iccet2020.ZapicDoctor;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +29,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     Context context;
     ArrayList<ZapicDoctor> arrayList;
     DatabaseReference myRef;
+    DatabaseReference myRef2;
     FirebaseDatabase mFirebaseDatabase;
     private static final String PUNCT = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
     private Shifr shifr = new Shifr();
@@ -50,6 +54,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ZapicDoctor zapicDoctor = arrayList.get(position);
+        System.out.println(arrayList + " ARRAYARRATY");
         holder.date.setText("Дата: " + shifr.dehifator(arrayList.get(position).getData()));
         holder.time.setText("Время: " + arrayList.get(position).getTime());
         holder.kab.setText("Кабинет: " + shifr.dehifator(arrayList.get(position).getKabinet()));
@@ -69,11 +74,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
                         {
                             for (DataSnapshot datas : snapshot.getChildren())
                             {
+                                arrayList.clear();
                                 String key = datas.getKey();
                                 myRef = mFirebaseDatabase.getReference("User").child("Запись " + doctor).child(date)
                                         .child(key);
                                 myRef.removeValue();
-                                arrayList.remove(arrayList.get(position));
+
+                                myRef2 = mFirebaseDatabase.getReference("User");
+                                getData(date, myRef2);
                                 notifyDataSetChanged();
                             }
                         }
@@ -84,6 +92,122 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
                     }
                 });
+            }
+        });
+    }
+
+    private void getData(String date, DatabaseReference myRef) {
+        arrayList.clear();
+        myRef = mFirebaseDatabase.getReference("User").child("Запись терапевт").child(date);
+
+        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        ZapicDoctor zapicDoctor = new ZapicDoctor();
+                        zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+                        zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+                        zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+                        zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+                        zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+                        zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+                        zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+                        zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+                        zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+                        zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+                        zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+                        zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+                        zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                        zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+                        zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+                        System.out.println(date);
+                        System.out.println(zapicDoctor.getEmail());
+
+                        arrayList.add(zapicDoctor);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        myRef = mFirebaseDatabase.getReference("User").child("Запись хирург").child(date);
+
+        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        ZapicDoctor zapicDoctor = new ZapicDoctor();
+                        zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+                        zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+                        zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+                        zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+                        zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+                        zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+                        zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+                        zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+                        zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+                        zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+                        zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+                        zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+                        zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                        zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+                        zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+                        System.out.println(date);
+                        System.out.println(zapicDoctor.getEmail());
+
+                        arrayList.add(zapicDoctor);
+                        notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        myRef = mFirebaseDatabase.getReference("User").child("Запись отоларинголог").child(date);
+
+        myRef.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        ZapicDoctor zapicDoctor = new ZapicDoctor();
+                        zapicDoctor.setTime(dataSnapshot.getValue(ZapicDoctor.class).getTime());
+                        zapicDoctor.setData(dataSnapshot.getValue(ZapicDoctor.class).getData());
+                        zapicDoctor.setBirthday(dataSnapshot.getValue(ZapicDoctor.class).getBirthday());
+                        zapicDoctor.setDoctor(dataSnapshot.getValue(ZapicDoctor.class).getDoctor());
+                        zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
+                        zapicDoctor.setKabinet(dataSnapshot.getValue(ZapicDoctor.class).getKabinet());
+                        zapicDoctor.setLastname(dataSnapshot.getValue(ZapicDoctor.class).getLastname());
+                        zapicDoctor.setMiddlename(dataSnapshot.getValue(ZapicDoctor.class).getMiddlename());
+                        zapicDoctor.setName(dataSnapshot.getValue(ZapicDoctor.class).getName());
+                        zapicDoctor.setNomerOMS(dataSnapshot.getValue(ZapicDoctor.class).getNomerOMS());
+                        zapicDoctor.setPhone(dataSnapshot.getValue(ZapicDoctor.class).getPhone());
+                        zapicDoctor.setSeriaOMS(dataSnapshot.getValue(ZapicDoctor.class).getSeriaOMS());
+                        zapicDoctor.setSnils(dataSnapshot.getValue(ZapicDoctor.class).getSnils());
+                        zapicDoctor.setCoutnChangeTime(dataSnapshot.getValue(ZapicDoctor.class).getCoutnChangeTime());
+                        zapicDoctor.setKey(dataSnapshot.getValue(ZapicDoctor.class).getKey());
+                        System.out.println(date);
+                        System.out.println(zapicDoctor.getEmail());
+
+                        arrayList.add(zapicDoctor);
+                        notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

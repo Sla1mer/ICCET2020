@@ -44,10 +44,8 @@ public class AddShedule extends AppCompatActivity {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
@@ -58,6 +56,20 @@ public class AddShedule extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                String stTime = shifr.hifr_zezarya("115");
+//                String count = shifr.hifr_zezarya("8");
+//                SrTime srTime5 = new SrTime(stTime, count);
+//                mDataBase.child("calculatingSrTime").child("Хирург").child("srTime").setValue(srTime5);
+//
+//                String stTime2 = shifr.hifr_zezarya("345");
+//                String count2 = shifr.hifr_zezarya("20");
+//                SrTime srTime6 = new SrTime(stTime2, count2);
+//                mDataBase.child("calculatingSrTime").child("Терапевт").child("srTime").setValue(srTime6);
+//
+//                String stTime3 = shifr.hifr_zezarya("815");
+//                String count3 = shifr.hifr_zezarya("40");
+//                SrTime srTime7 = new SrTime(stTime3, count3);
+//                mDataBase.child("calculatingSrTime").child("Отоларинголог").child("srTime").setValue(srTime7);
                 switch (date.getText().toString()) {
                     case "1":
                         arrayList.clear();
@@ -1326,9 +1338,9 @@ public class AddShedule extends AppCompatActivity {
                                         String nameMSG = name.getText().toString();
                                         System.out.println(i);
                                         if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
+                                            dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
                                         } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
+                                            dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
                                         }
                                         System.out.println(dateMSG);
                                         dateMSG = removePunct2(dateMSG);

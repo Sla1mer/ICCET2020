@@ -69,6 +69,7 @@ public class TakeNoteFragment extends Fragment {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private String date = " ";
     private DatabaseReference mDataBase;
+    private boolean flag = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -288,176 +289,381 @@ public class TakeNoteFragment extends Fragment {
         registration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag = true;
 
-                try {
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
-                    mDataBase.child("User").child(currentUser.getUid());
-                    System.out.println(currentUser.getUid());
-                    mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    User user = new User();
-                                    user.setFirstname(dataSnapshot.getValue(User.class).getFirstname());
-                                    user.setLastname(dataSnapshot.getValue(User.class).getLastname());
-                                    user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
+                myRef2 = mFirebaseDatabase.getReference("User").child("Запись " + chosheDoctor.toLowerCase()).child(date);
 
-                                    user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
-                                    user.setSnils(dataSnapshot.getValue(User.class).getSnils());
-                                    user.setEmail(dataSnapshot.getValue(User.class).getEmail());
-                                    user.setPhone(dataSnapshot.getValue(User.class).getPhone());
-                                    user.setSeriaOMS(dataSnapshot.getValue(User.class).getSeriaOMS());
-                                    user.setNomerOMS(dataSnapshot.getValue(User.class).getNomerOMS());
+                myRef2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                ZapicDoctor zapicDoctor = new ZapicDoctor();
+                                zapicDoctor.setEmail(dataSnapshot.getValue(ZapicDoctor.class).getEmail());
 
-                                    String doctor = chosheDoctor;
-                                    int index = listView.getCheckedItemPosition();
-                                    Shedule shedule = shedule2.get(index);
-                                    String date = shedule.getDate();
-                                    String time = shedule.getTime();
-                                    date = removePunct2(date);
-                                    System.out.println(date + "DATE PLK");
-
-                                    ZapicDoctor zapicDoctor = null;
-
-                                    if (doctor.equals("Отоларинголог")) {
-                                        zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
-                                                user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("1"), "0", shedule.time);
-                                    } else if (doctor.equals("Терапевт")) {
-                                        zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
-                                                user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("2"), "0", shedule.time);
-                                    } else if (doctor.equals("Хирург")) {
-                                        zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
-                                                user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("3"), "0", shedule.time);
-                                    }
-
-                                    if (doctor.equals("Отоларинголог")) {
-                                        myRef3.child("Запись отоларинголог").child(date).child(time).setValue(zapicDoctor);
-                                        System.out.println("DATE DATE DATE " + date);
-                                        myRef4 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(date);
-                                        ZapicDoctor finalZapicDoctor = zapicDoctor;
-                                        String finalDate = date;
-                                        System.out.println(finalDate);
-                                        System.out.println(finalZapicDoctor.getTime());
-                                        System.out.println(zapicDoctor.getDoctor());
-
-
-                                        System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
-                                        myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if (snapshot.exists()) {
-                                                    for (DataSnapshot datas : snapshot.getChildren()) {
-                                                        String key = datas.getKey();
-                                                        System.out.println(key);
-                                                        myRef4 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(finalDate)
-                                                                .child(key);
-                                                        myRef4.removeValue();
-                                                        adapter.notifyDataSetChanged();
-                                                    }
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-                                        Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
-                                        intent.putExtra("date", date);
-                                        intent.putExtra("timeO", zapicDoctor.getTime());
-                                        intent.putExtra("doctorO", "отоларинголог");
-                                        intent.putExtra("snils", zapicDoctor.getSnils());
-                                        getActivity().startService(intent);
-                                        getActivity().startService(intent);
-                                    } else if (doctor.equals("Терапевт")) {
-                                        myRef3.child("Запись терапевт").child(date).child(time).setValue(zapicDoctor);
-                                        System.out.println("DATE DATE DATE " + date);
-                                        myRef4 = mFirebaseDatabase.getReference("User").child("Терапевт").child(date);
-                                        ZapicDoctor finalZapicDoctor = zapicDoctor;
-                                        String finalDate = date;
-                                        System.out.println(finalDate);
-                                        System.out.println(finalZapicDoctor.getTime());
-                                        System.out.println(zapicDoctor.getDoctor());
-
-
-                                        System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
-                                        myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if (snapshot.exists()) {
-                                                    for (DataSnapshot datas : snapshot.getChildren()) {
-                                                        String key = datas.getKey();
-                                                        System.out.println(key);
-                                                        myRef4 = mFirebaseDatabase.getReference("User").child("Терапевт").child(finalDate)
-                                                                .child(key);
-                                                        myRef4.removeValue();
-                                                        adapter.notifyDataSetChanged();
-                                                    }
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-                                        Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
-                                        intent.putExtra("date", date);
-                                        intent.putExtra("timeT", zapicDoctor.getTime());
-                                        intent.putExtra("doctorT", "терапевт");
-                                        intent.putExtra("snils", zapicDoctor.getSnils());
-                                        getActivity().startService(intent);
-                                    } else if (doctor.equals("Хирург")) {
-                                        myRef3.child("Запись хирург").child(date).child(time).setValue(zapicDoctor);
-                                        System.out.println("DATE DATE DATE " + date);
-                                        myRef4 = mFirebaseDatabase.getReference("User").child("Хирург").child(date);
-                                        ZapicDoctor finalZapicDoctor = zapicDoctor;
-                                        String finalDate = date;
-                                        System.out.println(finalDate);
-                                        System.out.println(finalZapicDoctor.getTime());
-                                        System.out.println(zapicDoctor.getDoctor());
-
-
-                                        System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
-                                        myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if (snapshot.exists()) {
-                                                    for (DataSnapshot datas : snapshot.getChildren()) {
-                                                        String key = datas.getKey();
-                                                        System.out.println(key);
-                                                        myRef4 = mFirebaseDatabase.getReference("User").child("Хирург").child(finalDate)
-                                                                .child(key);
-                                                        myRef4.removeValue();
-                                                        adapter.notifyDataSetChanged();
-                                                    }
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-                                        Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
-                                        intent.putExtra("date", date);
-                                        intent.putExtra("timeX", zapicDoctor.getTime());
-                                        intent.putExtra("doctorX", "хирург");
-                                        intent.putExtra("snils", zapicDoctor.getSnils());
-                                        getActivity().startService(intent);
-                                    }
+                                if (zapicDoctor.getEmail().equals(shifr.hifr_zezaryaEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())))
+                                {
+                                    flag = false;
+                                    break;
                                 }
                             }
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                        if (flag)
+                        {
+                            try {
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                mDataBase.child("User").child(currentUser.getUid());
+                                System.out.println(currentUser.getUid());
+                                mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                                User user = new User();
+                                                user.setFirstname(dataSnapshot.getValue(User.class).getFirstname());
+                                                user.setLastname(dataSnapshot.getValue(User.class).getLastname());
+                                                user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
 
+                                                user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
+                                                user.setSnils(dataSnapshot.getValue(User.class).getSnils());
+                                                user.setEmail(dataSnapshot.getValue(User.class).getEmail());
+                                                user.setPhone(dataSnapshot.getValue(User.class).getPhone());
+                                                user.setSeriaOMS(dataSnapshot.getValue(User.class).getSeriaOMS());
+                                                user.setNomerOMS(dataSnapshot.getValue(User.class).getNomerOMS());
+
+                                                String doctor = chosheDoctor;
+                                                int index = listView.getCheckedItemPosition();
+                                                Shedule shedule = shedule2.get(index);
+                                                String date = shedule.getDate();
+                                                String time = shedule.getTime();
+                                                date = removePunct2(date);
+                                                System.out.println(date + "DATE PLK");
+
+                                                ZapicDoctor zapicDoctor = null;
+
+                                                if (doctor.equals("Отоларинголог")) {
+                                                    zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
+                                                            user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("1"), "0", shedule.time);
+                                                } else if (doctor.equals("Терапевт")) {
+                                                    zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
+                                                            user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("2"), "0", shedule.time);
+                                                } else if (doctor.equals("Хирург")) {
+                                                    zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
+                                                            user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("3"), "0", shedule.time);
+                                                }
+
+                                                if (doctor.equals("Отоларинголог")) {
+                                                    myRef3.child("Запись отоларинголог").child(date).child(time).setValue(zapicDoctor);
+                                                    System.out.println("DATE DATE DATE " + date);
+                                                    myRef4 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(date);
+                                                    ZapicDoctor finalZapicDoctor = zapicDoctor;
+                                                    String finalDate = date;
+                                                    System.out.println(finalDate);
+                                                    System.out.println(finalZapicDoctor.getTime());
+                                                    System.out.println(zapicDoctor.getDoctor());
+
+
+                                                    System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
+                                                    myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                for (DataSnapshot datas : snapshot.getChildren()) {
+                                                                    String key = datas.getKey();
+                                                                    System.out.println(key);
+                                                                    myRef4 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(finalDate)
+                                                                            .child(key);
+                                                                    myRef4.removeValue();
+                                                                    adapter.notifyDataSetChanged();
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
+                                                    intent.putExtra("date", date);
+                                                    intent.putExtra("timeO", zapicDoctor.getTime());
+                                                    intent.putExtra("doctorO", "отоларинголог");
+                                                    intent.putExtra("snils", zapicDoctor.getSnils());
+                                                    getActivity().startService(intent);
+                                                    getActivity().startService(intent);
+                                                } else if (doctor.equals("Терапевт")) {
+                                                    myRef3.child("Запись терапевт").child(date).child(time).setValue(zapicDoctor);
+                                                    System.out.println("DATE DATE DATE " + date);
+                                                    myRef4 = mFirebaseDatabase.getReference("User").child("Терапевт").child(date);
+                                                    ZapicDoctor finalZapicDoctor = zapicDoctor;
+                                                    String finalDate = date;
+                                                    System.out.println(finalDate);
+                                                    System.out.println(finalZapicDoctor.getTime());
+                                                    System.out.println(zapicDoctor.getDoctor());
+
+
+                                                    System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
+                                                    myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                for (DataSnapshot datas : snapshot.getChildren()) {
+                                                                    String key = datas.getKey();
+                                                                    System.out.println(key);
+                                                                    myRef4 = mFirebaseDatabase.getReference("User").child("Терапевт").child(finalDate)
+                                                                            .child(key);
+                                                                    myRef4.removeValue();
+                                                                    adapter.notifyDataSetChanged();
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
+                                                    intent.putExtra("date", date);
+                                                    intent.putExtra("timeT", zapicDoctor.getTime());
+                                                    intent.putExtra("doctorT", "терапевт");
+                                                    intent.putExtra("snils", zapicDoctor.getSnils());
+                                                    getActivity().startService(intent);
+                                                } else if (doctor.equals("Хирург")) {
+                                                    myRef3.child("Запись хирург").child(date).child(time).setValue(zapicDoctor);
+                                                    System.out.println("DATE DATE DATE " + date);
+                                                    myRef4 = mFirebaseDatabase.getReference("User").child("Хирург").child(date);
+                                                    ZapicDoctor finalZapicDoctor = zapicDoctor;
+                                                    String finalDate = date;
+                                                    System.out.println(finalDate);
+                                                    System.out.println(finalZapicDoctor.getTime());
+                                                    System.out.println(zapicDoctor.getDoctor());
+
+
+                                                    System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
+                                                    myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                for (DataSnapshot datas : snapshot.getChildren()) {
+                                                                    String key = datas.getKey();
+                                                                    System.out.println(key);
+                                                                    myRef4 = mFirebaseDatabase.getReference("User").child("Хирург").child(finalDate)
+                                                                            .child(key);
+                                                                    myRef4.removeValue();
+                                                                    adapter.notifyDataSetChanged();
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
+                                                    intent.putExtra("date", date);
+                                                    intent.putExtra("timeX", zapicDoctor.getTime());
+                                                    intent.putExtra("doctorX", "хирург");
+                                                    intent.putExtra("snils", zapicDoctor.getSnils());
+                                                    getActivity().startService(intent);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }catch (Exception ex){
+                                System.out.println(ex.getMessage());
+                            }
                         }
-                    });
-                }catch (Exception ex){
-                    System.out.println(ex.getMessage());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+                if (flag)
+                {
+//                    try {
+//                        FirebaseUser currentUser = mAuth.getCurrentUser();
+//                        mDataBase.child("User").child(currentUser.getUid());
+//                        System.out.println(currentUser.getUid());
+//                        mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                if (snapshot.exists()) {
+//                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                                        User user = new User();
+//                                        user.setFirstname(dataSnapshot.getValue(User.class).getFirstname());
+//                                        user.setLastname(dataSnapshot.getValue(User.class).getLastname());
+//                                        user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
+//
+//                                        user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
+//                                        user.setSnils(dataSnapshot.getValue(User.class).getSnils());
+//                                        user.setEmail(dataSnapshot.getValue(User.class).getEmail());
+//                                        user.setPhone(dataSnapshot.getValue(User.class).getPhone());
+//                                        user.setSeriaOMS(dataSnapshot.getValue(User.class).getSeriaOMS());
+//                                        user.setNomerOMS(dataSnapshot.getValue(User.class).getNomerOMS());
+//
+//                                        String doctor = chosheDoctor;
+//                                        int index = listView.getCheckedItemPosition();
+//                                        Shedule shedule = shedule2.get(index);
+//                                        String date = shedule.getDate();
+//                                        String time = shedule.getTime();
+//                                        date = removePunct2(date);
+//                                        System.out.println(date + "DATE PLK");
+//
+//                                        ZapicDoctor zapicDoctor = null;
+//
+//                                        if (doctor.equals("Отоларинголог")) {
+//                                            zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
+//                                                    user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("1"), "0", shedule.time);
+//                                        } else if (doctor.equals("Терапевт")) {
+//                                            zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
+//                                                    user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("2"), "0", shedule.time);
+//                                        } else if (doctor.equals("Хирург")) {
+//                                            zapicDoctor = new ZapicDoctor(user.getLastname(), user.getFirstname(), user.getMiddlename(), user.getBirhday(), user.getSnils(),
+//                                                    user.getEmail(), user.getPhone(), user.getSeriaOMS(), user.getNomerOMS(), shifr.hifr_zezarya(doctor), shifr.hifr_zezarya(shedule.date), shedule.time, shifr.hifr_zezarya("3"), "0", shedule.time);
+//                                        }
+//
+//                                        if (doctor.equals("Отоларинголог")) {
+//                                            myRef3.child("Запись отоларинголог").child(date).child(time).setValue(zapicDoctor);
+//                                            System.out.println("DATE DATE DATE " + date);
+//                                            myRef4 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(date);
+//                                            ZapicDoctor finalZapicDoctor = zapicDoctor;
+//                                            String finalDate = date;
+//                                            System.out.println(finalDate);
+//                                            System.out.println(finalZapicDoctor.getTime());
+//                                            System.out.println(zapicDoctor.getDoctor());
+//
+//
+//                                            System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
+//                                            myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                                    if (snapshot.exists()) {
+//                                                        for (DataSnapshot datas : snapshot.getChildren()) {
+//                                                            String key = datas.getKey();
+//                                                            System.out.println(key);
+//                                                            myRef4 = mFirebaseDatabase.getReference("User").child("Отоларинголог").child(finalDate)
+//                                                                    .child(key);
+//                                                            myRef4.removeValue();
+//                                                            adapter.notifyDataSetChanged();
+//                                                        }
+//                                                    }
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                                }
+//                                            });
+//                                            Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
+//                                            intent.putExtra("date", date);
+//                                            intent.putExtra("timeO", zapicDoctor.getTime());
+//                                            intent.putExtra("doctorO", "отоларинголог");
+//                                            intent.putExtra("snils", zapicDoctor.getSnils());
+//                                            getActivity().startService(intent);
+//                                            getActivity().startService(intent);
+//                                        } else if (doctor.equals("Терапевт")) {
+//                                            myRef3.child("Запись терапевт").child(date).child(time).setValue(zapicDoctor);
+//                                            System.out.println("DATE DATE DATE " + date);
+//                                            myRef4 = mFirebaseDatabase.getReference("User").child("Терапевт").child(date);
+//                                            ZapicDoctor finalZapicDoctor = zapicDoctor;
+//                                            String finalDate = date;
+//                                            System.out.println(finalDate);
+//                                            System.out.println(finalZapicDoctor.getTime());
+//                                            System.out.println(zapicDoctor.getDoctor());
+//
+//
+//                                            System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
+//                                            myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                                    if (snapshot.exists()) {
+//                                                        for (DataSnapshot datas : snapshot.getChildren()) {
+//                                                            String key = datas.getKey();
+//                                                            System.out.println(key);
+//                                                            myRef4 = mFirebaseDatabase.getReference("User").child("Терапевт").child(finalDate)
+//                                                                    .child(key);
+//                                                            myRef4.removeValue();
+//                                                            adapter.notifyDataSetChanged();
+//                                                        }
+//                                                    }
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                                }
+//                                            });
+//                                            Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
+//                                            intent.putExtra("date", date);
+//                                            intent.putExtra("timeT", zapicDoctor.getTime());
+//                                            intent.putExtra("doctorT", "терапевт");
+//                                            intent.putExtra("snils", zapicDoctor.getSnils());
+//                                            getActivity().startService(intent);
+//                                        } else if (doctor.equals("Хирург")) {
+//                                            myRef3.child("Запись хирург").child(date).child(time).setValue(zapicDoctor);
+//                                            System.out.println("DATE DATE DATE " + date);
+//                                            myRef4 = mFirebaseDatabase.getReference("User").child("Хирург").child(date);
+//                                            ZapicDoctor finalZapicDoctor = zapicDoctor;
+//                                            String finalDate = date;
+//                                            System.out.println(finalDate);
+//                                            System.out.println(finalZapicDoctor.getTime());
+//                                            System.out.println(zapicDoctor.getDoctor());
+//
+//
+//                                            System.out.println("TIME TIME TIME " + zapicDoctor.getTime());
+//                                            myRef4.orderByChild("time").equalTo(zapicDoctor.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                                    if (snapshot.exists()) {
+//                                                        for (DataSnapshot datas : snapshot.getChildren()) {
+//                                                            String key = datas.getKey();
+//                                                            System.out.println(key);
+//                                                            myRef4 = mFirebaseDatabase.getReference("User").child("Хирург").child(finalDate)
+//                                                                    .child(key);
+//                                                            myRef4.removeValue();
+//                                                            adapter.notifyDataSetChanged();
+//                                                        }
+//                                                    }
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                                }
+//                                            });
+//                                            Intent intent = new Intent(getContext(), com.example.iccet2020.Services.Service.class);
+//                                            intent.putExtra("date", date);
+//                                            intent.putExtra("timeX", zapicDoctor.getTime());
+//                                            intent.putExtra("doctorX", "хирург");
+//                                            intent.putExtra("snils", zapicDoctor.getSnils());
+//                                            getActivity().startService(intent);
+//                                        }
+//                                    }
+//                                }
+//                                flag = false;
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                            }
+//                        });
+//                    }catch (Exception ex){
+//                        System.out.println(ex.getMessage());
+//                    }
                 }
             }
         });
