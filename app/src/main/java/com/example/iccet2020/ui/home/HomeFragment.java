@@ -36,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class HomeFragment extends Fragment {
 
         exit = root.findViewById(R.id.exit);
         refresh = root.findViewById(R.id.reload);
-
+        
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
