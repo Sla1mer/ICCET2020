@@ -18,12 +18,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp">
+            android:layout_height="800dp">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="349dp"
-                android:layout_height="620dp"
+                android:layout_width="350dp"
+                android:layout_height="550dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/seriy_fon"
@@ -250,22 +250,25 @@
                         app:layout_constraintVertical_bias="0.02" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="297dp"
-                    android:layout_height="38dp"
-                    android:layout_gravity="center" />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/openCalendar"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:text="Выбрать дату записи"
-                    app:backgroundTint="#3d7894" />
+                    android:layout_height="65dp">
+
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="297dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.086" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </LinearLayout>
@@ -274,7 +277,7 @@
 
     <LinearLayout
         android:layout_width="349dp"
-        android:layout_height="221dp"
+        android:layout_height="256dp"
         android:background="@drawable/seriy_fon"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -288,10 +291,26 @@
             android:layout_height="match_parent">
 
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/openCalendar"
+                android:layout_width="167dp"
+                android:layout_height="57dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="28dp"
+                android:gravity="center"
+                android:text="Выбрать дату записи"
+                app:backgroundTint="#3d7894"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.733" />
+
             <ListView
                 android:id="@+id/listView"
                 android:layout_width="320dp"
-                android:layout_height="150dp"
+                android:layout_height="137dp"
                 android:layout_gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.551"
@@ -303,17 +322,17 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/registration_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="55dp"
+                android:layout_height="57dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Записаться"
                 app:backgroundTint="#3d7894"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.925"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.849" />
+                app:layout_constraintVertical_bias="0.733" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
