@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ICCET2020</string>
+    <string name="app_name">MedonTime</string>
     <string name="sign_in">Вход</string>
     <string name="registrait">Зарегистрироваться</string>
     <string name="take_note">Запись на прием</string>

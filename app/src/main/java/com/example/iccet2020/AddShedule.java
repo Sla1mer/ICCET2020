@@ -56,6 +56,7 @@ public class AddShedule extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
 //                String stTime = shifr.hifr_zezarya("115");
 //                String count = shifr.hifr_zezarya("8");
 //                SrTime srTime5 = new SrTime(stTime, count);
@@ -70,53 +71,51 @@ public class AddShedule extends AppCompatActivity {
 //                String count3 = shifr.hifr_zezarya("40");
 //                SrTime srTime7 = new SrTime(stTime3, count3);
 //                mDataBase.child("calculatingSrTime").child("Отоларинголог").child("srTime").setValue(srTime7);
-                switch (date.getText().toString()) {
-                    case "1":
-                        arrayList.clear();
-                        flag4 = true;
+                    switch (date.getText().toString()) {
+                        case "1":
+                            arrayList.clear();
+                            flag4 = true;
 
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                               for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                               {
-                                   String count = dataSnapshot.getValue(String.class);
-                                   arrayList.add(count);
-                                   myRef3.onDisconnect();
-                               }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
+                                }
+                            });
 
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
                                         SrTime srTime = new SrTime();
                                         srTime.setCount(arrayList.get(0));
                                         srTime.setTime(arrayList.get(1));
@@ -131,1242 +130,1199 @@ public class AddShedule extends AppCompatActivity {
                                         System.out.println(sc);
                                         srTimeInt = sr / sc;
                                         System.out.println(srTimeInt);
+                                    }
+
+                                    for (int i = 1; i < 32; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                        }
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
                                 }
 
-                                for (int i = 1; i < 32; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                        {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
-                                        }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "2":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "2":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 29; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
-                                        }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "3":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
 
-                            }
-                        });
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
 
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 32; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
+                                    for (int i = 1; i < 29; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "2" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "2" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
                                         }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "3":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "4":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 31; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
-                                        }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "5":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
 
-                            }
-                        });
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
 
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 32; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
+                                    for (int i = 1; i < 32; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "3" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "3" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
                                         }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "4":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "6":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 31; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
-                                        }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "7":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
 
-                            }
-                        });
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
 
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 32; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
+                                    for (int i = 1; i < 31; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "4" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "4" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
                                         }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "5":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "8":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 31; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
-                                        }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "9":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
 
-                            }
-                        });
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
 
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 32; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
+                                    for (int i = 1; i < 32; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "5" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "5" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
                                         }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "6":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "10":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 31; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
-                                        }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "11":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
 
-                            }
-                        });
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
 
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 31; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
+                                    for (int i = 1; i < 31; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "6" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "6" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
                                         }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "7":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    case "12":
-                        arrayList.clear();
-                        flag4 = true;
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String count = dataSnapshot.getValue(String.class);
-                                    arrayList.add(count);
-                                    myRef3.onDisconnect();
                                 }
-                            }
+                            });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                                {
-                                    String time = dataSnapshot.getValue(String.class);
-                                    arrayList.add(time);
-                                    myRef3.onDisconnect();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
-                        myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int srTimeInt = 0;
-                                if (snapshot.exists() && flag4) {
-                                    SrTime srTime = new SrTime();
-                                    srTime.setCount(arrayList.get(0));
-                                    srTime.setTime(arrayList.get(1));
-
-                                    String t = shifr.dehifator(srTime.getTime());
-                                    String c = shifr.dehifator(srTime.getCount());
-                                    t = t.substring(1);
-                                    c = c.substring(1);
-                                    int sr = Integer.parseInt(t);
-                                    int sc = Integer.parseInt(c);
-                                    System.out.println(sr);
-                                    System.out.println(sc);
-                                    srTimeInt = sr / sc;
-                                    System.out.println(srTimeInt);
-                                }
-
-                                for (int i = 1; i < 32; i++) {
-                                    String time = "08:00";
-                                    int c = i;
-                                    byte count = 0;
-                                    System.out.println(Integer.parseInt(time.substring(0, 2)));
-                                    while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945)
-                                    {
-                                        if (count != 0){
-                                            time = calcuclatingTime(time, srTimeInt);
-                                        }else
-                                        {
-                                            count = (byte) (count + 1);
-                                        }
-                                        String dateMSG = "";
-                                        String nameMSG = name.getText().toString();
-                                        System.out.println(i);
-                                        if (i < 10) {
-                                            dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
-                                        } else {
-                                            dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
-                                        }
-                                        System.out.println(dateMSG);
-                                        dateMSG = removePunct2(dateMSG);
-                                        Shedule shedule = new Shedule(dateMSG, time);
-                                        mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
                                     }
                                 }
 
-                                myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
-                                myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
-                                String stTime = shifr.hifr_zezarya("0");
-                                String count = shifr.hifr_zezarya("0");
-                                SrTime srTime5 = new SrTime(stTime, count);
-                                mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
-                                flag4 = false;
-                                myRef3.onDisconnect();
-                                myRef.onDisconnect();
-                                mDataBase.onDisconnect();
-                                Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            });
 
-                            }
-                        });
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
+
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
+
+                                    for (int i = 1; i < 32; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "7" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "7" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                        }
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "8":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
+
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
+
+                                    for (int i = 1; i < 31; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "8" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "8" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                        }
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "9":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
+
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
+
+                                    for (int i = 1; i < 32; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + "0" + "9" + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + "0" + "9" + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                        }
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "10":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
+
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
+
+                                    for (int i = 1; i < 31; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                        }
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "11":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
+
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
+
+                                    for (int i = 1; i < 31; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                        }
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        case "12":
+                            arrayList.clear();
+                            flag4 = true;
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("count").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String count = dataSnapshot.getValue(String.class);
+                                        arrayList.add(count);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.orderByChild("time").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String time = dataSnapshot.getValue(String.class);
+                                        arrayList.add(time);
+                                        myRef3.onDisconnect();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            myRef3 = mFirebaseDatabase.getReference("User").child("calculatingSrTime").child(name.getText().toString()).child("srTime");
+                            myRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int srTimeInt = 0;
+                                    if (snapshot.exists() && flag4) {
+                                        SrTime srTime = new SrTime();
+                                        srTime.setCount(arrayList.get(0));
+                                        srTime.setTime(arrayList.get(1));
+
+                                        String t = shifr.dehifator(srTime.getTime());
+                                        String c = shifr.dehifator(srTime.getCount());
+                                        t = t.substring(1);
+                                        c = c.substring(1);
+                                        int sr = Integer.parseInt(t);
+                                        int sc = Integer.parseInt(c);
+                                        System.out.println(sr);
+                                        System.out.println(sc);
+                                        srTimeInt = sr / sc;
+                                        System.out.println(srTimeInt);
+                                    }
+
+                                    for (int i = 1; i < 32; i++) {
+                                        String time = "08:00";
+                                        int c = i;
+                                        byte count = 0;
+                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
+                                        while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
+                                            if (count != 0) {
+                                                time = calcuclatingTime(time, srTimeInt);
+                                            } else {
+                                                count = (byte) (count + 1);
+                                            }
+                                            String dateMSG = "";
+                                            String nameMSG = name.getText().toString();
+                                            System.out.println(i);
+                                            if (i < 10) {
+                                                dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
+                                            } else {
+                                                dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
+                                            }
+                                            System.out.println(dateMSG);
+                                            dateMSG = removePunct2(dateMSG);
+                                            Shedule shedule = new Shedule(dateMSG, time);
+                                            mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
+                                        }
+                                    }
+
+                                    myRef = mFirebaseDatabase.getReference("User").child("srednTime").child(name.getText().toString());
+                                    myRef.setValue(shifr.hifr_zezarya(String.valueOf(srTimeInt)));
+                                    String stTime = shifr.hifr_zezarya("0");
+                                    String count = shifr.hifr_zezarya("0");
+                                    SrTime srTime5 = new SrTime(stTime, count);
+                                    mDataBase.child("calculatingSrTime").child(name.getText().toString()).child("srTime").setValue(srTime5);
+                                    flag4 = false;
+                                    myRef3.onDisconnect();
+                                    myRef.onDisconnect();
+                                    mDataBase.onDisconnect();
+                                    Toast.makeText(getApplicationContext(), "Записи успешено созданы", Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                    }
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
                 }
             }
         });

@@ -87,15 +87,15 @@ public class HistoryFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerHistory);
         arrayList = new ArrayList<>();
 
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                if (flag)
-//                {
-//                    getData(date);
-//                }
-//            }
-//        }, 0, 1000);
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (flag)
+                {
+                    getData(date);
+                }
+            }
+        }, 0, 10000);
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
