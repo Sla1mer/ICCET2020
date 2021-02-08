@@ -51,26 +51,13 @@ public class AddShedule extends AppCompatActivity {
         time = findViewById(R.id.time);
         send = findViewById(R.id.send);
         name = findViewById(R.id.name);
+
         mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-//                String stTime = shifr.hifr_zezarya("115");
-//                String count = shifr.hifr_zezarya("8");
-//                SrTime srTime5 = new SrTime(stTime, count);
-//                mDataBase.child("calculatingSrTime").child("Хирург").child("srTime").setValue(srTime5);
-//
-//                String stTime2 = shifr.hifr_zezarya("345");
-//                String count2 = shifr.hifr_zezarya("20");
-//                SrTime srTime6 = new SrTime(stTime2, count2);
-//                mDataBase.child("calculatingSrTime").child("Терапевт").child("srTime").setValue(srTime6);
-//
-//                String stTime3 = shifr.hifr_zezarya("815");
-//                String count3 = shifr.hifr_zezarya("40");
-//                SrTime srTime7 = new SrTime(stTime3, count3);
-//                mDataBase.child("calculatingSrTime").child("Отоларинголог").child("srTime").setValue(srTime7);
                     switch (date.getText().toString()) {
                         case "1":
                             arrayList.clear();
@@ -126,17 +113,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 32; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -145,13 +128,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "1" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "1" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -230,17 +211,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 29; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -249,13 +226,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "2" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "2" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -334,17 +309,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 32; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -353,13 +324,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "3" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "3" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -438,17 +407,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 31; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -457,13 +422,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "4" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "4" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -542,17 +505,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 32; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -561,13 +520,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "5" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "5" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -646,17 +603,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 31; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -665,13 +618,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "6" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "6" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -750,17 +701,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 32; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -769,13 +716,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "7" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "7" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -854,17 +799,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 31; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -873,13 +814,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "8" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "8" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -958,17 +897,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 32; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -977,13 +912,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + "0" + "9" + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + "0" + "9" + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -1062,17 +995,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 31; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -1081,13 +1010,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -1166,17 +1093,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 31; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -1185,13 +1108,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -1270,17 +1191,13 @@ public class AddShedule extends AppCompatActivity {
                                         c = c.substring(1);
                                         int sr = Integer.parseInt(t);
                                         int sc = Integer.parseInt(c);
-                                        System.out.println(sr);
-                                        System.out.println(sc);
                                         srTimeInt = sr / sc;
-                                        System.out.println(srTimeInt);
                                     }
 
                                     for (int i = 1; i < 32; i++) {
                                         String time = "08:00";
                                         int c = i;
                                         byte count = 0;
-                                        System.out.println(Integer.parseInt(time.substring(0, 2)));
                                         while (Integer.parseInt(time.substring(0, 2) + time.substring(3)) < 1945) {
                                             if (count != 0) {
                                                 time = calcuclatingTime(time, srTimeInt);
@@ -1289,13 +1206,11 @@ public class AddShedule extends AppCompatActivity {
                                             }
                                             String dateMSG = "";
                                             String nameMSG = name.getText().toString();
-                                            System.out.println(i);
                                             if (i < 10) {
                                                 dateMSG = "0" + c + '.' + date.getText().toString() + '.' + "2020";
                                             } else {
                                                 dateMSG = "" + c + '.' + date.getText().toString() + '.' + "2020";
                                             }
-                                            System.out.println(dateMSG);
                                             dateMSG = removePunct2(dateMSG);
                                             Shedule shedule = new Shedule(dateMSG, time);
                                             mDataBase.child(nameMSG).child(dateMSG).child(time).setValue(shedule);
@@ -1322,7 +1237,7 @@ public class AddShedule extends AppCompatActivity {
                             });
                     }
                 }catch (Exception e){
-                    System.out.println(e.getMessage());
+
                 }
             }
         });

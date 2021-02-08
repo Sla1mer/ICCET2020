@@ -60,8 +60,6 @@ public class DoctorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
 
-//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
-
         myRef = FirebaseDatabase.getInstance().getReference(USER_KEY);
         myRef2 = FirebaseDatabase.getInstance().getReference(USER_KEY);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -74,11 +72,14 @@ public class DoctorActivity extends AppCompatActivity {
         myAdapter = new MyAdapter(this, zapicDoctorsList, mChronometer, myRef2, date.getText().toString(), mFirebaseDatabase, chosheDoctor);
         btnExit = findViewById(R.id.exit);
         addNoteBtn = findViewById(R.id.addNoteBtn);
+        btnExit = findViewById(R.id.exit);
+        addNoteBtn = findViewById(R.id.addNoteBtn);
+
 
         addNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddShedule.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -96,7 +97,6 @@ public class DoctorActivity extends AppCompatActivity {
                                 - chronometer.getBase();
 
                         time2 = elapsedMillis / 60000;
-                        System.out.println(time2);
                     }
                 });
             }
@@ -149,7 +149,6 @@ public class DoctorActivity extends AppCompatActivity {
                                 String resultTime2 = сalculatingTime(shedule.getTime());
                                 myRef2.child(dataSnapshot1.getKey()).child("time").setValue(resultTime2);
                                 String dateFinaly = date.getText().toString().substring(0, 2) + "." + date.getText().toString().substring(2, 4) + "." + date.getText().toString().substring(4);
-                                System.out.println(date);
                                 myRef2.child(dataSnapshot1.getKey()).child("date").setValue(dateFinaly);
                             }
                         }
@@ -237,7 +236,6 @@ public class DoctorActivity extends AppCompatActivity {
                 String date2 = day + "." + month + "." + year;
                 String m = String.valueOf(month);
                 String d = String.valueOf(day);
-                System.out.println("MONTH " + month);
                 if (String.valueOf(day).length() == 1)
                 {
                     d = ("0" + day);
@@ -347,7 +345,6 @@ public class DoctorActivity extends AppCompatActivity {
     private void getData(String pathDoctor, String date)
     {
         date = removePunct2(date);
-        System.out.println(date + " DAAAAAATE");
         myRef2 = mFirebaseDatabase.getReference("User").child("Запись " + pathDoctor.toLowerCase()).child(date);
 
         myRef2.addValueEventListener(new ValueEventListener() {
@@ -388,7 +385,6 @@ public class DoctorActivity extends AppCompatActivity {
                     zapicDoctor.setBirthday(shifr.dehifator(zapicDoctor.getBirthday()));
 
                     zapicDoctorsList.add(zapicDoctor);
-                    System.out.println(zapicDoctorsList);
                     myAdapter.notifyDataSetChanged();
                 }
             }

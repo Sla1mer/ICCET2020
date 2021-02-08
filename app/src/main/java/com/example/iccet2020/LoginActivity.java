@@ -82,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
     // Инициализация элементов интерфейса
     private void init()
     {
-
         textRegister = findViewById(R.id.textRegister);
         signinBtn = findViewById(R.id.signin);
         email = findViewById(R.id.email);
@@ -110,12 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
         }catch (Exception ex){
-            System.out.println(ex.getMessage());
         }
     }
 
@@ -125,8 +121,6 @@ public class LoginActivity extends AppCompatActivity {
         try{
         if (firebaseUser != null){
             mDataBase.child("User").child(firebaseUser.getUid());
-            System.out.println(firebaseUser.getUid());
-            System.out.println(firebaseUser.getEmail());
             mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(firebaseUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -157,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
         }catch (Exception e){
-            System.out.println(e.getMessage());
+
         }
     }
 
@@ -168,8 +162,6 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
             mDataBase.child("User").child(currentUser.getUid());
-            System.out.println(currentUser.getUid());
-            System.out.println(currentUser.getEmail());
             mDataBase.orderByChild("email").equalTo(shifr.hifr_zezaryaEmail(currentUser.getEmail())).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -177,8 +169,24 @@ public class LoginActivity extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             User user = new User();
                             user.setStatus(dataSnapshot.getValue(User.class).getStatus());
-
+                            user.setBirhday(dataSnapshot.getValue(User.class).getStatus());
+                            user.setEmail(dataSnapshot.getValue(User.class).getEmail());
+                            user.setFirstname(dataSnapshot.getValue(User.class).getFirstname());
+                            user.setBirhday(dataSnapshot.getValue(User.class).getBirhday());
+                            user.setLastname(dataSnapshot.getValue(User.class).getLastname());
+                            user.setMiddlename(dataSnapshot.getValue(User.class).getMiddlename());
+                            user.setFirstname(dataSnapshot.getValue(User.class).getFirstname());
                             user.setStatus(shifr.dehifator(user.getStatus()));
+
+                            user.setBirhday(shifr.hifr_zezarya(user.getBirhday()));
+                            user.setFirstname(shifr.hifr_zezarya(user.getFirstname()));
+                            user.setLastname(shifr.hifr_zezarya(user.getLastname()));
+                            user.setMiddlename(shifr.hifr_zezarya(user.getMiddlename()));
+                            user.setEmail(shifr.hifr_zezaryaEmail(user.getEmail()));
+                            user.setNomerOMS(shifr.hifr_zezarya(user.getNomerOMS()));
+                            user.setPhone(shifr.hifr_zezarya(user.getPhone()));
+                            user.setSeriaOMS(shifr.hifr_zezarya(user.getSeriaOMS()));
+                            user.setNomerOMS(shifr.hifr_zezarya(user.getNomerOMS()));
 
                             if (user.getStatus().contains("patient"))
                             {

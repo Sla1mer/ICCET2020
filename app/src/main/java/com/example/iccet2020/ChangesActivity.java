@@ -62,15 +62,16 @@ public class ChangesActivity extends AppCompatActivity {
                 String date = day + "." + month + "." + year;
                 String m = String.valueOf(month);
                 String d = String.valueOf(day);
-                System.out.println("MONTH " + month);
                 if (String.valueOf(day).length() == 1)
                 {
                     d = ("0" + day);
+                    m = ("1" + day);
                 }
 
                 if (String.valueOf(month).length() == 1)
                 {
                     m = ("0" + month);
+                    d = ("1" + month);
                 }
 
                 date = d + "." + m + "." + year;
@@ -94,7 +95,6 @@ public class ChangesActivity extends AppCompatActivity {
             }
         });
 
-//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d7894")));
         changedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
